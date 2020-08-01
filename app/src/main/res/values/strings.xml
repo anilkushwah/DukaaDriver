@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">DukaaDriver</string>
+    <string name="no_internet" />
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_orders">Orders</string>
+    <string name="title_earning">Earning</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_accept">Accepted</string>
+</resources>
