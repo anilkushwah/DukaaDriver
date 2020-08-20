@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingLeft="@dimen/_10sdp"
+    android:paddingRight="@dimen/_10sdp"
+    android:paddingTop="@dimen/_10sdp"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+      <LinearLayout
+          android:layout_marginTop="@dimen/_25sdp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/devimage"
+            android:orientation="horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/backgroundone"
+            android:padding="10dp"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:src="@drawable/delivery"
+            android:layout_height="match_parent"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_toRightOf="@+id/devimage"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/_13sdp"
+                android:layout_height="wrap_content"
+                android:text="Pickup Location"/>
+
+
+            <TextView
+                android:layout_marginTop="@dimen/_6sdp"
+                android:textColor="#000000"
+                android:textSize="@dimen/_13sdp"
+                android:id="@+id/pick_location_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pickup Location"/>
+
+        </LinearLayout>
+      </LinearLayout>
+        <RelativeLayout
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:background="#CAEBFB"
+            >
+
+            <TextView
+                android:id="@+id/total_distance"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:textColor="#039BE5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20KM"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="1dp"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@color/grey"
+        android:layout_marginLeft="@dimen/_40sdp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/destination_image"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/backgroundone"
+            android:padding="10dp"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:src="@drawable/ic_location"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_toRightOf="@+id/destination_image"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_13sdp"
+                android:text="Pickup Location"/>
+
+
+            <TextView
+                android:layout_marginTop="@dimen/_6sdp"
+                android:textColor="#000000"
+                android:textSize="@dimen/_13sdp"
+                android:id="@+id/destination_location_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pickup Location"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/viewdetails_recycle"
+        android:layout_gravity="right"
+        android:background="@drawable/viewdetails"
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_width="wrap_content"
+            android:textColor="@color/colorPrimaryDark_old"
+            android:layout_height="wrap_content"
+            android:text="View Details"
+            android:textSize="@dimen/_18sdp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGreenLight"/>
+
+</LinearLayout>

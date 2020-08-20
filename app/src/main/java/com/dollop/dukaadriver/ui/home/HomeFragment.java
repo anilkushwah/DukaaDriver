@@ -17,6 +17,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dollop.dukaadriver.R;
 import com.dollop.dukaadriver.adapter.SavedAddressAdapter;
+import com.dollop.dukaadriver.fragment.AddnewVehicleFragment;
 import com.dollop.dukaadriver.model.savedaddress_model;
 
 import java.util.ArrayList;
@@ -73,6 +76,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         savedaddress_models = new ArrayList<>();
 
         RecyclerView rv_select_vehicle = selectvehicle.findViewById(R.id.rv_select_vehicle);
+        LinearLayout add_new_vehicle_ll = selectvehicle.findViewById(R.id.add_new_vehicle_ll);
+
         iv_close_vehicle = selectvehicle.findViewById(R.id.iv_close_vehicle);
         lv_applyBtn = selectvehicle.findViewById(R.id.lv_applyBtn);
 
@@ -100,6 +105,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         lv_applyBtn.setOnClickListener(this);
         iv_close_vehicle.setOnClickListener(this);
+
+        add_new_vehicle_ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectvehicle.dismiss();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment,new AddnewVehicleFragment()).commit();
+            }
+        });
     }
 
 }

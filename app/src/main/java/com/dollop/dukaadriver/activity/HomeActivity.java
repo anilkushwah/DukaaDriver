@@ -1,7 +1,8 @@
-package com.dollop.dukaadriver;
+package com.dollop.dukaadriver.activity;
 
 import android.os.Bundle;
 
+import com.dollop.dukaadriver.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;

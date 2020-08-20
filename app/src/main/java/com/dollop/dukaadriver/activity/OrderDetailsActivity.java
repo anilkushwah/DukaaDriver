@@ -1,4 +1,4 @@
-package com.dollop.dukaadriver;
+package com.dollop.dukaadriver.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.dollop.dukaadriver.R;
 import com.dollop.dukaadriver.adapter.OrderItemsDetailsAdapter;
 import com.dollop.dukaadriver.model.OrderDetailsModelList;
 

@@ -7,4 +7,10 @@
     <string name="title_earning">Earning</string>
     <string name="title_profile">Profile</string>
     <string name="title_accept">Accepted</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="month">
+        <item>month</item>
+    </string-array>
 </resources>
