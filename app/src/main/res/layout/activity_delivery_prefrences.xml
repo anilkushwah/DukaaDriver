@@ -33,7 +33,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_weight="2"
-            android:fontFamily="@font/poppins_light"
+            android:fontFamily="@font/nexa_light"
             android:text="Delivery Prefrences"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_12sdp" />
@@ -98,7 +98,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="@dimen/_5sdp"
-                            android:fontFamily="@font/poppins_light"
+                            android:fontFamily="@font/nexa_light"
                             android:gravity="center"
                             android:text="Click and  upload  to submit proof of your order delivery task completion to notify user"
                             android:textColor="@color/colorBlue"
@@ -159,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:fontFamily="@font/poppins_light"
+                    android:fontFamily="@font/nexa_light"
                     android:text="Item Details"
                     android:textSize="@dimen/_8sdp" />
 
@@ -179,7 +179,7 @@
                         android:layout_gravity="left"
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:layout_weight="1"
-                        android:fontFamily="@font/poppins_light"
+                        android:fontFamily="@font/nexa_light"
                         android:text="Total Bill"
                         android:textSize="@dimen/_10sdp"
                         android:visibility="gone" />
@@ -190,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:layout_weight="1"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/nexa_bold"
                         android:gravity="center"
                         android:text="5 items"
                         android:textSize="@dimen/_10sdp"
@@ -212,7 +212,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:background="@drawable/payment_rupee_bck"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/nexa_bold"
                             android:gravity="center"
                             android:paddingLeft="@dimen/_7sdp"
                             android:paddingTop="@dimen/_2sdp"
@@ -228,7 +228,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/_4sdp"
-                            android:fontFamily="@font/poppins_light"
+                            android:fontFamily="@font/nexa_light"
                             android:text="(Paid by Retailer)"
                             android:textSize="@dimen/_9sdp" />
 
@@ -315,7 +315,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/curve_bg_login"
-        android:fontFamily="@font/poppins_light"
+        android:fontFamily="@font/nexa_light"
         android:text="Upload Proof and Delivery Order"
         android:textAllCaps="false"
         android:textColor="@android:color/white"

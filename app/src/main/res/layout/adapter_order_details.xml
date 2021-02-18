@@ -50,7 +50,7 @@
                     android:textSize="@dimen/_10sdp"
                     android:layout_gravity="center"
                     android:id="@+id/tv_itemsName"
-                    android:fontFamily="@font/poppins_semibold"/>
+                    android:fontFamily="@font/nexa_bold"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                     android:textSize="@dimen/_8sdp"
                     android:layout_gravity="center"
                     android:id="@+id/tv_itemQuantity"
-                    android:fontFamily="@font/poppins_light"/>
+                    android:fontFamily="@font/nexa_light"/>
 
             </LinearLayout>
 
@@ -78,7 +78,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:textColor="@color/colorBlue"
-            android:fontFamily="@font/poppins_semibold"/>
+            android:fontFamily="@font/nexa_bold"/>
 
 
 
@@ -92,7 +92,7 @@
                     android:textSize="@dimen/_11sdp"
                     android:id="@+id/tv_price_per_item"
                     android:layout_marginLeft="@dimen/_2sdp"
-                    android:fontFamily="@font/poppins"/>
+                    android:fontFamily="@font/nexa_regular"/>
 
 
 

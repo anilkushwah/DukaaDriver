@@ -33,7 +33,7 @@
                 android:text="Toda, 10:45"
                 android:id="@+id/tv_notificationTime"
                 android:textSize="@dimen/_12sdp"
-                android:fontFamily="@font/poppins_light"/>
+                android:fontFamily="@font/nexa_light"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                 android:paddingTop="@dimen/_10sdp"
                 android:id="@+id/tv_notificaiton_Description"
                 android:paddingBottom="@dimen/_10sdp"
-                android:fontFamily="@font/poppins"/>
+                android:fontFamily="@font/nexa_regular"/>
 
             <View
                 android:layout_width="match_parent"

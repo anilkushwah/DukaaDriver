@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:fontFamily="@font/poppins"
+                android:fontFamily="@font/nexa_regular"
                 android:text="Order ID - #12501110"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_13sdp" />
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:fontFamily="@font/poppins_light"
+                android:fontFamily="@font/nexa_light"
                 android:text="5 items, Rs 597.04"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_12sdp" />
@@ -100,7 +100,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_10sdp"
-                        android:fontFamily="@font/poppins_light"
+                        android:fontFamily="@font/nexa_light"
                         android:text="Customer Name"
                         android:textSize="@dimen/_11sdp" />
 
@@ -146,7 +146,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/nexa_bold"
                                 android:text="Alex Carey"
                                 android:textSize="@dimen/_10sdp" />
 
@@ -155,7 +155,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:fontFamily="@font/poppins_light"
+                                android:fontFamily="@font/nexa_light"
                                 android:text="+91 - 12345 67890"
                                 android:textSize="@dimen/_10sdp" />
                         </LinearLayout>
@@ -179,7 +179,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_5sdp"
-                                android:fontFamily="@font/poppins"
+                                android:fontFamily="@font/nexa_regular"
                                 android:padding="@dimen/_2sdp"
                                 android:text="Call"
                                 android:textColor="@android:color/white"
@@ -194,7 +194,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_8sdp"
-                        android:fontFamily="@font/poppins_light"
+                        android:fontFamily="@font/nexa_light"
                         android:text="Store"
                         android:textSize="@dimen/_11sdp" />
 
@@ -219,7 +219,7 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_weight="1.5"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/nexa_bold"
                             android:text="Walmart - Bypass \n 117, Road -2, Bypass, Indore"
                             android:textSize="@dimen/_9sdp" />
 
@@ -243,7 +243,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_5sdp"
-                                android:fontFamily="@font/poppins"
+                                android:fontFamily="@font/nexa_regular"
                                 android:padding="@dimen/_2sdp"
                                 android:text="Call"
                                 android:textColor="@android:color/white"
@@ -279,7 +279,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/_3sdp"
-                                    android:fontFamily="@font/poppins_light"
+                                    android:fontFamily="@font/nexa_light"
                                     android:text="Delivery"
                                     android:textSize="@dimen/_10sdp" />
 
@@ -304,7 +304,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:fontFamily="@font/poppins_semibold"
+                                    android:fontFamily="@font/nexa_bold"
                                     android:text="Vishnupuri"
                                     android:textSize="@dimen/_10sdp" />
 
@@ -312,7 +312,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:fontFamily="@font/poppins_semibold"
+                                    android:fontFamily="@font/nexa_bold"
                                     android:text="117, Road -2, Bypass, Indore"
                                     android:textSize="@dimen/_10sdp" />
 
@@ -339,7 +339,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/_3sdp"
-                                    android:fontFamily="@font/poppins_light"
+                                    android:fontFamily="@font/nexa_light"
                                     android:text="Payment Method"
                                     android:textSize="@dimen/_10sdp" />
 
@@ -364,7 +364,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:fontFamily="@font/poppins_semibold"
+                                    android:fontFamily="@font/nexa_bold"
                                     android:text="Wallet"
                                     android:textSize="@dimen/_10sdp" />
 
@@ -400,7 +400,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
-                            android:fontFamily="@font/poppins_light"
+                            android:fontFamily="@font/nexa_light"
                             android:text="Total Products"
                             android:textSize="@dimen/_11sdp" />
 
@@ -434,7 +434,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="1.8"
-                                android:fontFamily="@font/poppins_light"
+                                android:fontFamily="@font/nexa_light"
                                 android:text="items"
                                 android:textSize="@dimen/_10sdp" />
 
@@ -443,7 +443,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="0.6"
-                                android:fontFamily="@font/poppins_light"
+                                android:fontFamily="@font/nexa_light"
                                 android:text="Quantity"
                                 android:textSize="@dimen/_10sdp" />
 
@@ -452,7 +452,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_weight="0.6"
-                                android:fontFamily="@font/poppins_light"
+                                android:fontFamily="@font/nexa_light"
                                 android:gravity="right"
                                 android:text="Amount"
                                 android:textSize="@dimen/_10sdp" />
@@ -487,7 +487,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_3sdp"
                                 android:layout_weight="1.5"
-                                android:fontFamily="@font/poppins_light"
+                                android:fontFamily="@font/nexa_light"
                                 android:text="Order Amount"
                                 android:textColor="#000000"
                                 android:textSize="@dimen/_11sdp" />
@@ -500,7 +500,7 @@
                                 android:layout_gravity="end"
                                 android:layout_marginLeft="@dimen/_2sdp"
                                 android:layout_weight="0.5"
-                                android:fontFamily="@font/poppins"
+                                android:fontFamily="@font/nexa_regular"
                                 android:gravity="end"
                                 android:text="200.00"
                                 android:textColor="#000000"
@@ -530,7 +530,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_3sdp"
                                 android:layout_weight="1.5"
-                                android:fontFamily="@font/poppins_light"
+                                android:fontFamily="@font/nexa_light"
                                 android:text="VAT"
                                 android:textColor="#000000"
                                 android:textSize="@dimen/_11sdp" />
@@ -543,7 +543,7 @@
                                 android:layout_gravity="end"
                                 android:layout_marginLeft="@dimen/_2sdp"
                                 android:layout_weight="0.5"
-                                android:fontFamily="@font/poppins"
+                                android:fontFamily="@font/nexa_regular"
                                 android:gravity="end"
                                 android:text="200.00"
                                 android:textColor="#000000"
@@ -572,7 +572,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_3sdp"
                                 android:layout_weight="1.5"
-                                android:fontFamily="@font/poppins_light"
+                                android:fontFamily="@font/nexa_light"
                                 android:text="Total Amount"
                                 android:textColor="#000000"
                                 android:textSize="@dimen/_11sdp" />
@@ -583,7 +583,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_2sdp"
-                                android:fontFamily="@font/poppins"
+                                android:fontFamily="@font/nexa_regular"
                                 android:text="200.00"
                                 android:layout_gravity="end"
                                 android:gravity="end"
@@ -608,7 +608,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/curve_bg_login"
-        android:fontFamily="@font/poppins_light"
+        android:fontFamily="@font/nexa_light"
         android:text="Proceed"
         android:textAllCaps="false"
         android:textColor="@android:color/white"

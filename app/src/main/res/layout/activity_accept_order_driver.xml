@@ -41,7 +41,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_weight="2"
-                    android:fontFamily="@font/poppins_light"
+                    android:fontFamily="@font/nexa_light"
                     android:text="Accepted By Driver"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/_12sdp" />
@@ -91,7 +91,7 @@
                     android:id="@+id/address_status_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_light"
+                    android:fontFamily="@font/nexa_light"
                     android:text="Pickup Location"
                     android:textSize="@dimen/_11sdp" />
 
@@ -99,7 +99,7 @@
                     android:id="@+id/address_one_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_light"
+                    android:fontFamily="@font/nexa_light"
                     android:text="Vishnupuri"
                     android:textColor="#000000"
                     android:textSize="@dimen/_11sdp" />
@@ -108,7 +108,7 @@
                     android:id="@+id/address_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_light"
+                    android:fontFamily="@font/nexa_light"
                     android:text="121,Black-E,I-bus stop,Near Anand Super"
                     android:textColor="#000000"
                     android:textSize="@dimen/_11sdp"
@@ -268,7 +268,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/poppins_light"
+                        android:fontFamily="@font/nexa_light"
                         android:gravity="center"
                         android:text="Distributor Distance"
                         android:textSize="@dimen/_9sdp" />
@@ -278,7 +278,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/nexa_bold"
                         android:gravity="center"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_10sdp" />
@@ -303,7 +303,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/poppins_light"
+                        android:fontFamily="@font/nexa_light"
                         android:gravity="center"
                         android:text="Time"
                         android:textSize="@dimen/_9sdp" />
@@ -313,7 +313,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/nexa_bold"
                         android:gravity="center"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_10sdp" />
@@ -338,7 +338,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/curve_bg_login"
-                android:fontFamily="@font/poppins_light"
+                android:fontFamily="@font/nexa_light"
                 android:text="Start job"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"

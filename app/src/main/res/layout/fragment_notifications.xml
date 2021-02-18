@@ -45,7 +45,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:text="Order No - #12501110"
-                    android:fontFamily="@font/poppins_light"
+                    android:fontFamily="@font/nexa_light"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/_15sdp" />
 
@@ -90,7 +90,7 @@
                 android:textSize="@dimen/_12sdp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:fontFamily="@font/poppins_light"/>
+                android:fontFamily="@font/nexa_light"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                 android:textColor="@android:color/black"
                 android:layout_gravity="center"
                 android:textSize="@dimen/_12sdp"
-                android:fontFamily="@font/poppins_semibold"/>
+                android:fontFamily="@font/nexa_bold"/>
 
 
         </LinearLayout>
@@ -125,7 +125,7 @@
                 android:textSize="@dimen/_12sdp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:fontFamily="@font/poppins_light"/>
+                android:fontFamily="@font/nexa_light"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -135,7 +135,7 @@
                 android:textColor="@android:color/black"
                 android:layout_gravity="center"
                 android:textSize="@dimen/_12sdp"
-                android:fontFamily="@font/poppins_semibold"/>
+                android:fontFamily="@font/nexa_bold"/>
 
 
         </LinearLayout>
@@ -165,7 +165,7 @@
                     android:text="Pickup Location"
                     android:textSize="@dimen/_12sdp"
                     android:padding="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins_light"/>
+                    android:fontFamily="@font/nexa_light"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -181,7 +181,7 @@
                     android:textColor="@android:color/black"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins_semibold"/>
+                    android:fontFamily="@font/nexa_bold"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -190,7 +190,7 @@
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@android:color/black"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins_semibold"/>
+                    android:fontFamily="@font/nexa_bold"/>
 
 
             </LinearLayout>
@@ -208,7 +208,7 @@
                     android:text="Drop Location"
                     android:textSize="@dimen/_12sdp"
                     android:padding="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins_light"/>
+                    android:fontFamily="@font/nexa_light"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -224,7 +224,7 @@
                     android:textColor="@android:color/black"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins_semibold"/>
+                    android:fontFamily="@font/nexa_bold"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -233,7 +233,7 @@
                     android:textSize="@dimen/_12sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/poppins_semibold"/>
+                    android:fontFamily="@font/nexa_bold"/>
 
 
             </LinearLayout>
@@ -260,7 +260,7 @@
                         android:textColor="@color/colorBlue"
                         android:layout_gravity="center"
                         android:textSize="@dimen/_20sdp"
-                        android:fontFamily="@font/poppins_semibold"/>
+                        android:fontFamily="@font/nexa_bold"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -270,7 +270,7 @@
                         android:textColor="@android:color/black"
                         android:layout_gravity="center"
                         android:textSize="@dimen/_11sdp"
-                        android:fontFamily="@font/poppins"/>
+                        android:fontFamily="@font/nexa_regular"/>
 
                 </LinearLayout>
 
@@ -282,7 +282,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins_light"/>
+                    android:fontFamily="@font/nexa_light"/>
 
                 <View
                     android:layout_width="@dimen/_70sdp"
@@ -298,7 +298,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:textSize="@dimen/_12sdp"
-                    android:fontFamily="@font/poppins_semibold"/>
+                    android:fontFamily="@font/nexa_bold"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -326,7 +326,7 @@
                         android:layout_gravity="center"
                         android:textSize="@dimen/_15sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
-                        android:fontFamily="@font/poppins_semibold"/>
+                        android:fontFamily="@font/nexa_bold"/>
 
                 </LinearLayout>
 
@@ -352,7 +352,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/reject_product_btn"
                 android:textAllCaps="false"
-                android:fontFamily="@font/poppins"
+                android:fontFamily="@font/nexa_regular"
                 android:padding="@dimen/_2sdp"
                 android:text="Reject"
                 android:layout_marginRight="@dimen/_5sdp"
@@ -365,7 +365,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/order_accept_btn"
                 android:textAllCaps="false"
-                android:fontFamily="@font/poppins"
+                android:fontFamily="@font/nexa_regular"
                 android:padding="@dimen/_2sdp"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:text="Accept"

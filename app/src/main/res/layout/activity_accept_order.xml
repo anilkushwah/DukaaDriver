@@ -81,14 +81,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Distributor Distance"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/nexa_bold"
                 android:textColor="#FF67686D"
                 android:textSize="@dimen/_9sdp" />
 
             <TextView
                 android:id="@+id/distributor_distance_tv"
                 android:layout_width="match_parent"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/nexa_bold"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:gravity="center"
@@ -110,14 +110,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Retailer Distance"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/nexa_bold"
                 android:textColor="#FF67686D"
                 android:textSize="@dimen/_9sdp" />
 
             <TextView
                 android:id="@+id/retailer_distance_tv"
                 android:layout_width="match_parent"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/nexa_bold"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:gravity="center"
@@ -155,7 +155,7 @@
                         android:textColor="#FF67686D"
                         android:text="Pickup Location"
                         android:textSize="@dimen/_9sdp"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/nexa_bold"
                         android:layout_alignParentLeft="true"/>
 
                     <ImageView
@@ -177,7 +177,7 @@
                     android:visibility="gone"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_width="match_parent"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/nexa_bold"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_9sdp"
                     android:text="Walmart-Bypass"
@@ -186,7 +186,7 @@
                 <TextView
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_width="match_parent"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/nexa_bold"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_9sdp"
                     android:id="@+id/distributore_address_tv"
@@ -201,7 +201,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/nexa_bold"
                         android:textColor="#FF67686D"
                         android:text="Drop Location"
                         android:textSize="@dimen/_9sdp"
@@ -225,7 +225,7 @@
                 <TextView
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_width="match_parent"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/nexa_bold"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_9sdp"
                     android:id="@+id/drop_address_TV"
@@ -259,7 +259,7 @@
                         android:id="@+id/time_left"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/nexa_bold"
                         android:layout_centerInParent="true"
                         android:gravity="center"
                         android:text="25"
@@ -270,7 +270,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/nexa_bold"
                     android:textColor="#FF67686D"
                     android:text="Delivery Fee"
                     android:gravity="center"
@@ -289,7 +289,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
                     android:text="5 Items"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/nexa_bold"
                     android:textSize="@dimen/_11sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:gravity="center"/>
@@ -304,7 +304,7 @@
                     android:paddingBottom="@dimen/_10sdp"
                     android:paddingLeft="@dimen/_20sdp"
                     android:background="@drawable/total_amount"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/nexa_bold"
                     android:gravity="center"
                     android:id="@+id/total_amouny_TV"
                     android:layout_marginLeft="@dimen/_2sdp"
@@ -354,7 +354,7 @@
         android:background="@drawable/reject_btn"
         android:text="Reject"
         android:textSize="@dimen/_12sdp"
-        android:fontFamily="@font/poppins_semibold"
+        android:fontFamily="@font/nexa_bold"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"

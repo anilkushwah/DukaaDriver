@@ -45,7 +45,7 @@
                         android:id="@+id/customer_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gilroy_medium"
+                        android:fontFamily="@font/nexa_regular"
                         android:padding="@dimen/_3sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10sdp"></TextView>
@@ -58,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2sdp"
                         android:layout_marginRight="5dp"
-                        android:fontFamily="@font/gilroy_medium"
+                        android:fontFamily="@font/nexa_regular"
                         android:padding="@dimen/_3sdp"
                         android:text="English,Ashok Kumar"
                         android:textSize="@dimen/_10sdp"></TextView>
@@ -75,7 +75,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:fontFamily="@font/gilroy_medium"
+                            android:fontFamily="@font/nexa_regular"
                             android:text="Order ID"
                             android:textSize="@dimen/_10sdp"></TextView>
 
@@ -84,7 +84,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:fontFamily="@font/gilroy_medium"
+                            android:fontFamily="@font/nexa_regular"
                             android:text="#876 "
                             android:textColor="@color/black"
                             android:textSize="@dimen/_10sdp"></TextView>
