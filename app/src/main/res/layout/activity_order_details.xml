@@ -43,7 +43,6 @@
                 android:textSize="@dimen/_13sdp" />
 
             <TextView
-                android:id="@+id/toolbar_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -73,7 +72,6 @@
 
 
     <LinearLayout
-        android:id="@+id/lay_out"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/proceed_btn"
@@ -377,7 +375,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/line_gape1"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_12sdp"
                     android:layout_below="@id/toolbar_order_items"
@@ -537,7 +534,6 @@
 
 
                             <TextView
-                                android:id="@+id/tv_Vatprice_per_item"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
@@ -579,7 +575,6 @@
 
 
                             <TextView
-                                android:id="@+id/tv_totalprice_item"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_2sdp"

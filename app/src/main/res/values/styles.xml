@@ -39,8 +39,4 @@
         <item name="android:colorForeground">#3F51B5</item>
     </style>
 
-    <style name="progressCircularDeterminateProgressBar">
-        <item name="android:indeterminateOnly">false</item>
-        <item name="android:progressDrawable">@drawable/progress_bar</item>
-    </style>
 </resources>

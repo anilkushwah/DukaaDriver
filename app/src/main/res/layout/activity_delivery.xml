@@ -42,7 +42,6 @@
 
 
     <ScrollView
-        android:id="@+id/scrollbar_one"
         android:layout_width="match_parent"
         android:background="@color/colorBody"
         android:layout_height="wrap_content"
@@ -83,7 +82,6 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/store_image"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:src="@drawable/individual_driver" />
@@ -140,7 +138,6 @@
 
 
                 <TextView
-                    android:id="@+id/order_Id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/order_pick"
@@ -162,7 +159,6 @@
 
 
                 <TextView
-                    android:id="@+id/order_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/order_time"
@@ -355,7 +351,6 @@
 
 
                 <TextView
-                    android:id="@+id/tv_vat_per_item"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -391,7 +386,6 @@
                     android:textSize="@dimen/_9sdp" />
 
                 <TextView
-                    android:id="@+id/tv_total_price"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity=""

@@ -75,7 +75,6 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <EditText
-                    android:id="@+id/modelNumber_edt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
@@ -138,7 +137,6 @@
 
                 <EditText
 
-                    android:id="@+id/vehicle_number_edt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
@@ -158,7 +156,6 @@
 
                 <EditText
                     android:padding="@dimen/_10sdp"
-                    android:id="@+id/vehicle_registernumber_edt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
@@ -177,7 +174,6 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <LinearLayout
-                    android:id="@+id/upload_insurance"
                     android:layout_marginTop="10dp"
                     android:layout_width="150dp"
                     android:layout_height="50dp"

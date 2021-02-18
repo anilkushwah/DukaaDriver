@@ -20,7 +20,6 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/mainly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -98,7 +97,6 @@
             </LinearLayout>
 
             <com.transferwise.sequencelayout.SequenceLayout
-                android:id="@+id/progress_state"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_180sdp"
                 android:layout_marginTop="@dimen/_10sdp"
