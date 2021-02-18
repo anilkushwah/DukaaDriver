@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/RL_Detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp">
+
+        <LinearLayout
+            android:id="@+id/destination_image"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/backgroundone"
+            android:padding="@dimen/_7sdp">
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/individual_driver" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/destination_image"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_5sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Customer Name"
+                android:id="@+id/driver_name_tv"
+                android:textSize="@dimen/_9sdp" />
+
+
+            <TextView
+
+                android:id="@+id/driver_number_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:text="1234567890"
+                android:textColor="#000000"
+                android:textSize="@dimen/_8sdp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/order_id_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:text="Order ID- #123456889"
+            android:textColor="@color/black" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/status_RL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RL_Detail">
+
+        <TextView
+            android:id="@+id/order_status_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:text="Pending"
+            android:textColor="@color/colorOrange" />
+        <TextView
+            android:id="@+id/order_assign_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:text="Assign Driver"
+            android:textColor="@color/colorOrange" />
+        <TextView
+            android:id="@+id/view_order_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:visibility="gone"
+            android:drawableRight="@drawable/ic_arrow"
+            android:drawablePadding="@dimen/_10sdp"
+            android:drawableTint="@color/colorPrimaryDark_old"
+            android:text="View Order"
+            android:textColor="@color/colorPrimaryDark_old"
+            android:textSize="@dimen/_12sdp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_below="@+id/status_RL"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEEEEE" />
+
+</RelativeLayout>

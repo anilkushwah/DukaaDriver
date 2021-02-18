@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.dollop.dukaadriver.R;
@@ -18,7 +19,6 @@ import com.dollop.dukaadriver.R;
 public class AddnewVehicleFragment extends Fragment {
 
 
-    ImageView back_to_chngeV;
     public AddnewVehicleFragment() {
         // Required empty public constructor
     }
@@ -29,15 +29,10 @@ public class AddnewVehicleFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=  inflater.inflate(R.layout.fragment_addnew_vehicle, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        back_to_chngeV = view.findViewById(R.id.back_to_chngeV);
 
-        back_to_chngeV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
         return view;
     }

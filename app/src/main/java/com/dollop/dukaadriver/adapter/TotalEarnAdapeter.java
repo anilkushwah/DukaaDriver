@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dollop.dukaadriver.R;
 import com.dollop.dukaadriver.model.TotalEarnModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TotalEarnAdapeter extends RecyclerView.Adapter<TotalEarnAdapeter.MyViewHolder> {
     Context context;
@@ -26,7 +29,7 @@ public class TotalEarnAdapeter extends RecyclerView.Adapter<TotalEarnAdapeter.My
     @NonNull
     @Override
     public TotalEarnAdapeter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.totalearn,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.totalearn, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -34,11 +37,25 @@ public class TotalEarnAdapeter extends RecyclerView.Adapter<TotalEarnAdapeter.My
     public void onBindViewHolder(@NonNull TotalEarnAdapeter.MyViewHolder holder, int position) {
 
         TotalEarnModel totalEarnModel = totalEarnModels.get(position);
-        holder.orderId.setText(totalEarnModel.OrderId);
-        holder.PaymetnMethod.setText(totalEarnModel.PaymentMehtod);
-        holder.Time.setText(totalEarnModel.Time);
-        holder.Payment.setText("₹ "+totalEarnModel.Payment);
-        holder.Location.setText(totalEarnModel.Location);
+        holder.orderId.setText("Order_id: #000" + totalEarnModel.getId());
+        holder.PaymetnMethod.setText(totalEarnModel.getTransactionMode());
+
+        holder.delivery_charge_tv.setText("Delivery Charges: " + context.getString(R.string.currency_sign) + totalEarnModel.getDeliveryCharge());
+        String date = totalEarnModel.getCreateDate();
+       // SimpleDateFormat spf = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a");
+        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date newDate = null;
+        try {
+            newDate = spf.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        spf = new SimpleDateFormat("dd MMM yyyy");
+        String newDateString = spf.format(newDate);
+        System.out.println(newDateString);
+
+        holder.Time.setText("Order Date : " +newDateString);
+
     }
 
     @Override
@@ -47,7 +64,8 @@ public class TotalEarnAdapeter extends RecyclerView.Adapter<TotalEarnAdapeter.My
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView orderId,PaymetnMethod,Location,Time,Payment,ViewDetails;
+        TextView orderId, PaymetnMethod, Time, ViewDetails;
+        TextView delivery_charge_tv;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,8 +74,8 @@ public class TotalEarnAdapeter extends RecyclerView.Adapter<TotalEarnAdapeter.My
             orderId = itemView.findViewById(R.id.earnorderId_tv);
             PaymetnMethod = itemView.findViewById(R.id.earnpaymethod_tv);
             Time = itemView.findViewById(R.id.earnTime_tv);
-            Payment = itemView.findViewById(R.id.earnpaymnet_tv);
-            Location = itemView.findViewById(R.id.earnlocation_tv);
+            delivery_charge_tv = itemView.findViewById(R.id.delivery_charge_tv);
+
             ViewDetails = itemView.findViewById(R.id.earnViewdetails_tv);
         }
     }

@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "489262203669",
+    "firebase_url": "https://dukkadriver.firebaseio.com",
+    "project_id": "dukkadriver",
+    "storage_bucket": "dukkadriver.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489262203669:android:97e37fa9f04cabcd8a9f1c",
+        "android_client_info": {
+          "package_name": "com.dollop.dukaadriver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "489262203669-n7ndumvgip4vn62p21qutns7gdmnerlv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dollop.dukaadriver",
+            "certificate_hash": "ad8af9901011c6b06a0ea073de291fae2c05bd94"
+          }
+        },
+        {
+          "client_id": "489262203669-dne43g41p8n7g6tsalsvltm4dnjicdhg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dollop.dukaadriver",
+            "certificate_hash": "beb686e54f002cd37424f5d099ed2c164a07ce4e"
+          }
+        },
+        {
+          "client_id": "489262203669-hoom1f65e729606nupo9rh1rgdbc4nb9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9l7tak8lZrqatDJjb13c3Y5t1e40zZHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "489262203669-hoom1f65e729606nupo9rh1rgdbc4nb9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

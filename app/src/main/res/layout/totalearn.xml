@@ -1,99 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="#ffffff"
-    android:padding="@dimen/_10sdp"
-    android:layout_height="wrap_content">
+    android:orientation="vertical"
+    android:padding="@dimen/_5sdp">
+
+
+    <TextView
+        android:id="@+id/earnorderId_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order ID: #21457826"
+        android:textColor="#000000"
+        android:textSize="@dimen/_12sdp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/earnorderId_tv"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:drawableLeft="@drawable/payment_type"
+        android:drawablePadding="@dimen/_10sdp"
+        android:text="Translation Type"
+        android:textSize="@dimen/_10sdp" />
+
+
+    <TextView
+        android:id="@+id/earnpaymethod_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/earnorderId_tv"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginRight="20dp"
+        android:drawablePadding="10dp"
+        android:text="Cash"
+        android:textColor="@color/colorGreen"
+        android:textSize="@dimen/_10sdp" />
+
+    <TextView
+        android:id="@+id/delivery_charge_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/earnpaymethod_tv"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Delivery Charge"
+        android:textSize="@dimen/_10sdp" />
 
     <RelativeLayout
+        android:id="@+id/time_RL"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        >
-
-        <TextView
-            android:id="@+id/earnorderId_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/_16sdp"
-            android:layout_alignParentLeft="true"
-            android:text="Order Id: #21457826"/>
-
-        <TextView
-            android:id="@+id/earnpaymethod_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:layout_marginRight="20dp"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/_16sdp"
-            android:layout_alignParentRight="true"
-            android:text="Cash"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        >
-
-
-        <TextView
-            android:id="@+id/earnlocation_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/grey_2"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/_13sdp"
-            android:layout_alignParentLeft="true"
-            android:text="Vishnupuri"/>
-
-        <TextView
-            android:id="@+id/earnpaymnet_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorGreen"
-            android:layout_marginRight="20dp"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/_20sdp"
-            android:layout_alignParentRight="true"
-            android:text="₹ 200.00"/>
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        >
-
+        android:layout_below="@+id/delivery_charge_tv"
+        android:layout_marginTop="@dimen/_5sdp">
 
         <TextView
             android:id="@+id/earnTime_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/grey_2"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/_13sdp"
             android:layout_alignParentLeft="true"
-            android:text="Today 10:20 AM"/>
+            android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/_10sdp"
+            android:drawableLeft="@drawable/ic_clock_blue"
+            android:text="Today 10:20 AM"
+            android:textColor="@color/grey_2"
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/earnViewdetails_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryDark_old"
-            android:layout_marginRight="20dp"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/_19sdp"
             android:layout_alignParentRight="true"
-            android:text="View Details"/>
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:text="View Details"
+            android:textColor="@color/colorPrimaryDark_old"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone" />
     </RelativeLayout>
+
     <View
-        android:layout_marginTop="@dimen/_1sdp"
-        android:background="#EAEAEA"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"/>
+        android:layout_height="@dimen/_1sdp"
+        android:layout_below="@+id/time_RL"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:background="#EAEAEA" />
 
 
-</LinearLayout>
+</RelativeLayout>

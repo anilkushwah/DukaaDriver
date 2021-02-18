@@ -8,6 +8,7 @@
     <color name="colorRed">#ec1515</color>
     <color name="subhading_black">#191919</color>
     <color name="colorPurple">#3700B3</color>
+    <color name="yellow">#fed231</color>
 
 
 
@@ -31,4 +32,5 @@
     <color name="color_primaty_old">#6200EE</color>
     <color name="colorPrimaryDark_old">#2196f3</color>
     <color name="colorAccent_old">#6200EE</color>
+    <color name="darkblue">#FF191C32</color>
 </resources>

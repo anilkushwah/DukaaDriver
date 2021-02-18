@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,7 @@ public class NotificationsFragment extends Fragment implements View.OnClickListe
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
         btn_accpet_order = root.findViewById(R.id.btn_accpet_order);
 

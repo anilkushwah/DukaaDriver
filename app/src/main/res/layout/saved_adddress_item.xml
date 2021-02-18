@@ -1,63 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
     <LinearLayout
-        android:padding="@dimen/_5sdp"
-        android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_marginRight="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:background="@drawable/list_light_blue"
+        android:id="@+id/parent_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@drawable/seletec_user_type"
         android:orientation="horizontal"
-        android:weightSum="1"
-        >
+        android:padding="@dimen/_3sdp"
+        android:weightSum="1">
 
         <RadioButton
-            android:layout_gravity="center"
-            android:gravity="center"
             android:id="@+id/radio_saved"
             android:layout_width="0dp"
-            android:layout_weight="0.1"
             android:layout_height="wrap_content"
-            />
+            android:layout_gravity="center"
+            android:layout_weight="0.1"
+            android:gravity="center"
+            android:visibility="gone" />
+
         <LinearLayout
-            android:padding="@dimen/_5sdp"
+            android:id="@+id/click_are_LL"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_2sdp"
             android:layout_weight="0.9"
-            android:layout_height="wrap_content"
             android:orientation="vertical"
-            >
+            android:padding="@dimen/_10sdp">
+
+
             <TextView
-                android:padding="@dimen/_2sdp"
-                android:textSize="@dimen/_12sdp"
-                android:id="@+id/address_name"
-                android:textColor="@color/colorPrimary"
+                android:id="@+id/vehicle_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ford Pickup"/>
+                android:padding="@dimen/_2sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp" />
 
 
             <TextView
-                android:padding="@dimen/_2sdp"
-                android:textSize="@dimen/_10sdp"
-                android:id="@+id/full_address"
+                android:id="@+id/vehicle_type_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:lineSpacingExtra="@dimen/_3sdp"
+                android:padding="@dimen/_2sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp" />
+
+            <TextView
+                android:id="@+id/vehicle_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="h jdksl jdjlkjj fls"/>
+                android:lineSpacingExtra="@dimen/_3sdp"
+                android:padding="@dimen/_2sdp"
+                android:textColor="@color/colorGreen"
+                android:textSize="@dimen/_10sdp" />
+
+
 
         </LinearLayout>
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/verify_tv"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/verify_icon"
+            android:visibility="gone"
 
+            />
+
+        <ImageView
+            android:id="@+id/trash_vehicle"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:src="@drawable/trash"
+
+            />
+    </LinearLayout>
 
 
 </RelativeLayout>

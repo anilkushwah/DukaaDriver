@@ -4,13 +4,13 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">Home</string>
     <string name="title_orders">Orders</string>
+    <string name="title_jobs">Jobs</string>
     <string name="title_earning">Earning</string>
     <string name="title_profile">Profile</string>
     <string name="title_accept">Accepted</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string-array name="month">
-        <item>month</item>
-    </string-array>
+    <string name="title_activity_maps">Map</string>
+    <string name="default_notification_channel_id">10010010</string>
+    <string name="currency_sign">KSh</string>
 </resources>

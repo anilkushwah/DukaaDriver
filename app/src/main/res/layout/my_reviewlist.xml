@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/common_background"
+    android:layout_marginTop="@dimen/_8sdp"
+    android:padding="@dimen/_5sdp">
+
+    <RelativeLayout
+        android:id="@+id/user_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:padding="@dimen/_1sdp"
+            android:visibility="gone"
+            android:id="@+id/user_profile_pic_riv"
+            android:src="@drawable/individual_driver"
+            app:riv_corner_radius="@dimen/_5sdp" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/user_profile_pic_riv"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_5sdp">
+
+            <TextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alex Carey"
+                android:textColor="#000000"
+                android:id="@+id/user_name_tv"
+                android:textSize="@dimen/_10sdp" />
+
+
+            <TextView
+                android:id="@+id/userorder_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="Order No - #12501160"
+                android:textColor="#000000"
+                android:textSize="@dimen/_10sdp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <RatingBar
+        android:layout_marginLeft="@dimen/_4sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:id="@+id/my_rating_ratebar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_info"
+        android:max="5"
+        android:numStars="5"
+        android:rating="3"
+        android:scaleX=".8"
+        android:scaleY=".8"
+        android:stepSize=".5"
+        android:transformPivotY="0dp" />
+
+
+    <TextView
+        android:layout_marginTop="@dimen/_8sdp"
+        android:padding="@dimen/_8sdp"
+        android:id="@+id/rating_by_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_info"
+        android:layout_toRightOf="@+id/my_rating_ratebar"
+        android:textSize="@dimen/_12sdp"
+        android:text="3.0 Rating" />
+
+
+    <TextView
+        android:paddingHorizontal="@dimen/_8sdp"
+        android:paddingVertical="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_minus14sdp"
+        android:id="@+id/review_by_user_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_rating_ratebar"
+        android:textSize="@dimen/_9sdp" />
+
+
+    <TextView
+        android:paddingBottom="@dimen/_4sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/review_by_user_tv"
+        android:id="@+id/review_time_tv"
+        android:text="25 Jun 2020 | 10:45 AM"
+        android:gravity="end"
+        android:layout_marginRight="@dimen/_5sdp"/>
+
+
+
+
+</RelativeLayout>

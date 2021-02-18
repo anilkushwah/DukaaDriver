@@ -12,6 +12,12 @@
         android:title="@string/title_orders" />
 
     <item
+        android:iconTint="@color/black"
+        android:id="@+id/navigation_jobs"
+        android:icon="@drawable/company_jobs"
+        android:title="@string/title_jobs" />
+
+    <item
         android:id="@+id/navigation_earning"
         android:icon="@drawable/ic_earning"
         android:title="@string/title_earning" />

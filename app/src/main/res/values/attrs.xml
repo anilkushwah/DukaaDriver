@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TextView">
+        <attr name="typeface" format="enum">
+            <enum name="fontRegular" value="1" />
+            <enum name="fontMedium" value="2" />
+            <enum name="fontItalic" value="3" />
+        </attr>
+    </declare-styleable>
+</resources>

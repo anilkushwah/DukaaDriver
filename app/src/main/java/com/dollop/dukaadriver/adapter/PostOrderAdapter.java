@@ -1,6 +1,8 @@
 package com.dollop.dukaadriver.adapter;
 
 import android.content.Context;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,50 +12,73 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dollop.dukaadriver.R;
+import com.dollop.dukaadriver.model.OrderDTO;
 import com.dollop.dukaadriver.model.PostorderModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
+import static android.icu.lang.UProperty.INT_START;
 
 public class PostOrderAdapter extends RecyclerView.Adapter<PostOrderAdapter.MyViewHolder> {
-    public PostOrderAdapter(Context context, ArrayList<PostorderModel> postorderModels) {
-        this.context = context;
-        this.postorderModels = postorderModels;
-    }
 
+    ArrayList<OrderDTO> mOrderDTOArrayListPost;
     Context context;
-    ArrayList<PostorderModel> postorderModels = new ArrayList<>();
+
+
+    public PostOrderAdapter(Context context, ArrayList<OrderDTO> mList) {
+        this.context = context;
+        this.mOrderDTOArrayListPost = mList;
+    }
 
 
     @NonNull
     @Override
     public PostOrderAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.post_order,parent,false);
-
+        View view = LayoutInflater.from(context).inflate(R.layout.post_order, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PostOrderAdapter.MyViewHolder holder, int position) {
 
-        PostorderModel postorderModel = postorderModels.get(position);
+        OrderDTO postorderModel = mOrderDTOArrayListPost.get(position);
 
-        holder.Pickuplocation.setText(postorderModel.PickupLocation);
-        holder.Droplocation.setText(postorderModel.DropLocation);
-        holder.OrderId.setText("OrderId : "+postorderModel.OrderId);
-        holder.PaymentMethod.setText(postorderModel.PaymentMwthod);
-        holder.Price.setText("₹ "+postorderModel.Price);
-        holder.Time.setText(postorderModel.Time);
+        holder.Pickuplocation.setText(postorderModel.getDistributorAddress());
+        holder.Droplocation.setText(postorderModel.getRetailerAddress());
+
+
+        holder.OrderId.setText("OrderId : #000" + postorderModel.getId() + "    Name:-" + postorderModel.getRetailerName());
+        holder.PaymentMethod.setText(postorderModel.getTransactionMode());
+        holder.Price.setText(context.getString(R.string.currency_sign) + postorderModel.getDeliveryCharge());
+
+        String date = postorderModel.getCreateDate();
+    /*    SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date newDate = null;
+        try {
+            newDate = spf.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        spf = new SimpleDateFormat("dd MMM yyyy");
+        String newDateString = spf.format(newDate);
+        System.out.println(newDateString);
+*/
+        holder.Time.setText("Order Date : " + date);
+
     }
 
     @Override
     public int getItemCount() {
-        return postorderModels.size();
+        return mOrderDTOArrayListPost.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView Pickuplocation,Droplocation,Price,PaymentMethod,Time,OrderId;
+        TextView Pickuplocation, Droplocation, Price, PaymentMethod, Time, OrderId;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,7 +89,6 @@ public class PostOrderAdapter extends RecyclerView.Adapter<PostOrderAdapter.MyVi
             PaymentMethod = itemView.findViewById(R.id.postpaymethod_tv);
             Time = itemView.findViewById(R.id.postorderTime_tv);
             OrderId = itemView.findViewById(R.id.postorderId_tv);
-
 
 
         }

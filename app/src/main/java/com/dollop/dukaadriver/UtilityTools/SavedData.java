@@ -6,25 +6,26 @@ import android.preference.PreferenceManager;
 
 public class SavedData {
 
-
-
-    private static final String adminlogin = "adminlogin";
-    private static final String emp_name = "empname";
-    private static final String emp_image = "empimage";
-    private static final String active_user = "active_admin";
-
-
+    private static final String firebaseToken = "firebaseToken";
     private static SharedPreferences prefs;
-    private static SharedPreferences.Editor editor;
+    private static final String LatitudeService = "latitudeService";
+    private static final String LongitudeService = "LongitudeService";
+    private static final String OrderId = "OrderId";
+    private static final String CustomerMobile = "customerMobile";
+    private static final String VehicalName = "vehicalName";
+    private static final String VehicalModal = "vehicalModal";
+    private static final String CustomerName = "customerName";
+    private static final String CustomerAddress = "customerAddress";
+    private static final String CustomerPic = "customerPic";
+    private static final String CustomerLat = "customerLat";
+    private static final String CustomerLong = "customerLong";
+
 
 
 
 
 
     /*Order ID 146381161*/
-
-
-
 
 
     public static SharedPreferences getInstance() {
@@ -38,51 +39,129 @@ public class SavedData {
 
 
 
-
-    public static String getActive_user() {
-        return getInstance().getString(active_user, "");
+    public static String getFirebaseToken() {
+        return getInstance().getString(firebaseToken, "");
     }
 
-    public static void saveactiveUser(String startKm) {
+    public static void saveFirebaseToken(String startKm) {
         SharedPreferences.Editor editor = getInstance().edit();
-        editor.putString(active_user, startKm);
-        editor.commit();
+        editor.putString(firebaseToken, startKm);
         editor.apply();
     }
 
-    public static String getEmp_name() {
-        return getInstance().getString(emp_name, "0");
+
+    public static String getLatitudeFromService() {
+        return getInstance().getString(LatitudeService, "");
     }
 
-    public static String getEmp_image() {
-        return getInstance().getString(emp_image, "0");
-    }
-
-    public static void saveimage(String startKm) {
+    public static void saveLatitudeFromService(String latitude) {
         SharedPreferences.Editor editor = getInstance().edit();
-        editor.putString(emp_image, startKm);
-        editor.commit();
+        editor.putString(LatitudeService, latitude);
         editor.apply();
     }
 
-    public static String getAdminlogin() {
-        return getInstance().getString(adminlogin, "0");
+
+    public static String getLongitudeFromService() {
+        return getInstance().getString(LongitudeService, "");
     }
 
-
-    public static void saveempname(String startKm) {
+    public static void saveLongitudeFromService(String longitude) {
         SharedPreferences.Editor editor = getInstance().edit();
-        editor.putString(emp_name, startKm);
-        editor.commit();
+        editor.putString(LongitudeService, longitude);
         editor.apply();
     }
 
-    public static void saveadminlogin(String startKm) {
+    public static String getOrderId() {
+        return getInstance().getString(OrderId, "");
+    }
+
+    public static void saveOrderId(String orderId) {
         SharedPreferences.Editor editor = getInstance().edit();
-        editor.putString(adminlogin, startKm);
-        editor.commit();
+        editor.putString(OrderId, orderId);
         editor.apply();
     }
 
+    public static String getCustomerMobile() {
+        return getInstance().getString(CustomerMobile, "");
+    }
+
+    public static void saveCustomerMobile(String customerMobile) {
+        SharedPreferences.Editor editor = getInstance().edit();
+        editor.putString(CustomerMobile, customerMobile);
+        editor.apply();
+    }
+
+    public static String getVehicalName() {
+        return getInstance().getString(VehicalName, "");
+    }
+
+    public static void saveVehicalName(String vehicalName) {
+        SharedPreferences.Editor editor = getInstance().edit();
+        editor.putString(VehicalName, vehicalName);
+        editor.apply();
+    }
+
+    public static String getVehicalModal() {
+        return getInstance().getString(VehicalModal, "");
+    }
+
+    public static void saveVehicalModal(String vehicalModal) {
+        SharedPreferences.Editor editor = getInstance().edit();
+        editor.putString(VehicalModal, vehicalModal);
+        editor.apply();
+    }
+
+    public static String getCustomerName() {
+        return getInstance().getString(CustomerName, "");
+    }
+
+    public static void saveCustomerName(String customerName) {
+        SharedPreferences.Editor editor = getInstance().edit();
+        editor.putString(CustomerName, customerName);
+        editor.apply();
+    }
+
+    public static String getCustomerAddress() {
+        return getInstance().getString(CustomerAddress, "");
+    }
+
+    public static void saveCustomerAddress(String customerAddress) {
+        SharedPreferences.Editor editor = getInstance().edit();
+        editor.putString(customerAddress, customerAddress);
+        editor.apply();
+    }
+
+
+    public static String getCustomerPic() {
+        return getInstance().getString(CustomerPic, "");
+    }
+
+    public static void saveCustomerPic(String customerPic) {
+        SharedPreferences.Editor editor = getInstance().edit();
+        editor.putString(customerPic, customerPic);
+        editor.apply();
+    }
+
+
+    public static String getCustomerLat() {
+        return getInstance().getString(CustomerLat, "");
+    }
+
+    public static void saveCustomerLat(String customerLat) {
+        SharedPreferences.Editor editor = getInstance().edit();
+        editor.putString(customerLat, customerLat);
+        editor.apply();
+    }
+
+
+    public static String getCustomerLong() {
+        return getInstance().getString(CustomerLong, "");
+    }
+
+    public static void saveCustomerLong(String customerLong) {
+        SharedPreferences.Editor editor = getInstance().edit();
+        editor.putString(customerLong, customerLong);
+        editor.apply();
+    }
 
 }

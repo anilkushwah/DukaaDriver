@@ -17,7 +17,7 @@ import androidx.core.app.ActivityCompat;
 import static androidx.core.content.PermissionChecker.checkSelfPermission;
 
 /**
- * Created by Sohel on 10/4/2016.
+ * Created by Anil on 22/10/2020.
  */
 
 public class UserAccount {
@@ -87,11 +87,11 @@ public class UserAccount {
 
     public static boolean isPhoneNumberLength(EditText tv) {
         //add your own logic
-        if (tv.getText().toString().length() == 10) {
+        if (tv.getText().toString().length() == 9) {
             return true;
         } else {
             EditTextPointer = tv;
-            errorMessage = "Enter 10 digits number";
+            errorMessage = "Enter 9 digits number";
             return false;
         }
     }
@@ -111,9 +111,11 @@ public class UserAccount {
     }
 
     public static boolean isEmpty(EditText... arg) {
+
         for (int i = 0; i < arg.length; i++) {
             if (arg[i].getText().length() <= 0) {
                 EditTextPointer = arg[i];
+                errorMessage = "Feild can't be empty";
                 EditTextPointer.requestFocus();
                 return false;
             }

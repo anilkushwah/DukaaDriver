@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlue"
+    android:orientation="vertical"
+    android:weightSum="2"
+    tools:context=".fragment.Welcome_oneFragment">
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/final_logo" />
+
+    <TextView
+        android:textSize="@dimen/_16sdp"
+        android:textColor="@color/white"
+        android:text="Wlcome TO Dukka"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_logo"
+        android:layout_marginTop="@dimen/_10sdp" />
+
+
+    <ImageView
+        android:id="@+id/welcome_image"
+        android:background="@drawable/welcome_image"
+        android:layout_below="@+id/title_tv"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="@dimen/_150sdp"/>
+
+    <TextView
+        android:textSize="@dimen/_12sdp"
+        android:textColor="@color/white"
+        android:text="With Dukka you track \n delivery of your orders all \n the way to your shop"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/welcome_image"
+        android:layout_marginTop="@dimen/_10sdp" />
+
+
+</RelativeLayout>

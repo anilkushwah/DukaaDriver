@@ -50,7 +50,7 @@ public class MarshMallowPermission {
         }
     }
 
-    public boolean checkPermissionForCamera(){
+    public  boolean checkPermissionForCamera(){
         int result = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
         if (result == PackageManager.PERMISSION_GRANTED){
             return true;
@@ -82,7 +82,7 @@ public class MarshMallowPermission {
         }
     }
 
-    public void requestPermissionForCamera(){
+    public  void requestPermissionForCamera(){
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)){
 //            Toast.makeText(activity, "Camera permission needed. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
         } else {

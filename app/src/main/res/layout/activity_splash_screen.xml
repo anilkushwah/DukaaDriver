@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBlue"
+    tools:context=".activity.SplashScreenActivity">
+
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_85sdp"
+        android:src="@drawable/final_logo"/>
+
+
+
+  <!--  <RelativeLayout
+        android:id="@+id/texts"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_toLeftOf="@+id/book"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_baseline_fiber_manual_record_24"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+            />
+
+
+        <TextView
+            android:id="@+id/book"
+            android:layout_marginRight="@dimen/_50sdp"
+            android:layout_toLeftOf="@+id/cloth"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:text="Books"/>
+
+
+        <ImageView
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+            android:src="@drawable/ic_baseline_fiber_manual_record_24"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@id/book"/>
+
+        <TextView
+            android:id="@+id/cloth"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:text="Clothing"/>
+
+
+
+
+        <ImageView
+            android:layout_width="@dimen/_10sdp"
+            android:layout_toRightOf="@id/book"
+            android:layout_height="@dimen/_10sdp"
+            android:src="@drawable/ic_baseline_fiber_manual_record_24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_120sdp"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/audiobook"
+            android:layout_toRightOf="@id/book"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_135sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:text="Audio Books"/>
+
+
+
+
+
+    </RelativeLayout>-->
+
+
+
+</RelativeLayout>

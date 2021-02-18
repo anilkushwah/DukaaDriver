@@ -2,6 +2,7 @@ package com.dollop.dukaadriver.UtilityTools;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,7 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
+
+import com.dollop.dukaadriver.activity.LoginActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -148,5 +152,25 @@ public class Utility {
             e.printStackTrace();
         }
         return timeInMilliseconds;
+    }
+
+
+    public static void netConnect(Context mContext){
+        AlertDialog dialog = new AlertDialog.Builder(mContext)
+               // .setTitle("Connection Failed")
+                .setMessage("Please Check Your Internet Connection")
+                .setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Code for try again
+                    }
+                })
+                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).create();
+        dialog.show();
     }
 }

@@ -19,23 +19,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.7"
+            android:layout_margin="@dimen/_3sdp"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:id="@+id/lv_imageShow"
-                android:background="@drawable/wishlist_prdct_blue_bck">
+
 
                 <ImageView
                     android:id="@+id/iv_reviewEditProductImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_30sdp"
+                    android:background="@drawable/wishlist_prdct_blue_bck"        android:layout_height="@dimen/_30sdp"
                     android:padding="@dimen/_5sdp"
-                    android:src="@drawable/backeryy" />
+                    android:src="@drawable/individual_driver" />
 
-            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Fresh Onions"
-                    android:textSize="@dimen/_11sdp"
+                    android:textSize="@dimen/_10sdp"
                     android:layout_gravity="center"
                     android:id="@+id/tv_itemsName"
                     android:fontFamily="@font/poppins_semibold"/>
@@ -60,7 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="(2 kg)"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_8sdp"
                     android:layout_gravity="center"
                     android:id="@+id/tv_itemQuantity"
                     android:fontFamily="@font/poppins_light"/>
@@ -69,72 +65,37 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.6"
+            android:text="2 X 40"
             android:layout_marginLeft="@dimen/_5sdp"
+            android:padding="@dimen/_3sdp"
             android:layout_marginRight="@dimen/_5sdp"
+            android:background="@drawable/ic_quatity_items"
+            android:textSize="@dimen/_8sdp"
+            android:layout_weight="0.6"
+            android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:textColor="@color/colorBlue"
+            android:fontFamily="@font/poppins_semibold"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_5sdp"
-                android:gravity="center"
-                android:paddingRight="@dimen/_5sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:background="@drawable/ic_quatity_items">
 
-                <TextView
-                    android:layout_width="match_parent"
+
+        <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="2 X 40"
-                    android:textSize="@dimen/_11sdp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textColor="@color/colorBlue"
-                    android:fontFamily="@font/poppins_semibold"/>
-
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.7"
-            android:gravity="right|center"
-            android:layout_gravity="right|center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center|right"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/_12sdp"
-                    android:layout_height="@dimen/_12sdp"
-                    android:src="@drawable/ic_rupee_black"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
                     android:text="80.00"
-                    android:textSize="@dimen/_13sdp"
+                    android:layout_gravity="end|center_vertical"
+                    android:gravity="end"
+                    android:textSize="@dimen/_11sdp"
                     android:id="@+id/tv_price_per_item"
                     android:layout_marginLeft="@dimen/_2sdp"
                     android:fontFamily="@font/poppins"/>
 
 
-            </LinearLayout>
 
-        </LinearLayout>
 
     </LinearLayout>
 

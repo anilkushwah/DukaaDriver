@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Dukaa Partner</string>
+    <string name="no_internet" />
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_orders">Orders</string>
+    <string name="title_earning">Earning</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_accept">Accepted</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="month">
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
+
+
+</resources>

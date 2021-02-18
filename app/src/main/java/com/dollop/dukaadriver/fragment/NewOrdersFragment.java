@@ -1,5 +1,7 @@
 package com.dollop.dukaadriver.fragment;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -10,17 +12,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dollop.dukaadriver.R;
-import com.dollop.dukaadriver.adapter.NewOrderAdapter;
+import com.dollop.dukaadriver.UtilityTools.Utils;
+import com.dollop.dukaadriver.model.HomeDTO;
+import com.dollop.dukaadriver.activity.HomeActivity;
+import com.dollop.dukaadriver.adapter.OnRoutAdapter;
 import com.dollop.dukaadriver.adapter.PostOrderAdapter;
-import com.dollop.dukaadriver.model.NewOrderModel;
-import com.dollop.dukaadriver.model.PostorderModel;
+import com.dollop.dukaadriver.model.OrderDTO;
+import com.dollop.dukaadriver.retrofit.ApiClient;
+import com.dollop.dukaadriver.retrofit.ApiInterface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,40 +40,38 @@ import java.util.ArrayList;
  */
 public class NewOrdersFragment extends Fragment {
 
-    String Pickup = "Walmart-Bypass 117-Road-2, Bypass,Indore";
-    String Droplocation = "121 block-E,i-bus stop, Near Anand Super,Indore";
-    String  Distance = "28KM";
-    String Time = "10:20 AM";
-    String Price = "200";
-    String OrderId = "#337647";
-    String Paymentmethod = "cash";
-    TextView ordertype_tv;
+
+
     PostOrderAdapter postOrderAdapter;
     RecyclerView new_order_list;
-    Button new_order_rl,post_order_rl;
-    NewOrderAdapter newOrderAdapter;
-    ArrayList<NewOrderModel> newOrderModels = new ArrayList<>();
-    ArrayList<PostorderModel> postorderModels = new ArrayList<>();
-    public NewOrdersFragment() {
-        // Required empty public constructor
-    }
+    TextView new_order_rl, post_order_rl;
+    //  NewOrderAdapter newOrderAdapter;
+    ImageView no_data_image, back_home_img;
 
+    ArrayList<OrderDTO> mOrderDTOArrayList;
+    ArrayList<OrderDTO> mOrderDTOArrayListPost;
 
+    OnRoutAdapter mOnRoutAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-      View view = inflater.inflate(R.layout.fragment_new_orders, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_new_orders, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         new_order_list = view.findViewById(R.id.new_order_list);
         new_order_rl = view.findViewById(R.id.new_order_btn);
         post_order_rl = view.findViewById(R.id.post_order_btn);
-        ordertype_tv = view.findViewById(R.id.ordertype_tv);
 
+        no_data_image = view.findViewById(R.id.no_data_image);
+        back_home_img = view.findViewById(R.id.back_home_img);
 
-        newOrder();
+        mOrderDTOArrayList = new ArrayList<>();
+        mOrderDTOArrayListPost = new ArrayList<>();
+
+        getVehicalMethod();
+
         new_order_rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,10 +80,17 @@ public class NewOrdersFragment extends Fragment {
                 new_order_rl.setBackgroundResource(R.drawable.whitebnt);
 
                 post_order_rl.setTextColor(Color.WHITE);
-                post_order_rl.setBackgroundResource(R.drawable.laybtn);
+                post_order_rl.setBackgroundColor(Color.TRANSPARENT);
 
-                ordertype_tv.setText("All New Orders");
-                newOrder();
+
+                mOrderDTOArrayListPost.clear();
+                postOrderAdapter = new PostOrderAdapter(getActivity(), mOrderDTOArrayListPost);
+                new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+                new_order_list.setAdapter(postOrderAdapter);
+                postOrderAdapter.notifyDataSetChanged();
+
+
+                getVehicalMethod();
             }
         });
         post_order_rl.setOnClickListener(new View.OnClickListener() {
@@ -83,55 +100,133 @@ public class NewOrdersFragment extends Fragment {
                 post_order_rl.setTextColor(Color.BLACK);
                 post_order_rl.setBackgroundResource(R.drawable.whitebnt);
 
-
                 new_order_rl.setTextColor(Color.WHITE);
-                new_order_rl.setBackgroundResource(R.drawable.laybtn);
-                ordertype_tv.setText("Post Orders");
-                postOrder();
+                new_order_rl.setBackgroundColor(Color.TRANSPARENT);
+
+
+                mOrderDTOArrayList.clear();
+                mOnRoutAdapter = new OnRoutAdapter(getActivity(), mOrderDTOArrayList);
+                new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),
+                        RecyclerView.VERTICAL, false));
+                new_order_list.setAdapter(mOnRoutAdapter);
+                mOnRoutAdapter.notifyDataSetChanged();
+
+                completeOrder();
+
             }
         });
 
+        back_home_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+               getActivity().onBackPressed();
 
-       return view;
+            }
+        });
+        return view;
     }
 
 
-    public void newOrder()
-    {
-        for(int i=0;i<5;i++)
-        {
-            NewOrderModel newOrderModel = new NewOrderModel();
-            newOrderModel.PickupLocation=Pickup;
-            newOrderModel.DropLocation = Droplocation;
-            newOrderModel.Distance = Distance;
-            newOrderModels.add(newOrderModel);
-        }
+    private void getVehicalMethod() {
 
-        newOrderAdapter = new NewOrderAdapter(getActivity(),newOrderModels);
-        new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),RecyclerView.VERTICAL,false));
-        new_order_list.setAdapter(newOrderAdapter);
+        final Dialog dialog = Utils.initProgressDialog(getActivity());
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
+        HashMap<String, String> hm = new HashMap<>();
+        hm.put("driver_id", ((HomeActivity) getActivity()).sessionManager.getRegisterUser().getId());
+
+        Call<HomeDTO> call = apiService.route_jobs_order(hm);
+        call.enqueue(new Callback<HomeDTO>() {
+            @Override
+            public void onResponse(Call<HomeDTO> call, Response<HomeDTO> response) {
+                dialog.dismiss();
+                try {
+
+                    HomeDTO body = response.body();
+
+                    if (body.getStatus() == 200) {
+                        no_data_image.setVisibility(View.GONE);
+                        mOrderDTOArrayList = body.getAllOrder();
+                        if (mOrderDTOArrayList != null) {
+                            no_data_image.setVisibility(View.GONE);
+                        } else {
+                            no_data_image.setVisibility(View.VISIBLE);
+                        }
+
+                        mOnRoutAdapter = new OnRoutAdapter(getActivity(), mOrderDTOArrayList);
+                        new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),
+                                RecyclerView.VERTICAL, false));
+                        new_order_list.setAdapter(mOnRoutAdapter);
+                        mOnRoutAdapter.notifyDataSetChanged();
+                    } else {
+                        no_data_image.setVisibility(View.VISIBLE);
+                    }
+
+                } catch (
+                        Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<HomeDTO> call, Throwable t) {
+                call.cancel();
+                t.printStackTrace();
+                dialog.dismiss();
+            }
+        });
     }
 
-    public void postOrder()
-    {
+    private void completeOrder() {
 
-        for(int i=0;i<5;i++)
-        {
+        final Dialog dialog = Utils.initProgressDialog(getActivity());
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-            PostorderModel postorderModel = new PostorderModel();
-            postorderModel.PickupLocation=Pickup;
-            postorderModel.DropLocation = Droplocation;
-            postorderModel.PaymentMwthod = Paymentmethod;
-            postorderModel.OrderId = OrderId;
-            postorderModel.Price = Price;
-            postorderModel.Time = Time;
-            postorderModels.add(postorderModel);
-        }
-        postOrderAdapter = new PostOrderAdapter(getActivity(),postorderModels);
-        new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),RecyclerView.VERTICAL,false));
-        new_order_list.setAdapter(postOrderAdapter);
+        HashMap<String, String> hm = new HashMap<>();
+        hm.put("driver_id", ((HomeActivity) getActivity()).sessionManager.getRegisterUser().getId());
+        hm.put("type", "complete");
 
+        Call<HomeDTO> call = apiService.route_jobs_order(hm);
+        call.enqueue(new Callback<HomeDTO>() {
+            @Override
+            public void onResponse(Call<HomeDTO> call, Response<HomeDTO> response) {
+                dialog.dismiss();
+                try {
+
+                    HomeDTO body = response.body();
+
+                    if (body.getStatus() == 200) {
+                        no_data_image.setVisibility(View.GONE);
+                        mOrderDTOArrayListPost = body.getAllOrder();
+                        if (mOrderDTOArrayList != null) {
+                            no_data_image.setVisibility(View.GONE);
+                        } else {
+                            no_data_image.setVisibility(View.VISIBLE);
+                        }
+                        postOrderAdapter = new PostOrderAdapter(getActivity(), mOrderDTOArrayListPost);
+                        new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+                        new_order_list.setAdapter(postOrderAdapter);
+                        postOrderAdapter.notifyDataSetChanged();
+                    } else {
+                        no_data_image.setVisibility(View.VISIBLE);
+                    }
+
+                } catch (
+                        Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<HomeDTO> call, Throwable t) {
+                call.cancel();
+                t.printStackTrace();
+                dialog.dismiss();
+            }
+        });
     }
+
 }

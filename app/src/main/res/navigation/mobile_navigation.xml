@@ -18,6 +18,13 @@
         tools:layout="@layout/fragment_new_orders" />
 
     <fragment
+        android:id="@+id/navigation_jobs"
+        android:name="com.dollop.dukaadriver.ui.jobs.CourierJobFragment"
+        android:label="@string/title_jobs"
+        tools:layout="@layout/fragment_courier_job" />
+
+
+    <fragment
         android:id="@+id/navigation_earning"
         android:name="com.dollop.dukaadriver.ui.total_earnfragment.TotalEarningFragment"
         android:label="@string/title_earning"

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/RL_Detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp">
+
+        <LinearLayout
+            android:id="@+id/destination_image"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/backgroundone"
+            android:padding="@dimen/_7sdp">
+
+            <ImageView
+                android:id="@+id/driver_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/individual_driver" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/destination_image"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_5sdp">
+
+            <TextView
+                android:id="@+id/driver_name_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Customer Name"
+                android:textSize="@dimen/_9sdp" />
+
+
+            <TextView
+                android:id="@+id/driver_number_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:text="1234567890"
+                android:textColor="#000000"
+                android:textSize="@dimen/_9sdp" />
+
+            <TextView
+                android:id="@+id/view_rating_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:text="View Rating"
+                android:textColor="@color/colorGreen"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/driver_status_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_toLeftOf="@+id/textViewOptions"
+            android:background="@drawable/payment_rupee_bck"
+            android:paddingHorizontal="@dimen/_20sdp"
+            android:text="Online"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryDark_old" />
+
+        <TextView
+            android:id="@+id/textViewOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingHorizontal="@dimen/_20sdp"
+            android:text="&#8942;"
+            android:textAppearance="?android:textAppearanceLarge" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_below="@+id/RL_Detail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:background="#E8E8E8" />
+
+
+</RelativeLayout>
