@@ -16,8 +16,7 @@
 	<dimen name="_14sdp">14.00dp</dimen>
 	<dimen name="_15sdp">15.00dp</dimen>
 	<dimen name="_16sdp">16.00dp</dimen>
-	<dimen name="_17sdp">17.00dp</dimen>
-	<dimen name="_18sdp">18.00dp</dimen>
+    <dimen name="_18sdp">18.00dp</dimen>
     <dimen name="_20sdp">20.00dp</dimen>
     <dimen name="_22sdp">22.00dp</dimen>
     <dimen name="_25sdp">25.00dp</dimen>
@@ -30,7 +29,6 @@
     <dimen name="_60sdp">60.00dp</dimen>
     <dimen name="_70sdp">70.00dp</dimen>
     <dimen name="_80sdp">80.00dp</dimen>
-    <dimen name="_85sdp">85.00dp</dimen>
     <dimen name="_90sdp">90.00dp</dimen>
     <dimen name="_100sdp">100.00dp</dimen>
     <dimen name="_120sdp">120.00dp</dimen>

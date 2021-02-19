@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBody"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".fragment.NewOrdersFragment">
 
@@ -11,7 +11,7 @@
         android:id="@+id/toolbar_LL"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:background="@drawable/lv_home_bck"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
@@ -25,16 +25,17 @@
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_back_left" />
+                android:src="@drawable/ic_back_left_black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/_25sdp"
+                android:fontFamily="@font/nexa_bold"
                 android:text="Manage Vehicle"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/_14sdp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>
@@ -70,10 +71,13 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/_10sdp"
-        android:background="@drawable/order_accept_btn"
+        android:background="@drawable/the_button"
         android:padding="@dimen/_5sdp"
         android:text="Add Vehicle"
-        android:textColor="@color/white"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/nexa_bold"
+        android:textStyle="bold"
+        android:textAllCaps="false"
         android:textSize="@dimen/_10sdp" />
 
 </RelativeLayout>

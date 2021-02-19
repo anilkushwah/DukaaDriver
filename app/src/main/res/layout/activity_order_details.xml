@@ -15,7 +15,7 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:background="@color/colorBlue"
+        android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="2">
@@ -24,7 +24,7 @@
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:src="@drawable/ic_white_backbtn" />
+            android:src="@drawable/ic_back_left_black" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -37,19 +37,20 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:fontFamily="@font/nexa_regular"
+                android:fontFamily="@font/nexa_bold"
                 android:text="Order ID - #12501110"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/_13sdp" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:fontFamily="@font/nexa_light"
+                android:fontFamily="@font/nexa_regular"
                 android:text="5 items, Rs 597.04"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/_12sdp" />
 
         </LinearLayout>
@@ -58,7 +59,7 @@
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:src="@drawable/ic_help" />
+            android:src="@drawable/ic_help_black" />
 
     </LinearLayout>
 
@@ -67,7 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_12sdp"
         android:layout_below="@id/toolbar_order_items"
-        android:background="@color/colorBody"
+        android:background="@color/white"
         android:orientation="horizontal" />
 
 
@@ -98,9 +99,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_10sdp"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_bold"
                         android:text="Customer Name"
-                        android:textSize="@dimen/_11sdp" />
+                        android:textSize="@dimen/_11sdp"
+                        android:textStyle="bold" />
 
 
                     <View
@@ -149,10 +151,10 @@
                                 android:textSize="@dimen/_10sdp" />
 
                             <TextView
-                                android:layout_marginTop="@dimen/_2sdp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_2sdp"
                                 android:fontFamily="@font/nexa_light"
                                 android:text="+91 - 12345 67890"
                                 android:textSize="@dimen/_10sdp" />
@@ -192,9 +194,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_8sdp"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_bold"
                         android:text="Store"
-                        android:textSize="@dimen/_11sdp" />
+                        android:textSize="@dimen/_11sdp"
+                        android:textStyle="bold" />
 
 
                     <View
@@ -277,9 +280,10 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/_3sdp"
-                                    android:fontFamily="@font/nexa_light"
+                                    android:fontFamily="@font/nexa_bold"
                                     android:text="Delivery"
-                                    android:textSize="@dimen/_10sdp" />
+                                    android:textSize="@dimen/_11sdp"
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
 
@@ -337,9 +341,10 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/_3sdp"
-                                    android:fontFamily="@font/nexa_light"
+                                    android:fontFamily="@font/nexa_bold"
                                     android:text="Payment Method"
-                                    android:textSize="@dimen/_10sdp" />
+                                    android:textSize="@dimen/_10sdp"
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
 
@@ -378,7 +383,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_12sdp"
                     android:layout_below="@id/toolbar_order_items"
-                    android:background="@color/colorBody"
+                    android:background="@color/white"
                     android:orientation="horizontal" />
 
                 <LinearLayout
@@ -397,9 +402,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
-                            android:fontFamily="@font/nexa_light"
+                            android:fontFamily="@font/nexa_bold"
                             android:text="Total Products"
-                            android:textSize="@dimen/_11sdp" />
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
 
 
                         <View
@@ -577,12 +583,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_2sdp"
-                                android:fontFamily="@font/nexa_regular"
-                                android:text="200.00"
                                 android:layout_gravity="end"
-                                android:gravity="end"
+                                android:layout_marginLeft="@dimen/_2sdp"
                                 android:layout_weight="0.5"
+                                android:fontFamily="@font/nexa_regular"
+                                android:gravity="end"
+                                android:text="200.00"
                                 android:textColor="#000000"
                                 android:textSize="@dimen/_11sdp" />
 
@@ -602,11 +608,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/curve_bg_login"
-        android:fontFamily="@font/nexa_light"
+        android:layout_margin="@dimen/_8sdp"
+        android:background="@drawable/the_button"
+        android:fontFamily="@font/nexa_bold"
         android:text="Proceed"
         android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/_14sdp" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
