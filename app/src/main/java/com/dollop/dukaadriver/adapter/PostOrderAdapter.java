@@ -51,7 +51,8 @@ public class PostOrderAdapter extends RecyclerView.Adapter<PostOrderAdapter.MyVi
         holder.Droplocation.setText(postorderModel.getRetailerAddress());
 
 
-        holder.OrderId.setText("OrderId : #000" + postorderModel.getId() + "    Name:-" + postorderModel.getRetailerName());
+        holder.OrderId.setText("OrderId : #000" + postorderModel.getId());
+        holder.theName.setText("Name: " + postorderModel.getRetailerName());
         holder.PaymentMethod.setText(postorderModel.getTransactionMode());
         holder.Price.setText(context.getString(R.string.currency_sign) + postorderModel.getDeliveryCharge());
 
@@ -78,7 +79,7 @@ public class PostOrderAdapter extends RecyclerView.Adapter<PostOrderAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView Pickuplocation, Droplocation, Price, PaymentMethod, Time, OrderId;
+        TextView Pickuplocation, Droplocation, Price, PaymentMethod, Time, OrderId, theName;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +90,7 @@ public class PostOrderAdapter extends RecyclerView.Adapter<PostOrderAdapter.MyVi
             PaymentMethod = itemView.findViewById(R.id.postpaymethod_tv);
             Time = itemView.findViewById(R.id.postorderTime_tv);
             OrderId = itemView.findViewById(R.id.postorderId_tv);
+            theName = itemView.findViewById(R.id.name_tv);
 
 
         }

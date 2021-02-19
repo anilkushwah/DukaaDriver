@@ -1,291 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/new_order_layout"
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/_10sdp"
-        android:paddingRight="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_5sdp">
+        android:layout_margin="@dimen/_8sdp"
+        app:cardCornerRadius="@dimen/_4sdp"
+        app:cardElevation="@dimen/_4sdp">
 
         <LinearLayout
+            android:id="@+id/new_order_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_5sdp">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_weight="1.2">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-                <TextView
-                    android:id="@+id/order_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nexa_bold"
-                    android:gravity="center"
-                    android:text="Order ID"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/order_id_TV"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/order_tv"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:fontFamily="@font/nexa_regular"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="#845712643"
-                    android:textSize="@dimen/_11sdp" />
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/order_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nexa_bold"
+                        android:gravity="center"
+                        android:text="Order ID"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp" />
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/order_id_TV"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/order_tv"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/nexa_regular"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="#845712643"
+                        android:textSize="@dimen/_11sdp" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/delivery_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nexa_bold"
-                    android:gravity="center"
-                    android:text="Delivery Date"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_weight="1.2">
 
-                <TextView
-                    android:id="@+id/order_date_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/delivery_tv"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:fontFamily="@font/nexa_regular"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="01 Aug 2020,04:51PM"
-                    android:textSize="@dimen/_11sdp" />
+                    <TextView
+                        android:id="@+id/delivery_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nexa_bold"
+                        android:gravity="center"
+                        android:text="Delivery Date"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp" />
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/order_date_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/delivery_tv"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/nexa_regular"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="01 Aug 2020,04:51PM"
+                        android:textSize="@dimen/_11sdp" />
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_weight=".8">
+                </RelativeLayout>
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/wheeler_image"
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_weight=".8">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/wheeler_image"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_centerHorizontal="true"
+
+                        app:civ_border_color="@color/colorBlue"
+                        app:civ_border_overlay="true"
+                        app:civ_border_width="2px" />
+
+                    <TextView
+                        android:id="@+id/vehical_name"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:fontFamily="@font/nexa_bold"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text="Van"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <TextView
+                        android:id="@+id/vehical__registrationNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/wheeler_image"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/nexa_bold"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text="Mp-09-2222"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:background="#C3C3C3" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/devimage"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
-                   android:layout_centerHorizontal="true"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/backgroundone"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_7sdp">
 
-                    app:civ_border_color="@color/colorBlue"
-                    app:civ_border_overlay="true"
-                    app:civ_border_width="2px" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_delivery" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_weight="1.8"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nexa_bold"
+                        android:text="Pichup Address"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/_12sdp" />
+
+
+                    <TextView
+                        android:id="@+id/pickup_address_Tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nexa_regular"
+                        android:text="117,Road-2,Baypass,indore"
+                        android:textSize="@dimen/_11sdp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="#C3C3C3" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/destination_image"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/backgroundone"
+                    android:padding="@dimen/_7sdp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_drop_location" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_weight="1.8"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nexa_regular"
+                        android:text="Drop Address"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/_12sdp" />
+
+
+                    <TextView
+                        android:id="@+id/drop_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nexa_regular"
+                        android:text="drop location"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/_11sdp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:visibility="gone"
+                android:weightSum="2">
 
                 <TextView
-                    android:id="@+id/vehical_name"
-                    android:layout_width="@dimen/_40sdp"
+                    android:id="@+id/total_amouny"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nexa_bold"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_8sdp" />
+
+                <TextView
+                    android:layout_width="2px"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey" />
+
+                <TextView
+                    android:id="@+id/total_vat_TV"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_weight="1"
                     android:fontFamily="@font/nexa_bold"
-                    android:gravity="right"
-                    android:singleLine="true"
-                    android:text="Van"
+                    android:paddingLeft="@dimen/_10sdp"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
-
-                <TextView
-                    android:id="@+id/vehical__registrationNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/wheeler_image"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="@font/nexa_bold"
-                    android:gravity="right"
-                    android:singleLine="true"
-                    android:text="Mp-09-2222"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:background="#C3C3C3" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <LinearLayout
-                android:id="@+id/devimage"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_alignParentLeft="true"
-                android:background="@drawable/backgroundone"
-                android:orientation="horizontal"
-                android:padding="@dimen/_7sdp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_delivery" />
-
+                    android:textSize="@dimen/_8sdp" />
 
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_weight="1.8"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nexa_bold"
-                    android:text="Pichup Address"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/_12sdp" />
-
-
-                <TextView
-                    android:id="@+id/pickup_address_Tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nexa_regular"
-                    android:text="117,Road-2,Baypass,indore"
-                    android:textSize="@dimen/_11sdp" />
-            </LinearLayout>
-
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="#C3C3C3" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <LinearLayout
-                android:id="@+id/destination_image"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_alignParentLeft="true"
-                android:background="@drawable/backgroundone"
-                android:padding="@dimen/_7sdp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_drop_location" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_weight="1.8"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nexa_regular"
-                    android:text="Drop Address"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/_12sdp" />
-
-
-                <TextView
-                    android:id="@+id/drop_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nexa_regular"
-                    android:text="drop location"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/_11sdp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:visibility="gone"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/total_amouny"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_weight="1"
-                android:fontFamily="@font/nexa_bold"
-                android:paddingRight="@dimen/_10sdp"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/_8sdp" />
-
-            <TextView
-                android:layout_width="2px"
-                android:layout_height="match_parent"
-                android:background="@color/grey" />
-
-            <TextView
-                android:id="@+id/total_vat_TV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:layout_weight="1"
-                android:fontFamily="@font/nexa_bold"
-                android:paddingLeft="@dimen/_10sdp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_8sdp" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

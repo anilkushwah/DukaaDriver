@@ -240,8 +240,8 @@
                 android:fontFamily="@font/nexa_bold"
                 android:gravity="center"
                 android:text="Upload Proof and Deliver Order"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />
 
         </LinearLayout>

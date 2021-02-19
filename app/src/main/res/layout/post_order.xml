@@ -6,39 +6,63 @@
     android:background="@drawable/common_background"
     android:orientation="vertical">
 
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_4sdp"
         android:layout_marginRight="@dimen/_10sdp">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/postorderId_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/nexa_bold"
+                android:text="Order Id: #21457826"
+                android:textColor="#000000"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/postpaymethod_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/nexa_regular"
+                android:text="Cash"
+                android:textColor="#000000"
+                android:textSize="@dimen/_10sdp" />
+
+
+        </RelativeLayout>
+
         <TextView
-            android:id="@+id/postorderId_tv"
+            android:id="@+id/name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="Order Id: #21457826"
-            android:fontFamily="@font/nexa_bold"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="@dimen/_12sdp" />
-
-        <TextView
-            android:id="@+id/postpaymethod_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:text="Cash"
             android:fontFamily="@font/nexa_regular"
+            android:text="Name: Ken Muiga"
             android:textColor="#000000"
             android:textSize="@dimen/_10sdp" />
+    </LinearLayout>
 
-    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:background="#EAEAEA" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,11 +93,11 @@
                     android:drawableLeft="@drawable/ic_home_black_24dp"
                     android:drawablePadding="@dimen/_10sdp"
                     android:fontFamily="@font/nexa_bold"
-                    android:textStyle="bold"
                     android:gravity="center_vertical"
                     android:text="Pickup Locaton"
                     android:textColor="@color/grey_2"
-                    android:textSize="@dimen/_9sdp" />
+                    android:textSize="@dimen/_9sdp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/postpickuplocation_tv"
@@ -98,13 +122,13 @@
                 android:textSize="@dimen/_15sdp" />
 
         </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_1sdp"
-            android:background="#EAEAEA" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:background="#EAEAEA" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -130,12 +154,12 @@
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/ic_drop_location"
                 android:drawablePadding="@dimen/_10sdp"
-                android:text="Drop Location"
-                android:gravity="center_vertical"
                 android:fontFamily="@font/nexa_bold"
-                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:text="Drop Location"
                 android:textColor="@color/grey_2"
-                android:textSize="@dimen/_9sdp" />
+                android:textSize="@dimen/_9sdp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/postDrop_tv"

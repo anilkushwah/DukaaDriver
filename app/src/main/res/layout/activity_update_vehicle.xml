@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".activity.AddNewVehicleActivity">
 
@@ -12,7 +13,6 @@
         android:id="@+id/add_top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp"
-        android:background="@drawable/lv_home_bck"
         android:orientation="vertical">
 
         <LinearLayout
@@ -26,17 +26,16 @@
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_margin="@dimen/_10sdp"
-                android:src="@drawable/ic_back_left"
-
-                />
+                android:src="@drawable/ic_back_left_black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Update Vehicle"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp" />
+                android:fontFamily="@font/nexa_bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp" />
 
 
         </LinearLayout>
@@ -62,7 +61,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/curve_bg_white_login"
                 android:orientation="vertical">
 
 
@@ -76,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_bold"
                         android:paddingLeft="@dimen/_5sdp"
                         android:text="Model Name"
                         android:textColor="#000000"
@@ -105,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_bold"
                         android:text="Vehicle Type"
                         android:textColor="#000000"
                         android:textSize="@dimen/_9sdp" />
@@ -173,7 +171,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_bold"
                         android:text="Vehicle Number"
                         android:textColor="#000000"
                         android:textSize="@dimen/_9sdp" />
@@ -211,7 +209,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_bold"
                         android:text="Vehicle Registration Number"
                         android:textColor="#000000"
                         android:textSize="@dimen/_9sdp" />
@@ -260,7 +258,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
-                                android:fontFamily="@font/nexa_regular"
+                                android:fontFamily="@font/nexa_bold"
                                 android:paddingLeft="@dimen/_5sdp"
                                 android:paddingTop="@dimen/_5sdp"
                                 android:paddingRight="@dimen/_5sdp"
@@ -320,10 +318,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/curve_bg_login"
-        android:fontFamily="@font/nexa_regular"
+        android:background="@drawable/the_button"
+        android:fontFamily="@font/nexa_bold"
+        android:layout_margin="@dimen/_8sdp"
         android:text="Update Vehicle"
         android:textAllCaps="false"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorPrimary"
         android:textSize="@dimen/_14sdp" />
 </RelativeLayout>

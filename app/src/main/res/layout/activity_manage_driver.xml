@@ -3,15 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBody"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".fragment.NewOrdersFragment">
 
     <LinearLayout
         android:id="@+id/toolbar_LL"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
-        android:background="@drawable/lv_home_bck"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
         <LinearLayout
@@ -31,10 +31,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/_25sdp"
                 android:text="Manage Drivers"
                 android:textColor="#ffffff"
-                android:textSize="@dimen/_14sdp" />
+                android:fontFamily="@font/nexa_bold"
+                android:textStyle="bold"
+                android:textSize="@dimen/_16sdp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -74,7 +75,10 @@
         android:layout_margin="@dimen/_10sdp"
         android:background="@drawable/order_accept_btn"
         android:padding="@dimen/_5sdp"
+        android:textAllCaps="false"
+        android:fontFamily="@font/nexa_bold"
+        android:textStyle="bold"
         android:text="Add Driver"
         android:textColor="@color/white"
-        android:textSize="@dimen/_10sdp" />
+        android:textSize="@dimen/_14sdp" />
 </RelativeLayout>

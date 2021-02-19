@@ -14,8 +14,8 @@
     <RelativeLayout
         android:id="@+id/toolbar_LL"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
-        android:background="@drawable/lv_home_bck"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
         <ImageView
@@ -31,20 +31,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_toRightOf="@+id/create_back"
-            android:fontFamily="@font/nexa_regular"
+            android:fontFamily="@font/nexa_bold"
             android:text="Personal Details"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/_12sdp" />
+            android:textSize="@dimen/_16sdp" />
 
         <Button
             android:id="@+id/btn_edit_profile"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_30sdp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_margin="@dimen/_4sdp"
             android:background="@drawable/splash_next_btn"
-            android:fontFamily="@font/nexa_regular"
+            android:fontFamily="@font/nexa_bold"
+            android:paddingHorizontal="@dimen/_8sdp"
             android:text="Edit Profile"
             android:textAllCaps="false"
             android:textColor="@color/colorBlue"
@@ -95,12 +95,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Upload Image"
-                            android:textSize="@dimen/_6sdp" />
+                            android:textSize="@dimen/_6sdp"
+                            android:fontFamily="@font/nexa_regular"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="(optional)"
+                            android:fontFamily="@font/nexa_regular"
                             android:textSize="@dimen/_6sdp" />
                     </LinearLayout>
 

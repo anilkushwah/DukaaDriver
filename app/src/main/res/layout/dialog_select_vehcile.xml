@@ -37,8 +37,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:fontFamily="@font/nexa_bold"
+                    android:textStyle="bold"
                     android:text="Select Vehicle"
-                    android:textSize="@dimen/_9sdp" />
+                    android:textSize="@dimen/_14sdp" />
 
             </LinearLayout>
 
@@ -65,6 +66,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginTop="@dimen/_8sdp"
             android:gravity="center"
+            android:nextFocusForward="@font/nexa_bold"
             android:layout_marginBottom="@dimen/_10sdp"
             android:orientation="horizontal">
 

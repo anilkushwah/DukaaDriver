@@ -140,7 +140,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_40sdp"
                     android:layout_toRightOf="@+id/image1"
-                    android:fontFamily="@font/nexa_light"
+                    android:fontFamily="@font/nexa_bold"
+                    android:textStyle="bold"
                     android:text="General settings"
                     android:textColor="@color/grey_1"
                     android:textSize="@dimen/_12sdp" />
@@ -174,7 +175,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_40sdp"
                         android:layout_toRightOf="@+id/order_history_img"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_regular"
                         android:text="Order History"
                         android:textColor="#000000"
                         android:textSize="@dimen/_10sdp" />
@@ -211,7 +212,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_40sdp"
                         android:layout_toRightOf="@+id/statistic_img"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_regular"
                         android:text="Statistic"
                         android:textColor="#000000"
                         android:textSize="@dimen/_10sdp" />
@@ -247,7 +248,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_40sdp"
                         android:layout_toRightOf="@+id/notification_img"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_regular"
                         android:text="Notification"
                         android:textColor="#000000"
                         android:textSize="@dimen/_10sdp" />
@@ -285,7 +286,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_40sdp"
                         android:layout_toRightOf="@+id/accepted_img"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_regular"
                         android:text="Accepted Order"
                         android:textColor="#000000"
                         android:textSize="@dimen/_10sdp" />
@@ -320,7 +321,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_40sdp"
                     android:layout_toRightOf="@+id/image1"
-                    android:fontFamily="@font/nexa_light"
+                    android:fontFamily="@font/nexa_bold"
+                    android:textStyle="bold"
                     android:text="Driver Setting"
                     android:textColor="@color/grey_1"
                     android:textSize="@dimen/_12sdp" />
@@ -354,7 +356,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_40sdp"
                         android:layout_toRightOf="@+id/manage_driver_img"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_regular"
                         android:text="Manage Driver"
                         android:textColor="#000000"
                         android:textSize="@dimen/_10sdp" />
@@ -390,7 +392,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_40sdp"
                         android:layout_toRightOf="@+id/manage_vehicle_img"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_regular"
                         android:text="Manage Vehicle"
                         android:textColor="#000000"
                         android:textSize="@dimen/_10sdp" />
@@ -425,7 +427,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/_40sdp"
                     android:layout_toRightOf="@+id/image1"
-                    android:fontFamily="@font/nexa_light"
+                    android:fontFamily="@font/nexa_bold"
+                    android:textStyle="bold"
                     android:text="Account Setting"
                     android:textColor="@color/grey_1"
                     android:textSize="@dimen/_12sdp" />
@@ -459,7 +462,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_40sdp"
                         android:layout_toRightOf="@+id/personal_detail_img"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_regular"
                         android:text="Personal Details"
                         android:textColor="#000000"
                         android:textSize="@dimen/_10sdp" />
@@ -495,7 +498,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_40sdp"
                         android:layout_toRightOf="@+id/change_password_img"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_regular"
                         android:text="Change Password"
                         android:textColor="#000000"
                         android:textSize="@dimen/_10sdp" />
@@ -528,7 +531,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/_40sdp"
                     android:layout_toRightOf="@+id/image1"
-                    android:fontFamily="@font/nexa_light"
+                    android:fontFamily="@font/nexa_bold"
+                    android:textStyle="bold"
                     android:text="Rating"
                     android:textColor="@color/grey_1"
                     android:textSize="@dimen/_12sdp" />
@@ -562,7 +566,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_40sdp"
                         android:layout_toRightOf="@+id/my_review_img"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_regular"
                         android:text="Driver Review"
                         android:textColor="#000000"
                         android:textSize="@dimen/_10sdp" />
@@ -591,7 +595,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_40sdp"
                         android:layout_toRightOf="@+id/compnay_review_img"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_regular"
                         android:text="Company Review"
                         android:textColor="#000000"
                         android:textSize="@dimen/_10sdp" />

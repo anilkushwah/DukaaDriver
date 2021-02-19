@@ -77,7 +77,8 @@
             android:id="@+id/order_status_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:padding="@dimen/_4sdp"
+            android:textAllCaps="true"
             android:text="Pending"
             android:textColor="@color/colorOrange" />
         <TextView

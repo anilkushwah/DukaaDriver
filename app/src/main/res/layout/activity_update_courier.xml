@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.25"
-        android:background="@drawable/lv_home_bck"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="@dimen/_10sdp">
@@ -25,7 +23,7 @@
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_back_left" />
+            android:src="@drawable/ic_back_left_black" />
 
         <TextView
             android:id="@+id/title_TV"
@@ -33,12 +31,12 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/_15sdp"
-            android:fontFamily="@font/nexa_regular"
-            android:paddingLeft="@dimen/_5sdp"
-            android:paddingRight="@dimen/_15sdp"
+            android:layout_toRightOf="@id/create_back"
+            android:fontFamily="@font/nexa_bold"
             android:text="Personal Details"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_13sdp" />
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btn_edit_profile"
@@ -47,12 +45,13 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:background="@drawable/splash_next_btn"
-            android:fontFamily="@font/nexa_regular"
+            android:background="@drawable/splash_next_btn_primary"
+            android:fontFamily="@font/nexa_bold"
             android:text="Edit Profile"
             android:textAllCaps="false"
-            android:textColor="@color/colorBlue"
-            android:textSize="@dimen/_8sdp" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8sdp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
@@ -60,7 +59,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.75"
-        android:background="@drawable/curve_bg_white_login"
         android:orientation="vertical"
         android:weightSum="3">
 
@@ -100,12 +98,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nexa_regular"
                             android:text="Upload Image"
                             android:textSize="@dimen/_6sdp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nexa_regular"
                             android:text="(optional)"
                             android:textSize="@dimen/_6sdp" />
                     </LinearLayout>
@@ -129,7 +129,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_15sdp"
-                    android:fontFamily="@font/nexa_regular"
+                    android:fontFamily="@font/nexa_bold"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
@@ -167,13 +167,14 @@
                     android:gravity="end"
                     android:textColor="@color/colorRed"
                     android:visibility="gone" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_15sdp"
-                    android:fontFamily="@font/nexa_regular"
+                    android:fontFamily="@font/nexa_bold"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
@@ -211,14 +212,13 @@
                     android:visibility="gone" />
 
 
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_15sdp"
-                    android:fontFamily="@font/nexa_regular"
+                    android:fontFamily="@font/nexa_bold"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_2sdp"
@@ -262,7 +262,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_15sdp"
-                    android:fontFamily="@font/nexa_regular"
+                    android:fontFamily="@font/nexa_bold"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
@@ -284,10 +284,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_2sdp"
+                        android:fontFamily="@font/nexa_bold"
                         android:gravity="center|left"
                         android:paddingLeft="@dimen/_10sdp"
                         android:text="+91"
-                        android:textSize="@dimen/_9sdp" />
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
