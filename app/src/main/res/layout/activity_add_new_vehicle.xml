@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlue"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".activity.AddNewVehicleActivity">
 
@@ -13,7 +13,7 @@
         android:id="@+id/add_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBlue"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
@@ -29,15 +29,17 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="@dimen/_10sdp"
-                android:src="@drawable/ic_back_left" />
+                android:src="@drawable/ic_back_left_black" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_height="match_parent"
                 android:text="Add vehicle"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/_15sdp" />
+                android:gravity="center_vertical"
+                android:fontFamily="@font/nexa_bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"/>
 
 
         </LinearLayout>
@@ -48,7 +50,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/add_top"
-        android:background="@drawable/curve_bg_white_login"
         android:paddingHorizontal="@dimen/_10sdp"
         android:scrollbars="none">
 
@@ -63,7 +64,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/curve_bg_white_login"
                 android:orientation="vertical">
 
 
@@ -76,7 +76,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_bold"
                         android:text="Model Name"
                         android:textColor="#000000"
                         android:textSize="@dimen/_12sdp"
@@ -86,7 +86,7 @@
                         android:id="@+id/model_name_edt"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:background="@drawable/et_edittext_bck"
                         android:ems="10"
                         android:fontFamily="@font/nexa_light"
@@ -111,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_bold"
                         android:text="Vehicle Type"
                         android:textColor="#000000"
                         android:textSize="@dimen/_12sdp"
@@ -122,7 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:background="@drawable/chang_password">
+                        android:background="@drawable/et_edittext_bck">
 
                         <Spinner
                             android:id="@+id/vehicle_type_spiner"
@@ -202,7 +202,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_bold"
                         android:text="Vehicle Registration Number"
                         android:textColor="#000000"
                         android:textSize="@dimen/_12sdp"
@@ -311,7 +311,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/curve_bg_login"
+        android:background="@drawable/the_button"
+        android:layout_margin="@dimen/_8sdp"
         android:fontFamily="@font/nexa_regular"
         android:text="Add Vehicle"
         android:textAllCaps="false"

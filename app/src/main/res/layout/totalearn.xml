@@ -1,92 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
-    android:orientation="vertical"
-    android:padding="@dimen/_5sdp">
+    android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/earnorderId_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Order ID: #21457826"
-        android:textColor="#000000"
-        android:textSize="@dimen/_12sdp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/earnorderId_tv"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:drawableLeft="@drawable/payment_type"
-        android:drawablePadding="@dimen/_10sdp"
-        android:text="Translation Type"
-        android:textSize="@dimen/_10sdp" />
-
-
-    <TextView
-        android:id="@+id/earnpaymethod_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/earnorderId_tv"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginRight="20dp"
-        android:drawablePadding="10dp"
-        android:text="Cash"
-        android:textColor="@color/colorGreen"
-        android:textSize="@dimen/_10sdp" />
-
-    <TextView
-        android:id="@+id/delivery_charge_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/earnpaymethod_tv"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:text="Delivery Charge"
-        android:textSize="@dimen/_10sdp" />
-
-    <RelativeLayout
-        android:id="@+id/time_RL"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_below="@+id/delivery_charge_tv"
-        android:layout_marginTop="@dimen/_5sdp">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        app:cardElevation="@dimen/_4sdp">
 
-        <TextView
-            android:id="@+id/earnTime_tv"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:drawablePadding="@dimen/_10sdp"
-            android:drawableLeft="@drawable/ic_clock_blue"
-            android:text="Today 10:20 AM"
-            android:textColor="@color/grey_2"
-            android:textSize="@dimen/_10sdp" />
+            android:layout_margin="@dimen/_8sdp">
 
-        <TextView
-            android:id="@+id/earnViewdetails_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:text="View Details"
-            android:textColor="@color/colorPrimaryDark_old"
-            android:textSize="@dimen/_12sdp"
-            android:visibility="gone" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/earnorderId_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nexa_bold"
+                android:text="Order ID: #21457826"
+                android:textColor="#000000"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_below="@+id/time_RL"
-        android:layout_marginTop="@dimen/_1sdp"
-        android:background="#EAEAEA" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/earnorderId_tv"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:drawableLeft="@drawable/payment_type"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/nexa_regular"
+                android:text="Translation Type"
+                android:textSize="@dimen/_10sdp" />
+
+
+            <TextView
+                android:id="@+id/earnpaymethod_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/earnorderId_tv"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="20dp"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/nexa_bold"
+                android:text="Cash"
+                android:textColor="@color/colorGreen"
+                android:textSize="@dimen/_10sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/delivery_charge_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/earnpaymethod_tv"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/nexa_regular"
+                android:text="Delivery Charge"
+                android:textSize="@dimen/_10sdp" />
+
+            <RelativeLayout
+                android:id="@+id/time_RL"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@+id/delivery_charge_tv"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <TextView
+                    android:id="@+id/earnTime_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/ic_clock_blue"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:fontFamily="@font/nexa_regular"
+                    android:text="Today 10:20 AM"
+                    android:textColor="@color/grey_2"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/earnViewdetails_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/nexa_regular"
+                    android:text="View Details"
+                    android:textColor="@color/colorPrimaryDark_old"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>

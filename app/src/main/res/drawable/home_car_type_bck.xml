@@ -6,7 +6,7 @@
         android:color="@android:color/white"/>
 
     <corners
-        android:radius="@dimen/_10sdp"/>
+        android:radius="@dimen/_4sdp"/>
 
     <size
         android:height="@dimen/_25sdp"

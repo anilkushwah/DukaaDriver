@@ -11,7 +11,7 @@
         android:dashGap="@dimen/_5sdp"/>
 
     <corners
-        android:radius="@dimen/_10sdp"/>
+        android:radius="@dimen/_4sdp"/>
 
 <size
     android:width="@dimen/_200sdp"

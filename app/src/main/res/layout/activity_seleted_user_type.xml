@@ -41,7 +41,7 @@
             android:layout_height="0dp"
             android:layout_below="@+id/top_LL"
             android:layout_weight="1.2"
-            android:background="@drawable/curve_bg_white_login"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <TextView
@@ -49,9 +49,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_20sdp"
                 android:gravity="center"
+                android:fontFamily="@font/nexa_bold"
+                android:textStyle="bold"
                 android:text="Select Delivery Type"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_16sdp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,6 +92,7 @@
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:gravity="center"
                             android:text="Individual Driver"
+                            android:fontFamily="@font/nexa_regular"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -129,6 +132,7 @@
                             android:gravity="center"
                             android:text="Courier Compnay"
                             android:textColor="@color/black"
+                            android:fontFamily="@font/nexa_regular"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
 
@@ -141,21 +145,23 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_weight="0.4"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_8sdp">
 
         <Button
             android:id="@+id/btn_selete_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/curve_bg_login"
-            android:fontFamily="@font/nexa_regular"
+            android:background="@drawable/the_button"
+            android:fontFamily="@font/nexa_bold"
+            android:textStyle="bold"
             android:text="Signup"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorPrimary"
+            android:paddingTop="@dimen/_8sdp"
             android:textSize="@dimen/_14sdp" />
 
     </RelativeLayout>

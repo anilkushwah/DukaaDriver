@@ -12,7 +12,7 @@
         android:id="@+id/toolbar_LL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/lv_home_bck"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
         <LinearLayout
@@ -33,9 +33,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/_25sdp"
+                android:fontFamily="@font/nexa_bold"
                 android:text="Orders Status"
                 android:textColor="#ffffff"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -55,21 +57,23 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/whitebnt"
+                android:fontFamily="@font/nexa_regular"
                 android:gravity="center"
                 android:paddingVertical="@dimen/_8sdp"
-                android:background="@drawable/whitebnt"
                 android:text="On Rout Order"
                 android:textAllCaps="false"
                 android:textColor="#000000" />
 
 
             <TextView
-                android:paddingVertical="@dimen/_8sdp"
-                android:gravity="center"
                 android:id="@+id/post_order_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/nexa_regular"
+                android:gravity="center"
+                android:paddingVertical="@dimen/_8sdp"
                 android:text="Order history"
                 android:textAllCaps="false"
                 android:textColor="#ffffff" />

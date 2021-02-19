@@ -10,13 +10,8 @@
         android:id="@+id/toolbar_LL"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_120sdp"
-        android:background="@drawable/lv_home_bck">
+        android:background="@color/colorPrimary">
 
-        <ImageView
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/home_top_shape_bg" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,13 +51,14 @@
                     android:layout_toRightOf="@+id/parent_layout"
                     android:fontFamily="@font/nexa_bold"
                     android:text="Anil"
+                    android:textStyle="bold"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_16sdp" />
 
                 <LinearLayout
                     android:id="@+id/driver_status_ll"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -74,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginRight="@dimen/_1sdp"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_regular"
                         android:text=""
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_10sdp" />
@@ -82,7 +78,7 @@
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/switch_driver_online"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:gravity="right"
@@ -135,7 +131,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/nexa_regular"
+                        android:fontFamily="@font/nexa_bold"
+                        android:textStyle="bold"
                         android:text=""
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_10sdp" />
@@ -145,7 +142,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_regular"
                         android:text=""
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_8sdp" />
@@ -160,7 +157,8 @@
                     android:layout_marginRight="@dimen/_5sdp"
                     android:layout_weight="0.2"
                     android:background="@drawable/splash_next_btn"
-                    android:fontFamily="@font/nexa_regular"
+                    android:fontFamily="@font/nexa_bold"
+                    android:textStyle="bold"
                     android:padding="@dimen/_2sdp"
                     android:text="Vehicle Details"
                     android:textAllCaps="false"

@@ -28,10 +28,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/nexa_regular"
+            android:fontFamily="@font/nexa_bold"
+            android:textStyle="bold"
             android:text="Create Account"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_16sdp" />
 
     </LinearLayout>
 
@@ -41,7 +42,7 @@
         android:layout_height="fill_parent"
         android:layout_above="@+id/btn_ll"
         android:layout_below="@+id/toolbar_LL"
-        android:background="@drawable/curve_bg_white_login"
+        android:background="@color/white"
         android:scrollbars="none">
 
         <LinearLayout
@@ -843,7 +844,7 @@
     <RelativeLayout
         android:id="@+id/btn_ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="vertical">
@@ -852,11 +853,13 @@
             android:id="@+id/btn_reg_submit"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:background="@drawable/curve_bg_login"
-            android:fontFamily="@font/nexa_regular"
+            android:background="@drawable/the_button"
+            android:fontFamily="@font/nexa_bold"
+            android:textStyle="bold"
             android:text="Submit"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
+            android:layout_margin="@dimen/_8sdp"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/_12sdp" />
 
     </RelativeLayout>

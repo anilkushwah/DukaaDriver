@@ -7,7 +7,7 @@
         android:dashGap="@dimen/_3sdp"
         android:dashWidth="@dimen/_3sdp"/>
     <corners
-        android:radius="@dimen/_25sdp"/>
+        android:radius="@dimen/_4sdp"/>
 
     <padding
         android:top="@dimen/_6sdp"

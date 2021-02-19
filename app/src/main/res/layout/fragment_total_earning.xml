@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBody"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".ui.total_earnfragment.TotalEarningFragment">
     <!--  android:layout_height="?attr/actionBarSize"-->
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp"
         android:layout_marginBottom="@dimen/_9sdp"
-        android:background="@drawable/lv_home_bck"
+        android:background="@color/colorPrimary"
         android:paddingLeft="@dimen/_10sdp">
 
 
@@ -22,7 +22,7 @@
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_margin="@dimen/_10sdp"
-            android:src="@drawable/ic_white_backbtn" />
+            android:src="@drawable/ic_back_left" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -31,7 +31,9 @@
             android:layout_toRightOf="@+id/back_btn_total_earn"
             android:text="Total Earing"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/_13sdp" />
+            android:fontFamily="@font/nexa_bold"
+            android:textStyle="bold"
+            android:textSize="@dimen/_16sdp" />
 
         <TextView
             android:id="@+id/total_errning_tv"
@@ -43,8 +45,10 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:paddingRight="@dimen/_10sdp"
             android:text="Ksh0"
+            android:fontFamily="@font/nexa_bold"
+            android:textStyle="bold"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/_13sdp" />
+            android:textSize="@dimen/_16sdp" />
 
     </RelativeLayout>
 
