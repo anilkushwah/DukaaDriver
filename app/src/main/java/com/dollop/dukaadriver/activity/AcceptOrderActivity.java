@@ -4,10 +4,15 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
 import android.os.Build;
@@ -31,11 +36,13 @@ import com.dollop.dukaadriver.UtilityTools.SessionManager;
 
 import com.dollop.dukaadriver.UtilityTools.Utility;
 import com.dollop.dukaadriver.UtilityTools.Utils;
+import com.dollop.dukaadriver.adapter.ProductItemListAdapter;
 import com.dollop.dukaadriver.model.AccpetOrderDTO;
 import com.dollop.dukaadriver.model.AllResponse;
 import com.dollop.dukaadriver.model.DistanceDTO;
 import com.dollop.dukaadriver.model.DistanceRespone;
 import com.dollop.dukaadriver.model.OrderDTO;
+import com.dollop.dukaadriver.model.OrderItem;
 import com.dollop.dukaadriver.model.VehicalDTO;
 import com.dollop.dukaadriver.retrofit.ApiClient;
 import com.dollop.dukaadriver.retrofit.ApiInterface;
@@ -70,8 +77,10 @@ public class AcceptOrderActivity extends AppCompatActivity implements View.OnCli
     Window window;
     OrderDTO mOrderDTO;
     TextView order_id_TV, distributore_address_tv, drop_address_TV, total_item_Tv, total_amouny_TV;
+
     SessionManager sessionManager;
     ArrayList<VehicalDTO> mVehicalDTOS;
+    public ArrayList<OrderItem> itemModels = new ArrayList<>();
     MyCountDownTimer myCountDownTimer;
     boolean isCounterRunning = false;
     DistanceRespone mDistanceRespone;
@@ -349,8 +358,12 @@ public class AcceptOrderActivity extends AppCompatActivity implements View.OnCli
                             finishAffinity();
 
                         } else {
-                            startActivity(new Intent(AcceptOrderActivity.this, AssignOrderActivity.class)
-                                    .putExtra("object", mOrderDTO));
+                            /*startActivity(new Intent(AcceptOrderActivity.this, AssignOrderActivity.class)
+                                    .putExtra("object", mOrderDTO));*/
+                           startActivity(new Intent(AcceptOrderActivity.this, AssignOrderActivity.class)
+                                    .putExtra("ID", mOrderDTO.getId())
+                                    .putExtra("VehicleType", mOrderDTO.getVehicle_type())
+                            );
                             finish();
                             finishAffinity();
                         }

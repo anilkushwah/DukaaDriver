@@ -13,6 +13,9 @@ public class DriverDTO implements Serializable {
     @SerializedName("id")
     @Expose
     private String id;
+    @SerializedName("order_id")
+    @Expose
+    public String order_id;
     @SerializedName("delivery_partner_id")
     @Expose
     private String deliveryPartnerId;

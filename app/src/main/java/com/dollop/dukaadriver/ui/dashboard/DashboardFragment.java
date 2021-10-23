@@ -19,7 +19,7 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         btn_upload_proof = root.findViewById(R.id.btn_upload_proof);
 
@@ -27,7 +27,7 @@ public class DashboardFragment extends Fragment {
         btn_upload_proof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), OrderDetailsActivity.class);
+                Intent intent = new Intent(requireActivity(), OrderDetailsActivity.class);
                 startActivity(intent);
             }
         });

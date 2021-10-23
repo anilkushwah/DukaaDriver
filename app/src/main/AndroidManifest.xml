@@ -11,7 +11,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -28,6 +29,7 @@
         android:protectionLevel="signature" />
 
     <application
+        android:name=".UtilityTools.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -37,7 +39,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.VehicleAssigneActivity"></activity>
+        <activity android:name=".activity.UpdatePasswordActivity"></activity>
+        <activity android:name=".activity.ForgotMatchOtpActivity" />
+        <activity android:name=".activity.ForgotPasswordActivity" />
+        <activity android:name=".activity.VehicleAssigneActivity" />
         <activity android:name=".activity.ManageVehicleActivity" />
         <activity android:name=".activity.VehicleDetailActivity" />
         <activity android:name=".activity.StaticsActivity" />
@@ -131,7 +136,6 @@
         <activity
             android:name=".activity.AssignOrderActivity"
             android:windowSoftInputMode="adjustResize" />
-
 
         <uses-library
             android:name="com.google.android.maps"

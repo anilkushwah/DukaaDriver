@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,10 +19,11 @@
         android:weightSum="2">
 
         <ImageView
+            android:id="@+id/iv_back_arrow"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:src="@drawable/ic_white_backbtn" />
+            android:src="@drawable/ic_back_left" />
 
 
         <TextView
@@ -32,10 +32,11 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_weight="2"
-            android:fontFamily="@font/nexa_light"
-            android:text="Delivery Prefrences"
+            android:fontFamily="@font/nexa_bold"
+            android:text=" Delivery Confirmation"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/_12sdp" />
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
 
 
         <ImageView
@@ -68,21 +69,20 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_15sdp"
-                    android:background="@color/colorBody" />
+                    android:background="@color/white" />
 
                 <RelativeLayout
-                    android:layout_width="@dimen/_120sdp"
-                    android:layout_height="@dimen/_120sdp"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_20sdp">
+                    android:orientation="horizontal">
 
 
                     <LinearLayout
                         android:id="@+id/image_LL"
-                        android:layout_width="@dimen/_120sdp"
-                        android:layout_height="@dimen/_120sdp"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_100sdp"
                         android:background="@drawable/ic_camera_background"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -90,7 +90,9 @@
                         <ImageView
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
-                            android:src="@drawable/ic_camera" />
+                            android:padding="@dimen/_4sdp"
+                            android:src="@drawable/ic_camera"
+                            android:tint="@color/colorPrimary" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -117,23 +119,30 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp"
-                    android:background="@color/colorBody" />
+                    android:layout_height="2dp"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/dotted_line"
+                    android:fontFamily="@font/nexa_regular"
+                    android:gravity="start"
+                    android:textColor="@color/grey_1"
+                    android:textSize="@dimen/_12sdp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/main"
-                    android:paddingLeft="@dimen/_10sdp"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="Distributor Business Name :"
+                        android:fontFamily="@font/nexa_regular"
+                        android:text="Supplier's Business Name :"
                         android:textSize="@dimen/_12sdp" />
 
 
@@ -142,8 +151,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_15sdp"
                         android:layout_alignParentRight="true"
+                        android:fontFamily="@font/nexa_bold"
                         android:src="@drawable/trash"
-                        android:text="" />
+                        android:text=""
+                        android:textStyle="bold" />
 
 
                 </RelativeLayout>
@@ -151,17 +162,46 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_10sdp"
-                    android:background="@color/colorBody" />
-
-                <TextView
+                    android:background="@color/white" />
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:fontFamily="@font/nexa_light"
-                    android:text="Item Details"
-                    android:textSize="@dimen/_8sdp" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:fontFamily="@font/nexa_bold"
+                        android:text="Item Details"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tv_orderId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:fontFamily="@font/nexa_bold"
+                        android:text=""
+                        android:gravity="end"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
+
+
+                <View
+                    android:id="@+id/viewLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/dotted_line"
+                    android:fontFamily="@font/nexa_regular"
+                    android:gravity="start"
+                    android:textColor="@color/grey_1"
+                    android:textSize="@dimen/_12sdp" />
 
                 <LinearLayout
 
@@ -241,6 +281,100 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2sp"
+                    android:layout_margin="8sp"
+                    android:background="@color/grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:fontFamily="@font/nexa_regular"
+                        android:text="Total Amount"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13sdp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:gravity="end">
+
+                        <TextView
+                            android:id="@+id/tv_total_ProductPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/nexa_regular"
+                            android:text="440/-"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_13sdp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2sp"
+                    android:layout_margin="8sp"
+                    android:background="@color/grey" />
+
+                <RelativeLayout
+                    android:id="@+id/ll_payOnDelivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginVertical="@dimen/_5sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_retailer_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/nexa_regular"
+                        android:text="Retailer Name:"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <ImageView
+                        android:visibility="gone"
+                        android:id="@+id/refresh_iv"
+                        android:rotation="180"
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="@dimen/_6sdp"
+                        android:layout_toLeftOf="@id/tv_requestPayment"
+                        android:layout_width="@dimen/_25sdp"
+                        android:tint="@color/colorPrimary"
+                        android:layout_height="@dimen/_25sdp"
+                        android:src="@drawable/ic_replay" />
+
+                    <TextView
+                        android:id="@+id/tv_requestPayment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/the_button"
+                        android:fontFamily="@font/nexa_regular"
+                        android:paddingHorizontal="@dimen/_8sdp"
+                        android:paddingVertical="@dimen/_8sdp"
+                        android:text="Request Payment"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="@dimen/_12sdp" />
+                </RelativeLayout>
+
 
             </LinearLayout>
 
@@ -249,6 +383,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/main"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingRight="@dimen/_5sdp"
@@ -258,8 +393,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:fontFamily="@font/nexa_bold"
                     android:text="Retailer's Signature"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -267,6 +406,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_15sdp"
                     android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/_8sdp"
                     android:src="@drawable/trash"
                     android:text="Clear" />
 
@@ -285,17 +425,10 @@
 
                 android:visibility="visible">
 
-                <!--           <com.github.gcacace.signaturepad.views.SignaturePad
-
-                                android:id="@+id/mSignaturePad"
-                                android:layout_width="@dimen/_300sdp"
-                                android:layout_height="wrap_content"
-                                app:penColor="@android:color/black" />-->
                 <com.simplify.ink.InkView
                     android:id="@+id/ink"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-
 
                 <ImageView
                     android:id="@+id/final_image"
@@ -313,11 +446,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/curve_bg_login"
-        android:fontFamily="@font/nexa_light"
+        android:layout_margin="@dimen/_8sdp"
+        android:background="@drawable/the_button"
+        android:fontFamily="@font/nexa_bold"
         android:text="Upload Proof and Delivery Order"
         android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/_12sdp" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_14sdp" />
 
 </RelativeLayout>

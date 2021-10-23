@@ -99,9 +99,11 @@ public class MyRatingActivity extends AppCompatActivity implements View.OnClickL
         HashMap<String, String> hm = new HashMap<>();
 
         hm.put("driver_id", id);
-        if (str_type.equals("company")){
+        Utils.E("hm::::::rating::"+str_type);
+        if (str_type.equals("Company")){
             hm.put("driver_type", "Driver");
         }
+
 
 
         Call<RatingDTO> call = apiService.get_driver_rating(hm);

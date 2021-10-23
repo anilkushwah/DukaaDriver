@@ -671,13 +671,15 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     model_name_error_tv.setVisibility(View.VISIBLE);
                     model_name_error_tv.setText("Enter Model Number");
 
-                } else if (vehicle_type_spiner.getSelectedItem().toString().equals("Select wheeler type")) {
+                }
+                /*else if (vehicle_type_spiner.getSelectedItem().toString().equals("Select wheeler type")) {
 
                     //  Toast.makeText(AddNewVehicleActivity.this, "Selete Wheeler Type", Toast.LENGTH_LONG).show();
                     vehicle_type_error_tv.setText("Selete Wheeler Type");
                     vehicle_type_error_tv.setVisibility(View.VISIBLE);
 
-                } else if (et_reg_vehicle_regiter_num.getText().toString().equals("")) {
+                }*/
+                else if (et_reg_vehicle_regiter_num.getText().toString().equals("")) {
                     et_reg_vehicle_regiter_num.setFocusable(true);
                     registeration_number_error_tv.setText("Enter Registeration Number");
                     registeration_number_error_tv.setVisibility(View.VISIBLE);
@@ -1098,12 +1100,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 hm.put("mobile", edt_mobile_number.getText().toString());
                 hm.put("national_id", edt_national_Id.getText().toString());
                 hm.put("password", edt_password.getText().toString());
-                // hm.put("sacco_name", edt_Sacco_Name.getText().toString());
-                //  hm.put("other_services", et_reg_other_services.getText().toString());
                 hm.put("device_id", m_deviceId);
                 hm.put("token", sessionManager.getTokenFCM());
-                hm.put("vehicle_type", vehicle_type_spiner.getSelectedItem().toString());
-                hm.put("type", vehicle_type_spiner.getSelectedItem().toString());
+               hm.put("vehicle_type", vehicle_type_spiner.getSelectedItem().toString());
+               hm.put("type", vehicle_type_spiner.getSelectedItem().toString());
+                hm.put("type","Driver");
 
                 if (selete_type.equals("Courier")) {
                     hm.put("delivery_partner_id", sessionManager.getRegisterUser().getId());
@@ -1242,10 +1243,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private void getVehicleType() {
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        HashMap<String, String> hm = new HashMap<>();
-        hm.put("driver_id", sessionManager.getRegisterUser().getId());
 
-        Call<AllResponse> call = apiService.get_vehicle_type(hm);
+        Call<AllResponse> call = apiService.get_vehicle_type();
         call.enqueue(new Callback<AllResponse>() {
             @Override
             public void onResponse(Call<AllResponse> call, Response<AllResponse> response) {

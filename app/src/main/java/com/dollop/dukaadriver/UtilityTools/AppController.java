@@ -108,6 +108,7 @@ public class AppController extends MultiDexApplication {
         super.onCreate();
         mInstance = this;
         new UserDataHelper(this);
+        SavedData.getInstance();
 
 
 

@@ -1,5 +1,6 @@
 package com.dollop.dukaadriver.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.dollop.dukaadriver.R;
 import com.dollop.dukaadriver.UtilityTools.SessionManager;
+import com.dollop.dukaadriver.UtilityTools.Utils;
 import com.dollop.dukaadriver.activity.AcceptOrderActivity;
 import com.dollop.dukaadriver.activity.AcceptOrderDriverActivity;
 import com.dollop.dukaadriver.model.AccpetOrderDTO;
@@ -27,8 +29,13 @@ import com.dollop.dukaadriver.model.OrderDTO;
 import com.dollop.dukaadriver.retrofit.ApiClient;
 import com.dollop.dukaadriver.retrofit.ApiInterface;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -53,14 +60,40 @@ public class CompanyDriverHomeAdapter extends RecyclerView.Adapter<CompanyDriver
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.order_id_TV.setText("#000" + mOrderDTOArrayList.get(position).getId());
-        holder.order_date_tv.setText(mOrderDTOArrayList.get(position).getCreateDate());
-        holder.pickup_address_Tv.setText(mOrderDTOArrayList.get(position).getDistributorAddress());
+
+        DateFormat output = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                Locale.ENGLISH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM dd yyyy h:mm a");
+        // SimpleDateFormat format = new SimpleDateFormat("hh:mm aa");
+        Date dateasdf = null;
+        int hours = 0;
+
+            try {
+            dateasdf = output.parse(mOrderDTOArrayList.get(position).getCreateDate());
+            long mills = new Date().getTime() - dateasdf.getTime();
+            hours = (int) (mills / (1000 * 60 * 60));
+            int mins = (int) (mills % (1000 * 60 * 60));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(dateasdf != null ) {
+            holder.order_date_tv.setText(dateFormat.format(dateasdf));
+        }
+        else{
+            Utils.E("Null date"+mOrderDTOArrayList.get(position).getCreateDate());
+        }
+
+       // holder.order_date_tv.setText(mOrderDTOArrayList.get(position).getCreateDate());
+
+        holder.pickup_address_Tv.setText(mOrderDTOArrayList.get(position).getDistributor_landmark()+","+mOrderDTOArrayList.get(position).getDistributorAddress());
         holder.drop_address.setText(mOrderDTOArrayList.get(position).getRetailer_landmark()+","+mOrderDTOArrayList.get(position).getRetailerAddress());
 
         holder.total_amouny.setText("Delivery charges-" + mOrderDTOArrayList.get(position).getDeliveryCharge());
         holder.total_vat_TV.setText("Weight-");
+        holder.tv_recipientId.setText(mOrderDTOArrayList.get(position).getShopName());
+
 
         holder.new_order_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,18 +108,6 @@ public class CompanyDriverHomeAdapter extends RecyclerView.Adapter<CompanyDriver
         });
         holder.vehical_name.setText(mOrderDTOArrayList.get(position).getVehicle().get(0).getVehicleName());
         holder.vehical__registrationNumber.setText(mOrderDTOArrayList.get(position).getVehicle().get(0).getVehicleRegistrionNumber());
-        if (mOrderDTOArrayList.get(position).getVehicle_type().equals("Van")) {
-            holder.wheeler_image.setBackgroundResource(R.drawable.ic_van);
-            // Log.e("4 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
-        } else if (mOrderDTOArrayList.get(position).getVehicle_type().equals("Bike")) {
-            holder.wheeler_image.setBackgroundResource(R.drawable.ic_bike);
-            // Log.e("2 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
-        } else if (mOrderDTOArrayList.get(position).getVehicle_type().equals("Truck")) {
-            holder.wheeler_image.setBackgroundResource(R.drawable.ic_truck);
-            // Log.e("2 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
-        } else {
-            holder.wheeler_image.setBackgroundResource(R.drawable.ic_bike);
-        }
 
     }
 
@@ -98,9 +119,8 @@ public class CompanyDriverHomeAdapter extends RecyclerView.Adapter<CompanyDriver
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView order_id_TV, order_date_tv, pickup_address_Tv, drop_address, total_amouny;
-        TextView total_vat_TV, vehical_name, vehical__registrationNumber;
+        TextView total_vat_TV, vehical_name, vehical__registrationNumber,tv_recipientId;
         LinearLayout new_order_layout;
-        CircleImageView wheeler_image;
 
 
 
@@ -114,9 +134,9 @@ public class CompanyDriverHomeAdapter extends RecyclerView.Adapter<CompanyDriver
             total_amouny = itemView.findViewById(R.id.total_amouny);
             total_vat_TV = itemView.findViewById(R.id.total_vat_TV);
             new_order_layout = itemView.findViewById(R.id.new_order_layout);
-            wheeler_image = itemView.findViewById(R.id.wheeler_image);
             vehical_name = itemView.findViewById(R.id.vehical_name);
             vehical__registrationNumber = itemView.findViewById(R.id.vehical__registrationNumber);
+            tv_recipientId = itemView.findViewById(R.id.tv_recipientId);
 
 
             sessionManager = new SessionManager(context);

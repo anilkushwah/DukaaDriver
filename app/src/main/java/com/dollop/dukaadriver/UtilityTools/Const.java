@@ -7,7 +7,8 @@ package com.dollop.dukaadriver.UtilityTools;
 public class Const {
 
     public interface URL {
-        }
+
+    }
 }
 
 

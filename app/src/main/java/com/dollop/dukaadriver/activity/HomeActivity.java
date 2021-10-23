@@ -1,17 +1,8 @@
 package com.dollop.dukaadriver.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.MenuItem;
 import android.view.WindowManager;
-
-
-import com.dollop.dukaadriver.R;
-import com.dollop.dukaadriver.UtilityTools.MarshMallowPermission;
-import com.dollop.dukaadriver.UtilityTools.SessionManager;
-import com.dollop.dukaadriver.ui.jobs.CourierJobFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +13,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.dollop.dukaadriver.R;
+import com.dollop.dukaadriver.UtilityTools.MarshMallowPermission;
+import com.dollop.dukaadriver.UtilityTools.SavedData;
+import com.dollop.dukaadriver.UtilityTools.SessionManager;
+import com.dollop.dukaadriver.UtilityTools.Utils;
+import com.dollop.dukaadriver.ui.jobs.CourierJobFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -37,33 +36,56 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_order, R.id.navigation_earning, R.id.navigation_jobs
+                R.id.navigation_home, R.id.navigation_order, R.id.navigation_earning,
+                R.id.navigation_jobs
                 , R.id.navigation_profile)
                 .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
 
-        if (sessionManager.is_DRIVER()) {
+
+       /* if (sessionManager.is_DRIVER()) {
             navView.getMenu().findItem(R.id.navigation_jobs).setVisible(false);
 
-        }else {
+        } else {
             navView.getMenu().findItem(R.id.navigation_order).setVisible(false);
         }
 
         if (sessionManager.is_COMPANY_DRIVER()) {
             navView.getMenu().findItem(R.id.navigation_earning).setVisible(false);
-        }
+        }*/
 
         MarshMallowPermission marshMallowPermission = new MarshMallowPermission(HomeActivity.this);
 
-        if (marshMallowPermission.checkPermissionForLocation()) {
-
-        } else {
+        if (!marshMallowPermission.checkPermissionForLocation()) {
             marshMallowPermission.requestPermissionForLocation();
         }
+        Utils.E("getDriver::"+SavedData.getDriver());
+        Utils.E("getCourierDriver::"+SavedData.getCourierDriver());
+        Utils.E("getCourier::"+SavedData.getCourier());
 
-
+        if (SavedData.getDriver()) {
+            navView.getMenu().findItem(R.id.navigation_home).setVisible(true);
+            navView.getMenu().findItem(R.id.navigation_order).setVisible(true);
+            navView.getMenu().findItem(R.id.navigation_jobs).setVisible(false);
+            navView.getMenu().findItem(R.id.navigation_earning).setVisible(true);
+            navView.getMenu().findItem(R.id.navigation_profile).setVisible(true);
+        }
+        if (SavedData.getCourierDriver()) {
+            navView.getMenu().findItem(R.id.navigation_home).setVisible(true);
+            navView.getMenu().findItem(R.id.navigation_order).setVisible(true);
+            navView.getMenu().findItem(R.id.navigation_jobs).setVisible(false);
+            navView.getMenu().findItem(R.id.navigation_earning).setVisible(false);
+            navView.getMenu().findItem(R.id.navigation_profile).setVisible(true);
+        }
+        if (SavedData.getCourier()) {
+            navView.getMenu().findItem(R.id.navigation_home).setVisible(true);
+            navView.getMenu().findItem(R.id.navigation_order).setVisible(false);
+            navView.getMenu().findItem(R.id.navigation_jobs).setVisible(true);
+            navView.getMenu().findItem(R.id.navigation_earning).setVisible(true);
+            navView.getMenu().findItem(R.id.navigation_profile).setVisible(true);
+        }
     }
 
     @Override
@@ -82,12 +104,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         return true;
     }
 
-
-    public void moveToFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.nav_host_fragment, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
-
-    }
 
     public void replaceFragmentWithoutBack(Fragment newFragment, String tag) {
         FragmentManager fragmentManager = getSupportFragmentManager();

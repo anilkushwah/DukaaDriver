@@ -19,14 +19,10 @@ public class SavedData {
     private static final String CustomerPic = "customerPic";
     private static final String CustomerLat = "customerLat";
     private static final String CustomerLong = "customerLong";
-
-
-
-
-
-
-    /*Order ID 146381161*/
-
+    private static final String Driver = "Driver";
+    private static final String Courier = "Courier";
+    private static final String CourierDriver = "CourierDriver";
+    private static final String Path = "Path";
 
     public static SharedPreferences getInstance() {
         if (prefs == null) {
@@ -34,9 +30,43 @@ public class SavedData {
         }
         return prefs;
     }
+    public static boolean getCourierDriver() {
+        return getInstance().getBoolean(CourierDriver, false);
+    }
 
+    public static void saveCourierDriver(boolean startKm) {
+        SharedPreferences.Editor editor = getInstance().edit();
+        editor.putBoolean(CourierDriver, startKm);
+        editor.apply();
+    }public static boolean getPath() {
+        return getInstance().getBoolean(Path, false);
+    }
 
+    public static void savePath(boolean startKm) {
+        SharedPreferences.Editor editor = getInstance().edit();
+        editor.putBoolean(Path, startKm);
+        editor.apply();
+    }
 
+    public static boolean getCourier() {
+        return getInstance().getBoolean(Courier, false);
+    }
+
+    public static void saveCourier(boolean startKm) {
+        SharedPreferences.Editor editor = getInstance().edit();
+        editor.putBoolean(Courier, startKm);
+        editor.apply();
+    }
+
+    public static boolean getDriver() {
+        return getInstance().getBoolean(Driver, false);
+    }
+
+    public static void saveDriver(boolean startKm) {
+        SharedPreferences.Editor editor = getInstance().edit();
+        editor.putBoolean(Driver, startKm);
+        editor.apply();
+    }
 
 
     public static String getFirebaseToken() {

@@ -22,6 +22,7 @@
             android:id="@+id/create_back"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+            android:layout_centerVertical="true"
             android:layout_margin="@dimen/_10sdp"
             android:src="@drawable/ic_back_left" />
 
@@ -29,6 +30,7 @@
             android:id="@+id/title_TV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_toRightOf="@+id/create_back"
             android:fontFamily="@font/nexa_bold"
@@ -41,7 +43,12 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_30sdp"
             android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/_4sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
             android:background="@drawable/splash_next_btn"
             android:fontFamily="@font/nexa_bold"
             android:paddingHorizontal="@dimen/_8sdp"
@@ -87,22 +94,25 @@
 
 
                         <ImageView
+                            android:tint="@color/colorPrimary"
                             android:layout_width="@dimen/_25sdp"
                             android:layout_height="@dimen/_25sdp"
                             android:src="@drawable/ic_camera" />
 
                         <TextView
+                            android:textColor="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nexa_regular"
                             android:text="Upload Image"
-                            android:textSize="@dimen/_6sdp"
-                            android:fontFamily="@font/nexa_regular"/>
+                            android:textSize="@dimen/_6sdp" />
 
                         <TextView
+                            android:textColor="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="(optional)"
                             android:fontFamily="@font/nexa_regular"
+                            android:text="(optional)"
                             android:textSize="@dimen/_6sdp" />
                     </LinearLayout>
 
@@ -117,8 +127,6 @@
                         android:scaleType="fitXY" />
 
                 </RelativeLayout>
-
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -132,6 +140,21 @@
                     android:textStyle="bold" />
 
 
+                <TextView
+                    android:id="@+id/tv_driver_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center|start"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:background="@drawable/et_edittext_bck"
+                    android:fontFamily="@font/nexa_light"
+                    android:text=" "
+                    android:textSize="@dimen/_11sdp"
+                    android:textStyle="bold" />
+
+
                 <EditText
                     android:id="@+id/edt_driver_name"
                     android:layout_width="match_parent"
@@ -141,6 +164,8 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:background="@drawable/et_edittext_bck"
                     android:ems="10"
+                    android:visibility="gone"
+                    android:text="dfgdfhdfh"
                     android:fontFamily="@font/nexa_light"
                     android:gravity="center|left"
                     android:inputType="text"
@@ -229,6 +254,14 @@
                         android:textSize="@dimen/_11sdp" />
 
 
+                    <TextView
+                        android:id="@+id/tv_mobileNUmber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_2sdp"
+                        android:gravity="center|left"
+                        android:fontFamily="@font/nexa_light"
+                        android:layout_marginLeft="@dimen/_5sdp"                        android:textSize="@dimen/_11sdp" />
                     <EditText
                         android:id="@+id/edt_mobile_number"
                         android:layout_width="match_parent"
@@ -236,6 +269,7 @@
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:background="@null"
                         android:ems="10"
+                        android:visibility="gone"
                         android:fontFamily="@font/nexa_light"
                         android:gravity="center|left"
                         android:inputType="number"
@@ -267,6 +301,21 @@
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/tv_national_Id"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center|start"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:background="@drawable/et_edittext_bck"
+                    android:fontFamily="@font/nexa_light"
+                    android:text=" "
+                    android:textSize="@dimen/_11sdp"
+                    android:textStyle="bold" />
+
+
                 <EditText
                     android:id="@+id/edt_national_Id"
                     android:layout_width="match_parent"
@@ -274,6 +323,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginRight="@dimen/_10sdp"
+                    android:visibility="gone"
                     android:background="@drawable/et_edittext_bck"
                     android:ems="10"
                     android:fontFamily="@font/nexa_light"
@@ -333,6 +383,7 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:tint="@color/colorPrimary"
                                 android:layout_width="28dp"
                                 android:layout_height="16dp"
                                 android:src="@drawable/ic_upload" />
@@ -573,7 +624,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/vehicle_type_LL"
@@ -581,9 +632,9 @@
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_20sdp"
-                    android:gravity="center"
                     android:background="@drawable/chang_password"
-                    android:visibility="visible">
+                    android:gravity="center"
+                    android:visibility="gone">
 
                     <Spinner
                         android:id="@+id/vehicle_type_spiner"
@@ -686,12 +737,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/curve_bg_login"
-                android:fontFamily="@font/nexa_regular"
-                android:text="Submit"
+                android:layout_margin="@dimen/_8sdp"
+                android:background="@drawable/the_button"
+                android:fontFamily="@font/nexa_bold"
+                android:text="SUBMIT"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
                 android:visibility="gone" />
 
         </RelativeLayout>

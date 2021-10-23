@@ -94,10 +94,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.2"
-            android:background="@drawable/curve_bg_login"
-            android:fontFamily="@font/nexa_regular"
+            android:background="@drawable/the_button"
+            android:fontFamily="@font/nexa_bold"
+            android:textStyle="bold"
+            android:layout_marginRight="@dimen/_8sdp"
             android:text="Update Vehicle"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/_11sdp"
             android:visibility="gone" />
 

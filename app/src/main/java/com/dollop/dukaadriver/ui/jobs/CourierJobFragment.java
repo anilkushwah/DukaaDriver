@@ -105,14 +105,14 @@ public class CourierJobFragment extends Fragment implements View.OnClickListener
             btn_complete.setTextColor(getResources().getColor(R.color.white));
 
             mOrderDTOArrayList.clear();
-            mOnRoutAdapter = new OnRoutAdapter(getActivity(), mOrderDTOArrayList);
-            jobs_order_RL.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+            mOnRoutAdapter = new OnRoutAdapter(requireActivity(), mOrderDTOArrayList);
+            jobs_order_RL.setLayoutManager(new LinearLayoutManager(requireActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
             jobs_order_RL.setAdapter(mOnRoutAdapter);
             mOnRoutAdapter.notifyDataSetChanged();
 
             mOrderDTOArrayList.clear();
-            postOrderAdapter = new PostOrderAdapter(getActivity(), mOrderDTOArrayList);
-            jobs_order_RL.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+            postOrderAdapter = new PostOrderAdapter(requireActivity(), mOrderDTOArrayList);
+            jobs_order_RL.setLayoutManager(new LinearLayoutManager(requireActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
             jobs_order_RL.setAdapter(postOrderAdapter);
             postOrderAdapter.notifyDataSetChanged();
 
@@ -132,14 +132,14 @@ public class CourierJobFragment extends Fragment implements View.OnClickListener
 
 
             mAssignOrdeList.clear();
-            mAssignedJobsAdapter = new AssignedJobsAdapter(getActivity(), mAssignOrdeList);
-            jobs_order_RL.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+            mAssignedJobsAdapter = new AssignedJobsAdapter(requireActivity(), mAssignOrdeList);
+            jobs_order_RL.setLayoutManager(new LinearLayoutManager(requireActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
             jobs_order_RL.setAdapter(mAssignedJobsAdapter);
             mAssignedJobsAdapter.notifyDataSetChanged();
 
             mOrderDTOArrayList.clear();
-            postOrderAdapter = new PostOrderAdapter(getActivity(), mOrderDTOArrayList);
-            jobs_order_RL.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+            postOrderAdapter = new PostOrderAdapter(requireActivity(), mOrderDTOArrayList);
+            jobs_order_RL.setLayoutManager(new LinearLayoutManager(requireActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
             jobs_order_RL.setAdapter(postOrderAdapter);
             postOrderAdapter.notifyDataSetChanged();
 
@@ -158,30 +158,30 @@ public class CourierJobFragment extends Fragment implements View.OnClickListener
 
 
             mOrderDTOArrayList.clear();
-            mOnRoutAdapter = new OnRoutAdapter(getActivity(), mOrderDTOArrayList);
-            jobs_order_RL.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+            mOnRoutAdapter = new OnRoutAdapter(requireActivity(), mOrderDTOArrayList);
+            jobs_order_RL.setLayoutManager(new LinearLayoutManager(requireActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
             jobs_order_RL.setAdapter(mOnRoutAdapter);
             mOnRoutAdapter.notifyDataSetChanged();
 
             mAssignOrdeList.clear();
-            mAssignedJobsAdapter = new AssignedJobsAdapter(getActivity(), mAssignOrdeList);
-            jobs_order_RL.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+            mAssignedJobsAdapter = new AssignedJobsAdapter(requireActivity(), mAssignOrdeList);
+            jobs_order_RL.setLayoutManager(new LinearLayoutManager(requireActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
             jobs_order_RL.setAdapter(mAssignedJobsAdapter);
             mAssignedJobsAdapter.notifyDataSetChanged();
 
             completeOrder();
 
         } else if (v == back_home_img) {
-            getActivity().onBackPressed();
+            requireActivity().onBackPressed();
         }
     }
 
     private void assignJobsMethod() {
-        final Dialog dialog = Utils.initProgressDialog(getActivity());
+        final Dialog dialog = Utils.initProgressDialog(requireActivity());
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         HashMap<String, String> hm = new HashMap<>();
-        hm.put("courier_id", ((HomeActivity) getActivity()).sessionManager.getRegisterUser().getId());
+        hm.put("courier_id", ((HomeActivity) requireActivity()).sessionManager.getRegisterUser().getId());
 
         Call<AllResponse> call = apiService.pending_assign_driver(hm);
         call.enqueue(new Callback<AllResponse>() {
@@ -202,8 +202,8 @@ public class CourierJobFragment extends Fragment implements View.OnClickListener
                             no_data_image.setVisibility(View.GONE);
                         }
 
-                        mAssignedJobsAdapter = new AssignedJobsAdapter(getActivity(), mAssignOrdeList);
-                        jobs_order_RL.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+                        mAssignedJobsAdapter = new AssignedJobsAdapter(requireActivity(), mAssignOrdeList);
+                        jobs_order_RL.setLayoutManager(new LinearLayoutManager(requireActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
                         jobs_order_RL.setAdapter(mAssignedJobsAdapter);
                         mAssignedJobsAdapter.notifyDataSetChanged();
 
@@ -229,11 +229,11 @@ public class CourierJobFragment extends Fragment implements View.OnClickListener
 
     private void getVehicalMethod() {
 
-        final Dialog dialog = Utils.initProgressDialog(getActivity());
+        final Dialog dialog = Utils.initProgressDialog(requireActivity());
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         HashMap<String, String> hm = new HashMap<>();
-        hm.put("driver_id", ((HomeActivity) getActivity()).sessionManager.getRegisterUser().getId());
+        hm.put("driver_id", ((HomeActivity) requireActivity()).sessionManager.getRegisterUser().getId());
 
         Call<HomeDTO> call = apiService.route_jobs_order(hm);
         call.enqueue(new Callback<HomeDTO>() {
@@ -253,8 +253,8 @@ public class CourierJobFragment extends Fragment implements View.OnClickListener
                             no_data_image.setVisibility(View.GONE);
                         }
 
-                        mOnRoutAdapter = new OnRoutAdapter(getActivity(), mOrderDTOArrayList);
-                        jobs_order_RL.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+                        mOnRoutAdapter = new OnRoutAdapter(requireActivity(), mOrderDTOArrayList);
+                        jobs_order_RL.setLayoutManager(new LinearLayoutManager(requireActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
                         jobs_order_RL.setAdapter(mOnRoutAdapter);
                         mOnRoutAdapter.notifyDataSetChanged();
 
@@ -280,11 +280,11 @@ public class CourierJobFragment extends Fragment implements View.OnClickListener
 
     private void completeOrder() {
 
-        final Dialog dialog = Utils.initProgressDialog(getActivity());
+        final Dialog dialog = Utils.initProgressDialog(requireActivity());
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         HashMap<String, String> hm = new HashMap<>();
-        hm.put("driver_id", ((HomeActivity) getActivity()).sessionManager.getRegisterUser().getId());
+        hm.put("driver_id", ((HomeActivity) requireActivity()).sessionManager.getRegisterUser().getId());
         hm.put("type", "complete");
 
         Call<HomeDTO> call = apiService.route_jobs_order(hm);
@@ -306,7 +306,7 @@ public class CourierJobFragment extends Fragment implements View.OnClickListener
                             no_data_image.setVisibility(View.GONE);
                         }
 
-                        postOrderAdapter = new PostOrderAdapter(getActivity(), mOrderDTOArrayList);
+                        postOrderAdapter = new PostOrderAdapter(requireActivity(), mOrderDTOArrayList);
                         jobs_order_RL.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
                         jobs_order_RL.setAdapter(postOrderAdapter);
                         postOrderAdapter.notifyDataSetChanged();

@@ -19,7 +19,7 @@ public class NotificationsFragment extends Fragment implements View.OnClickListe
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
         btn_accpet_order = root.findViewById(R.id.btn_accpet_order);
 
@@ -31,7 +31,7 @@ public class NotificationsFragment extends Fragment implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == btn_accpet_order){
-            Intent intent = new Intent(getActivity(), AcceptOrderDriverActivity.class);
+            Intent intent = new Intent(requireActivity(), AcceptOrderDriverActivity.class);
             startActivity(intent);
         }
     }

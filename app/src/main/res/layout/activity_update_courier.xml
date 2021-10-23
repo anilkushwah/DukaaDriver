@@ -7,8 +7,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    android:weightSum="2"
-    tools:context=".activity.RegistrationActivity">
+    android:weightSum="2">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -157,7 +156,6 @@
                     android:paddingBottom="@dimen/_9sdp"
                     android:textSize="@dimen/_9sdp" />
 
-
                 <TextView
                     android:id="@+id/full_name_error_tv"
                     android:layout_width="match_parent"
@@ -287,7 +285,7 @@
                         android:fontFamily="@font/nexa_bold"
                         android:gravity="center|left"
                         android:paddingLeft="@dimen/_10sdp"
-                        android:text="+91"
+                        android:text="+254"
                         android:textSize="@dimen/_9sdp"
                         android:textStyle="bold" />
 
@@ -345,11 +343,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/curve_bg_login"
-                android:fontFamily="@font/nexa_regular"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:background="@drawable/the_button"
+                android:fontFamily="@font/nexa_bold"
                 android:text="Update"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_14sdp"
                 android:visibility="gone" />
 

@@ -42,7 +42,8 @@ public class AssignOrderActivity extends AppCompatActivity {
     SessionManager sessionManager;
     ArrayList<DriverDTO> mDriverDTOArrayList;
     String order_id = "";
-    OrderDTO mOrderDTO;
+    String VehicleType = "";
+    //OrderDTO mOrderDTO;
     ImageView back_home_img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,8 @@ public class AssignOrderActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.fragment_assign_order);
 
-        mOrderDTO = (OrderDTO) getIntent().getSerializableExtra("object");
+        order_id=getIntent().getStringExtra("ID");
+        VehicleType=getIntent().getStringExtra("VehicleType");
 
 
         all_drivers_RL = findViewById(R.id.all_drivers_RL);
@@ -81,7 +83,7 @@ public class AssignOrderActivity extends AppCompatActivity {
 
         HashMap<String, String> hm = new HashMap<>();
         hm.put("driver_id", sessionManager.getRegisterUser().getId());
-        hm.put("vehicle_type", mOrderDTO.getVehicle_type());
+        hm.put("vehicle_type", VehicleType);
 
         Call<AllResponse> call = apiService.get_driver_status(hm);
         call.enqueue(new Callback<AllResponse>() {
@@ -95,7 +97,9 @@ public class AssignOrderActivity extends AppCompatActivity {
                     if (body.getStatus() == 200) {
                         mDriverDTOArrayList = body.getDriverList();
 
-                        mAllDriversAdapter = new AllDriversAdapter(AssignOrderActivity.this, mDriverDTOArrayList,  mOrderDTO.getVehicle_type(), mOrderDTO.getId());
+                        mAllDriversAdapter = new AllDriversAdapter(AssignOrderActivity.this,
+                                mDriverDTOArrayList,  VehicleType,
+                                order_id);
                         all_drivers_RL.setLayoutManager(new LinearLayoutManager(AssignOrderActivity.this, RecyclerView.VERTICAL, false));
                         all_drivers_RL.setAdapter(mAllDriversAdapter);
                         mAllDriversAdapter.notifyDataSetChanged();

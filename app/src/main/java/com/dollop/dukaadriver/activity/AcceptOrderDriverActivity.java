@@ -1,13 +1,5 @@
 package com.dollop.dukaadriver.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.Manifest;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -18,33 +10,41 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-
-import com.dollop.dukaadriver.DirectionHelper.PointsParser;
-import com.dollop.dukaadriver.model.VehicalDTO;
-import com.google.android.gms.location.LocationListener;
-
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Looper;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.dollop.dukaadriver.DirectionHelper.FetchURL;
+import com.dollop.dukaadriver.DirectionHelper.PointsParser;
 import com.dollop.dukaadriver.DirectionHelper.TaskLoadedCallback;
 import com.dollop.dukaadriver.R;
 import com.dollop.dukaadriver.UtilityTools.GoogleApisHandle;
@@ -53,17 +53,23 @@ import com.dollop.dukaadriver.UtilityTools.SavedData;
 import com.dollop.dukaadriver.UtilityTools.SessionManager;
 import com.dollop.dukaadriver.UtilityTools.Utility;
 import com.dollop.dukaadriver.UtilityTools.Utils;
+import com.dollop.dukaadriver.adapter.ProductItemListAdapter;
 import com.dollop.dukaadriver.firebase.Config;
 import com.dollop.dukaadriver.model.AllResponse;
 import com.dollop.dukaadriver.model.DistanceDTO;
 import com.dollop.dukaadriver.model.DistanceRespone;
 import com.dollop.dukaadriver.model.OrderDTO;
+import com.dollop.dukaadriver.model.OrderItem;
+import com.dollop.dukaadriver.model.VehicalDTO;
 import com.dollop.dukaadriver.retrofit.ApiClient;
 import com.dollop.dukaadriver.retrofit.ApiInterface;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -71,6 +77,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -88,10 +96,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -100,53 +107,83 @@ import retrofit2.Response;
 
 public class AcceptOrderDriverActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener, TaskLoadedCallback {
+        GoogleApiClient.OnConnectionFailedListener, TaskLoadedCallback {
 
+    private static final int ALL_PERMISSIONS_RESULT = 1011;
+    private static final long UPDATE_INTERVAL = 1000, FASTEST_INTERVAL = 1000; // = 5 seconds
+    public boolean aBoolean = true;
+    private final ArrayList<String> permissionsRejected = new ArrayList<>();
+    private final ArrayList<String> permissions = new ArrayList<>();
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            Utils.E("broadcast:");
+            //  if (active && !isFinishing()) {
+            String message = intent.getStringExtra("Message");
+            //  ShowDialog();
+            //    }
+
+
+        }
+    };
+    public GoogleApisHandle googleApisHandle;
     ImageView back_image, map_navigation;
-    String pickup = "Start Job";
-    Button pickup_parcel_btn, call_btn, call_to_distributore_btn;
+    String pickup = "START JOB";
+    Button pickup_parcel_btn;
+    TextView call_btn, call_to_distributore_btn;
     OrderDTO mOrderDTO;
-
-    private Polyline currentPolyline;
-    private Marker PickUpMarker, DropUpMarker;
     LatLng currentLatLng, customerLatlong;
-
     double currentLatitude = 0.00;
     double currentLongitude = 0.00;
-    private GoogleMap mMap;
     Dialog dialog;
     String km = "";
     String time_str = "";
-
     int count = 0;
-    private LocationListener locationListener;
-
-    private FusedLocationProviderClient fusedLocationClient;
-    private static final int ALL_PERMISSIONS_RESULT = 1011;
-    private ArrayList<String> permissionsToRequest;
-    private ArrayList<String> permissionsRejected = new ArrayList<>();
-    private ArrayList<String> permissions = new ArrayList<>();
-
     List<Place.Field> fields;
-    public GoogleApisHandle googleApisHandle;
-    private GoogleApiClient googleApiClient;
-    TextView address_status_tv, address_one_tv, address_tv, distance_tv, distance_Title_tv, time_tv;
+    TextView address_status_tv, address_one_tv, address_tv, order_id_tv, distance_tv, distance_Title_tv, time_tv;
     SessionManager sessionManager;
-
     double customerLatiitude = 0.00;
     double customerLongituded = 0.00;
     String retailer_phone = "", string_stage = "";
     String distributore_number = "";
-
     DistanceRespone mDistanceRespone;
-    private Location location;
-
-    private LocationRequest locationRequest;
-    private static final long UPDATE_INTERVAL = 60000, FASTEST_INTERVAL = 5000; // = 5 seconds
-
     boolean distributore = false;
-
     ArrayList<VehicalDTO> mVehicalDTOS;
+    CountDownTimer countDownTimer;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    public ArrayList<OrderDTO> itemModels = new ArrayList<>();
+
+    Timer T;
+    private Polyline currentPolyline;
+    private Marker DriverMarker, DropUpMarker;
+    private GoogleMap mMap;
+    private LocationListener locationListener;
+    private ArrayList<String> permissionsToRequest;
+    private GoogleApiClient googleApiClient;
+    private Location location;
+    private LocationRequest locationRequest;
+    private FusedLocationProviderClient fusedLocationClient;
+    private Circle userLocationAccuracyCircle;
+    LinearLayout ll_itemListId;
+    LocationCallback locationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            super.onLocationResult(locationResult);
+            if (mMap != null) {
+                location = locationResult.getLastLocation();
+                Utils.E("location:::" + location);
+
+                updatelatLong(location);
+                if (aBoolean) {
+                    aBoolean = false;
+                    SavedData.savePath(true);
+
+                    pathDrwaMethod(new LatLng(customerLatiitude, customerLongituded), location);
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,27 +193,28 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
 
         sessionManager = new SessionManager(this);
         mOrderDTO = (OrderDTO) getIntent().getSerializableExtra("model");
-        Utils.E("RetilerLandmark::::::" + mOrderDTO.getRetailer_landmark());
         string_stage = getIntent().getStringExtra("stage");
+
 
         initialization();
         googleMethod();
         setData();
+     /*   Utils.E("Updatefdasdfs");
 
-
-        Timer T = new Timer();
+        T = new Timer();
         T.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        updatelatLong();
+                        Utils.E("UpdateLocation");
+
                         //   Log.e("timer", "" + T);
                     }
                 });
             }
-        }, 50000, 50000);
+        }, 3000, 3000);*/
 
 
     }
@@ -185,44 +223,36 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
     public void onClick(View v) {
         if (v == pickup_parcel_btn) {
 
-            if (pickup.equals("Start Job")) {
+            switch (pickup) {
+                case "START JOB":
+                    map_navigation.setVisibility(View.VISIBLE);
+                    startJob("Start_Job");
+                    customerLatiitude = Double.parseDouble(mOrderDTO.getStoreLat());
+                    customerLongituded = Double.parseDouble(mOrderDTO.getStoreLong());
+                    distributore = false;
+                    break;
+                case "PICK UP":
+                    pichUpOrder();
+                    distributore = false;
+                    break;
+                case "Start Job For Delivery":
+                    startJob("On_the_way");
+                    map_navigation.setVisibility(View.VISIBLE);
+                    address_status_tv.setText("Drop Location");
 
-                map_navigation.setVisibility(View.VISIBLE);
-                startJob("Start_Job");
+                    address_one_tv.setText(mOrderDTO.getRetailer_landmark() + "," + mOrderDTO.getRetailerAddress());
+                    address_tv.setText(mOrderDTO.getRetailer_landmark() + "," + mOrderDTO.getRetailerAddress());
 
-                customerLatiitude = Double.parseDouble(mOrderDTO.getStoreLat());
-                customerLongituded = Double.parseDouble(mOrderDTO.getStoreLong());
+                    customerLatiitude = Double.parseDouble(mOrderDTO.getRetailerLat());
+                    customerLongituded = Double.parseDouble(mOrderDTO.getRetailerLong());
 
-                distributore = false;
-            } else if (pickup.equals("pick up")) {
+                    show_retailer_distance();
 
-                pichUpOrder();
-                distributore = false;
-
-            } else if (pickup.equals("start job drop")) {
-
-                startJob("On_the_way");
-                map_navigation.setVisibility(View.VISIBLE);
-                address_status_tv.setText("Drop Location");
-
-                address_one_tv.setText(mOrderDTO.getRetailer_landmark() + "," + mOrderDTO.getRetailerAddress());
-                address_tv.setText(mOrderDTO.getRetailerAddress());
-
-                customerLatiitude = Double.parseDouble(mOrderDTO.getRetailerLat());
-                customerLongituded = Double.parseDouble(mOrderDTO.getRetailerLong());
-
-                show_retailer_distance();
-
-                distributore = true;
-            } else if (pickup.equals("arrived")) {
-                address_status_tv.setText("Drop Location");
-                show_retailer_distance();
-                map_navigation.setVisibility(View.VISIBLE);
-                startActivity(new Intent(AcceptOrderDriverActivity.this, DeliveryPrefrences.class)
-                        .putExtra("model", mOrderDTO));
-                finish();
-
-
+                    distributore = true;
+                    break;
+                case "ARRIVED":
+                    arrivedTask();
+                    break;
             }
 
         } else if (v == back_image) {
@@ -241,8 +271,53 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
             Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", distributore_number, null));
             startActivity(intent);
         }
+        else if(v==ll_itemListId){
+            ProductListDialog(mOrderDTO);
+
+        }
     }
 
+    private void arrivedTask() {
+        StringRequest stringRequest = new StringRequest(1, ApiClient.driver_arrived, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Utils.E("response::" + response);
+                try {
+                    JSONObject object = new JSONObject(response);
+
+                    if (object.getInt("status") == 200) {
+                        address_status_tv.setText("Drop Location");
+                        show_retailer_distance();
+                        map_navigation.setVisibility(View.VISIBLE);
+                        startActivity(new Intent(AcceptOrderDriverActivity.this, DeliveryPrefrences.class)
+                                .putExtra("model", mOrderDTO));
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Utils.E("error::" + error);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("order_id", mOrderDTO.getId());
+                hashMap.put("driver_id",sessionManager.getRegisterUser().getId() );
+                return hashMap;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -265,11 +340,6 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
                 addApi(LocationServices.API).
                 addConnectionCallbacks(this).
                 addOnConnectionFailedListener(this).build();
-
-        googleApiClient = new GoogleApiClient.Builder(getApplicationContext()).
-                addApi(LocationServices.API).
-                addConnectionCallbacks((GoogleApiClient.ConnectionCallbacks) this).
-                addOnConnectionFailedListener((GoogleApiClient.OnConnectionFailedListener) this).build();
 
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
@@ -309,21 +379,6 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
 
     }
 
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            Utils.E("broadcast:");
-            //  if (active && !isFinishing()) {
-            String message = intent.getStringExtra("Message");
-            //  ShowDialog();
-            //    }
-
-
-        }
-    };
-
     private ArrayList<String> permissionsToRequest(ArrayList<String> wantedPermissions) {
         ArrayList<String> result = new ArrayList<>();
 
@@ -335,6 +390,7 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
         return result;
     }
 
+
     private boolean hasPermission(String permission) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return this.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
@@ -342,56 +398,27 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
         return true;
     }
 
-    boolean aBoolean = true;
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-
-        if (location != null) {
-
-            currentLatitude = location.getLatitude();
-            currentLongitude = location.getLongitude();
-
-            sessionManager.current_LAT("" + currentLatitude);
-            sessionManager.current_LONG("" + currentLongitude);
-            if (aBoolean) {
-                aBoolean = false;
-                new AsyncCaller().execute();
-            }
-
-
-        }
-
-
-    }
-
-
     @Override
     public void onTaskDone(Object... values) {
         if (currentPolyline != null)
             currentPolyline.remove();
         currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
-        TimerStartMethod();
-    }
+        if (SavedData.getPath()){
+            new CountDownTimer(30000,1000){
 
-    CountDownTimer countDownTimer;
+                @Override
+                public void onTick(long l) {
 
-    private void TimerStartMethod() {
-        countDownTimer = new CountDownTimer(30000, 1000) {
+                }
 
-            @Override
-            public void onTick(long l) {
+                @Override
+                public void onFinish() {
+                    pathDrwaMethod(new LatLng(customerLatiitude, customerLongituded), location);
+                }
+            }.start();
+        }
 
-            }
 
-            @Override
-            public void onFinish() {
-
-                new AsyncCaller().execute();
-
-            }
-        }.start();
     }
 
 
@@ -418,8 +445,9 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
         startLocationUpdates();
     }
 
-
     private void startLocationUpdates() {
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(AcceptOrderDriverActivity.this);
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(UPDATE_INTERVAL);
@@ -430,10 +458,11 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
                 && ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "You need to enable permissions to display location !", Toast.LENGTH_SHORT).show();
-
         }
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
 
-        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, AcceptOrderDriverActivity.this);
+
+        //  LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationCallback, AcceptOrderDriverActivity.this);
     }
 
     @Override
@@ -452,114 +481,65 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        mMap.setMyLocationEnabled(true);
+        mMap.setMyLocationEnabled(false);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
-
-
-/*
-        T.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                       */
-/* myTextView.setText("count="+count);
-                        count++;*/
-        /*
-
-                        new AsyncCaller().execute();
-
-                    }
-                });
-            }
-        }, 5000, 5000);
-*/
-
-        //
-      /*  mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                String url = "http://maps.google.com/maps?daddr=" + customerLatiitude + "," + customerLongituded;
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
-            }
-        });*/
-
-        //  getCurrentLocation();
-    }
-
-
-    private class AsyncCaller extends AsyncTask<Void, Void, Void> {
-        // ProgressDialog pdLoading = new ProgressDialog(AsyncExample.this);
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            if (mMap != null) {
-                mMap.clear();
-            }
-            Log.e("AsyncCaller>>", "AsyncCaller");
-            if (!isFinishing())
-                pathDrwaMethod(new LatLng(customerLatiitude, customerLongituded), new LatLng(currentLatitude, currentLongitude));
-
-        }
-
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-
-            return null;
-        }
+        mMap.getUiSettings().setAllGesturesEnabled(false);
+        mMap.getUiSettings().setScrollGesturesEnabled(true);
+        mMap.getUiSettings().setZoomGesturesEnabled(true);
 
     }
 
-    private void pathDrwaMethod(LatLng customer, LatLng driver) {
-
+    private void pathDrwaMethod(LatLng customer, Location location) {
         if (dialog != null) {
             dialog.dismiss();
         }
-        Drawable circleDrawable = null;
 
-        if (mOrderDTO.getVehicle_type().equals("Van")) {
-            circleDrawable = getResources().getDrawable(R.drawable.ic_van);
-        } else if (mOrderDTO.getVehicle_type().equals("Bike")) {
-            circleDrawable = getResources().getDrawable(R.drawable.ic_bike);
-        } else if (mOrderDTO.getVehicle_type().equals("Truck")) {
-            circleDrawable = getResources().getDrawable(R.drawable.ic_truck);
+        if (DriverMarker == null) {
+            Drawable circleDrawabledest = getResources().getDrawable(R.drawable.tracking);
+            BitmapDescriptor markerIcondest = getMarkerIconFromDrawableHalf(circleDrawabledest);
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(new LatLng(location.getLatitude(), location.getLongitude()));
+            markerOptions.icon(markerIcondest);
+            markerOptions.rotation(location.getBearing());
+            markerOptions.anchor((float) 0.5, (float) 0.5);
+            DriverMarker = mMap.addMarker(markerOptions);
         } else {
-            circleDrawable = getResources().getDrawable(R.drawable.ic_bike);
+            DriverMarker.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
+            DriverMarker.setRotation(location.getBearing());
+
+        }
+        if (userLocationAccuracyCircle == null) {
+            CircleOptions circleOptions = new CircleOptions();
+            circleOptions.center(new LatLng(location.getLatitude(), location.getLongitude()));
+            circleOptions.strokeWidth(4);
+            circleOptions.strokeColor(Color.argb(255, 255, 0, 0));
+            circleOptions.fillColor(Color.argb(32, 255, 0, 0));
+            circleOptions.radius(location.getAccuracy());
+            userLocationAccuracyCircle = mMap.addCircle(circleOptions);
+        } else {
+            userLocationAccuracyCircle.setCenter(new LatLng(location.getLatitude(), location.getLongitude()));
+            userLocationAccuracyCircle.setRadius(location.getAccuracy());
         }
 
-        BitmapDescriptor markerIcon = getMarkerIconFromDrawable(circleDrawable);
-        PickUpMarker = mMap.addMarker(new MarkerOptions().position(driver).icon(markerIcon));
 
         Drawable circleDrawabledest = getResources().getDrawable(R.drawable.ic_pin_red);
         BitmapDescriptor markerIcondest = getMarkerIconFromDrawable(circleDrawabledest);
-        DropUpMarker = mMap.addMarker(new MarkerOptions().position(customer).icon(markerIcondest));
+        DropUpMarker = mMap.addMarker(new MarkerOptions().position(customer).icon(markerIcondest).title(mOrderDTO.getRetailerName()));
 
+        new FetchURL(this).execute(getUrl(DriverMarker.getPosition(), DropUpMarker.getPosition(),
+                "driving"), "driving");
+        moveCameraToWantedArea(new LatLng(location.getLatitude(), location.getLongitude()), customer);
 
-        new FetchURL(this).execute(getUrl(PickUpMarker.getPosition(), DropUpMarker.getPosition(), "driving"), "driving");
-
-        Utils.E("getUrl::" + getUrl(PickUpMarker.getPosition(), DropUpMarker.getPosition(), "driving"));
-        Log.e("latlong for path", "latlong for path" + customer);
-        Log.e("latlong for path", "latlong for path" + driver);
-        currentLatLng = driver;
-        customerLatlong = customer;
-        moveCameraToWantedArea();
-        //   updatelatLong();
     }
 
-
-    private void moveCameraToWantedArea() {
+    private void moveCameraToWantedArea(LatLng myLatlang, LatLng customer) {
         mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
                 // Set up the bounds coordinates for the area we want the user's viewpoint to be.
                 LatLngBounds bounds = new LatLngBounds.Builder()
-                        .include(currentLatLng)
-                        .include(customerLatlong)
+                        .include(myLatlang)
+                        .include(customer)
                         .build();
                 // Move the camera now.
                 mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 200));
@@ -596,7 +576,9 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
     }
 
 
-    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
+
+    @NonNull
+    private String getUrl(@NonNull LatLng origin, @NonNull LatLng dest, String directionMode) {
         // Origin of route
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
         // Destination of route
@@ -610,14 +592,24 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
         // Building the url to the web service
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" +
                 "AIzaSyA9l7tak8lZrqatDJjb13c3Y5t1e40zZHE";
+        Utils.E("Url:::" + url);
         return url;
     }
 
-    private BitmapDescriptor getMarkerIconFromDrawable(Drawable drawable) {
+    private BitmapDescriptor getMarkerIconFromDrawable(@NonNull Drawable drawable) {
         Canvas canvas = new Canvas();
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         canvas.setBitmap(bitmap);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        drawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    private BitmapDescriptor getMarkerIconFromDrawableHalf(@NonNull Drawable drawable) {
+        Canvas canvas = new Canvas();
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth() / 2, drawable.getIntrinsicHeight() / 2, Bitmap.Config.ARGB_8888);
+        canvas.setBitmap(bitmap);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth() / 2, drawable.getIntrinsicHeight() / 2);
         drawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
@@ -643,17 +635,12 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
                     if (body.getStatus() == 200) {
 
                         if (status.equals("Start_Job")) {
-                            pickup_parcel_btn.setText("Pick up");
-                            pickup = "pick up";
+                            pickup_parcel_btn.setText("PICK UP");
+                            pickup = "PICK UP";
                         } else {
-                            pickup_parcel_btn.setText("Arrived");
-                            pickup = "arrived";
+                            pickup_parcel_btn.setText("ARRIVED");
+                            pickup = "ARRIVED";
                         }
-
-                     /*   Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+currentLatitude, currentLongitude);
-                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                        mapIntent.setPackage("com.google.android.apps.maps");
-                        startActivity(mapIntent);*/
 
 
                     } else {
@@ -689,7 +676,6 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
 
     }
 
-
     private void pichUpOrder() {
         final Dialog dialog = Utils.initProgressDialog(this);
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -710,8 +696,13 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
                     if (body.getStatus() == 200) {
 
                         pickup_parcel_btn.setText("Start Job For Delivery");
-                        pickup = "start job drop";
+                        pickup = "Start Job For Delivery";
 
+
+                        address_status_tv.setText("Drop Location");
+
+                        address_one_tv.setText(mOrderDTO.getRetailer_landmark() + "," + mOrderDTO.getRetailerAddress());
+                        address_tv.setText(mOrderDTO.getRetailer_landmark() + "," + mOrderDTO.getRetailerAddress());
                     } else {
                         ShowDialog(body.getMessage());
                     }
@@ -862,7 +853,8 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
         if (googleApiClient != null) {
             googleApiClient.disconnect();
         }
-        finish();
+       // T.cancel();
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
         super.onStop();
     }
 
@@ -871,83 +863,12 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
         if (googleApiClient != null) {
             googleApiClient.disconnect();
         }
-        finish();
+       // T.cancel();
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
         super.onDestroy();
 
     }
 
-    private void getCurrentLocation() {
-
-        location = googleApisHandle.getLastKnownLocation(AcceptOrderDriverActivity.this);
-        if (location != null) {
-
-            setCurrentMarker(location.getLatitude(), location.getLongitude());
-
-            currentLatitude = location.getLatitude();
-            currentLongitude = location.getLongitude();
-
-            sessionManager.current_LAT("" + currentLatitude);
-            sessionManager.current_LONG("" + currentLongitude);
-
-
-        } else {
-            if (count < 5) {
-                count++;
-                getCurrentLocation();
-            } else {
-                ShowRefereshDialog();
-
-            }
-        }
-
-
-    }
-
-    private void setCurrentMarker(double latitude, double longitude) {
-
-        currentLatLng = new LatLng(latitude, longitude);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLatLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-        getAddress(latitude, longitude);
-    }
-
-    private void ShowRefereshDialog() {
-        androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(AcceptOrderDriverActivity.this)
-                .setMessage("please_refresh_your_location")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Utils.I(this, AmountDoneNotificationActivity.class, null);
-                        dialog.dismiss();
-                    }
-                }).show();
-
-    }
-
-    public String getAddress(double lat, double lang) {
-        try {
-            Geocoder geocoder;
-            List<Address> addresses;
-            geocoder = new Geocoder(AcceptOrderDriverActivity.this);
-            if (lat != 0 || lang != 0) {
-                addresses = geocoder.getFromLocation(lat, lang, 1);
-                String address = addresses.get(0).getAddressLine(0);
-                String city = addresses.get(0).getAddressLine(1);
-                String country = addresses.get(0).getAddressLine(2);
-                String state = addresses.get(0).getSubLocality();
-
-                //  search_TV.setText(address);
-                //  strAddress = search_TV.toString();
-                return city + "," + country + "-" + state;
-
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     private void ConfirmationForGoogleMAp() {
         androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(AcceptOrderDriverActivity.this)
@@ -967,12 +888,13 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
 
     }
 
-    private void updatelatLong() {
+    private void updatelatLong(Location location) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         HashMap<String, String> hm = new HashMap<>();
         hm.put("driver_id", sessionManager.getRegisterUser().getId());
-        hm.put("driver_lat", "" + currentLatitude);
-        hm.put("driver_long", "" + currentLongitude);
+        hm.put("driver_lat", "" + location.getLatitude());
+        hm.put("driver_long", "" + location.getLongitude());
+        Utils.E("ParamUpdate::" + hm);
 
         Call<AllResponse> call = apiService.driver_update_lat_long(hm);
         call.enqueue(new Callback<AllResponse>() {
@@ -1004,48 +926,6 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
         });
     }
 
-
-    /*
-        private void getVehicalMethod() {
-
-
-            ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-
-            HashMap<String, String> hm = new HashMap<>();
-            hm.put("driver_id", sessionManager.getRegisterUser().getId());
-
-            Call<AllResponse> call = apiService.view_vehicle(hm);
-            call.enqueue(new Callback<AllResponse>() {
-                @Override
-                public void onResponse(Call<AllResponse> call, Response<AllResponse> response) {
-
-                    try {
-
-                        AllResponse body = response.body();
-
-                        if (body.getStatus() == 200) {
-
-                            mVehicalDTOS = body.getmVehicalDTOS();
-
-
-                        }
-
-                    } catch (
-                            Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<AllResponse> call, Throwable t) {
-                    call.cancel();
-                    t.printStackTrace();
-
-                }
-            });
-        }
-    */
     private void setData() {
         distributore_number = mOrderDTO.getDistribuorMobile();
         retailer_phone = mOrderDTO.getRetailerMobile();
@@ -1058,22 +938,22 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
 
         if (string_stage.equals("0")) {
             map_navigation.setVisibility(View.GONE);
-            pickup = "Start Job";
-            pickup_parcel_btn.setText("Start job");
+            pickup = "START JOB";
+            pickup_parcel_btn.setText("START JOB");
             show_distributor_distance();
             distributore = false;
         } else if (string_stage.equals("Start_Job")) {
 
             map_navigation.setVisibility(View.VISIBLE);
-            pickup_parcel_btn.setText("Pick up");
-            pickup = "pick up";
-
+            pickup_parcel_btn.setText("PICK UP");
+            pickup = "PICK UP";
+/*
             if (NetworkUtil.isNetworkAvailable(AcceptOrderDriverActivity.this)) {
                 //   pichUpOrder();
             } else {
                 Utility.netConnect(AcceptOrderDriverActivity.this);
 
-            }
+            }*/
 
             show_distributor_distance();
 
@@ -1085,19 +965,19 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
 
             map_navigation.setVisibility(View.VISIBLE);
             pickup_parcel_btn.setText("Start Job For Delivery");
-            pickup = "start job drop";
+            pickup = "Start Job For Delivery";
 
             show_retailer_distance();
-            if (NetworkUtil.isNetworkAvailable(AcceptOrderDriverActivity.this)) {
+          /*  if (NetworkUtil.isNetworkAvailable(AcceptOrderDriverActivity.this)) {
                 //  startJob("On_the_way");
             } else {
                 Utility.netConnect(AcceptOrderDriverActivity.this);
 
-            }
+            }*/
 
             address_status_tv.setText("Drop Location");
             address_one_tv.setText(mOrderDTO.getRetailer_landmark() + "," + mOrderDTO.getRetailerAddress());
-            address_tv.setText(mOrderDTO.getRetailerAddress());
+            address_tv.setText(mOrderDTO.getRetailer_landmark() + "," + mOrderDTO.getRetailerAddress());
 
             customerLatiitude = Double.parseDouble(mOrderDTO.getRetailerLat());
             customerLongituded = Double.parseDouble(mOrderDTO.getRetailerLong());
@@ -1107,10 +987,10 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
         } else if (string_stage.equals("On_the_way")) {
             address_status_tv.setText("Drop Location");
             address_one_tv.setText(mOrderDTO.getRetailer_landmark() + "," + mOrderDTO.getRetailerAddress());
-            address_tv.setText(mOrderDTO.getRetailerAddress());
+            address_tv.setText(mOrderDTO.getRetailer_landmark() + "," + mOrderDTO.getRetailerAddress());
 
-            pickup_parcel_btn.setText("Arrived");
-            pickup = "arrived";
+            pickup_parcel_btn.setText("ARRIVED");
+            pickup = "ARRIVED";
 
             show_retailer_distance();
         }
@@ -1121,6 +1001,7 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
 
 
         pickup_parcel_btn = findViewById(R.id.pickup_parcel_btn);
+        order_id_tv = findViewById(R.id.order_id_tv);
         back_image = findViewById(R.id.back_image);
 
         address_status_tv = findViewById(R.id.address_status_tv);
@@ -1132,17 +1013,37 @@ public class AcceptOrderDriverActivity extends AppCompatActivity implements View
         map_navigation = findViewById(R.id.map_navigation);
         time_tv = findViewById(R.id.time_tv);
         call_to_distributore_btn = findViewById(R.id.call_to_distributore_btn);
+        ll_itemListId = findViewById(R.id.ll_itemListId);
 
-        address_one_tv.setText(mOrderDTO.getDistributorAddress());
-        address_tv.setText(mOrderDTO.getDistributorAddress());
+        address_one_tv.setText(mOrderDTO.getDistributor_landmark() + "," + mOrderDTO.getDistributorAddress());
+        address_tv.setText(mOrderDTO.getDistributor_landmark() + "," + mOrderDTO.getDistributorAddress());
+        order_id_tv.setText("Order ID-: #000" + mOrderDTO.getId());
 
         pickup_parcel_btn.setOnClickListener(this);
         back_image.setOnClickListener(this);
         call_btn.setOnClickListener(this);
         map_navigation.setOnClickListener(this);
         call_to_distributore_btn.setOnClickListener(this);
+        ll_itemListId.setOnClickListener(this);
 
     }
 
-
+    private void ProductListDialog(OrderDTO mOrderDTO) {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_product_list);
+        RecyclerView rv_product_list = dialog.findViewById(R.id.rv_product_list);
+        rv_product_list.setLayoutManager(new LinearLayoutManager(this));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().setAttributes(lp);
+        ProductItemListAdapter itemAdapter = new ProductItemListAdapter(this,itemModels);
+        rv_product_list.setAdapter(itemAdapter);
+        TextView tv_total_ProductPrice = dialog.findViewById(R.id.tv_total_ProductPrice);
+     //  String Amount= (Utils.getFormatedAmount(Integer.parseInt(itemModels.getProductDiscountedPrice())));
+      // tv_total_ProductPrice.setText(this.getString(R.string.currency_sign) + Amount);
+        dialog.show();
+    }
 }

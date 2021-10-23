@@ -37,7 +37,7 @@ public class TotalEarnAdapeter extends RecyclerView.Adapter<TotalEarnAdapeter.My
     public void onBindViewHolder(@NonNull TotalEarnAdapeter.MyViewHolder holder, int position) {
 
         TotalEarnModel totalEarnModel = totalEarnModels.get(position);
-        holder.orderId.setText("Order_id: #000" + totalEarnModel.getId());
+        holder.orderId.setText("Order ID: #000" + totalEarnModel.getOrderId());
         holder.PaymetnMethod.setText(totalEarnModel.getTransactionMode());
 
         holder.delivery_charge_tv.setText("Delivery Charges: " + context.getString(R.string.currency_sign) + totalEarnModel.getDeliveryCharge());
@@ -64,7 +64,7 @@ public class TotalEarnAdapeter extends RecyclerView.Adapter<TotalEarnAdapeter.My
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView orderId, PaymetnMethod, Time, ViewDetails;
+        TextView orderId, PaymetnMethod, Time;
         TextView delivery_charge_tv;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -76,7 +76,7 @@ public class TotalEarnAdapeter extends RecyclerView.Adapter<TotalEarnAdapeter.My
             Time = itemView.findViewById(R.id.earnTime_tv);
             delivery_charge_tv = itemView.findViewById(R.id.delivery_charge_tv);
 
-            ViewDetails = itemView.findViewById(R.id.earnViewdetails_tv);
+
         }
     }
 }

@@ -47,7 +47,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private String notificationTitle;
     private String messageBody;
 
-    String NOTIFICATION_CHANNEL_ID = "Cambio";
+    String NOTIFICATION_CHANNEL_ID = "dukaa";
     NotificationManager manager;
 
     Random random = new Random();
@@ -73,7 +73,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             } catch (Exception e) {
                 Log.e(TAG, "Exception: " + e.getMessage());
             }
-
         }
 
     }
@@ -104,6 +103,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
                 pushNotification.putExtra("Message", title);
                 pushNotification.putExtra("body", messageBody);
+                pushNotification.putExtra("action", action);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
                 new NotificationUtils(getApplicationContext()).playNotificationSound();
 

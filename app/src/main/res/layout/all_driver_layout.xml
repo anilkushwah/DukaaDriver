@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_8sdp"
-    android:background="@drawable/dark_orange_round_back">
+    android:background="@drawable/accepted_order_back">
 
     <RelativeLayout
         android:id="@+id/RL_Detail"
@@ -29,7 +28,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_toRightOf="@+id/destination_image"
@@ -38,27 +38,40 @@
 
             <TextView
                 android:id="@+id/driver_name_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Customer Name"
                 android:fontFamily="@font/nexa_bold"
                 android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_9sdp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp" />
 
 
             <TextView
                 android:id="@+id/driver_number_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:text="1234567890"
                 android:fontFamily="@font/nexa_regular"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_8sdp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp" />
 
         </LinearLayout>
 
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/status_RL"
+        android:layout_marginBottom="@dimen/_8sdp"
+
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RL_Detail">
         <TextView
             android:id="@+id/assign_task_tv"
             android:layout_width="wrap_content"
@@ -66,49 +79,33 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/viewdetails"
-            android:drawableEnd="@drawable/ic_arrow"
-            android:drawableRight="@drawable/ic_arrow"
-            android:drawablePadding="@dimen/_10sdp"
+            android:background="@drawable/the_button"
+
             android:gravity="center_vertical"
             android:fontFamily="@font/nexa_bold"
             android:textStyle="bold"
-            android:drawableTint="@color/colorBlue"
-            android:padding="@dimen/_4sdp"
+
+            android:padding="@dimen/_10sdp"
             android:text="Assign Task"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:textColor="@color/colorBlue"
-            android:textSize="@dimen/_8sdp" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/status_RL"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/RL_Detail">
-
+            android:textSize="@dimen/_10sdp" />
         <TextView
+            android:layout_centerVertical="true"
             android:id="@+id/driver_status_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_5sdp"
             android:text="Online"
-            android:layout_margin="@dimen/_4sdp"
+          android:fontFamily="@font/nexa_bold"
             android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:fontFamily="@font/nexa_bold"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+
             android:textSize="@dimen/_12sdp" />
 
 
     </RelativeLayout>
 
-    <View
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_below="@+id/status_RL"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#EEEEEE" />
+
 
 </RelativeLayout>

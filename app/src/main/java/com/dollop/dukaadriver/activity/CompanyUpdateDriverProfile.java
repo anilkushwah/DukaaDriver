@@ -740,10 +740,9 @@ public class CompanyUpdateDriverProfile extends AppCompatActivity {
     private void getVehicleType() {
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        HashMap<String, String> hm = new HashMap<>();
-        hm.put("driver_id", sessionManager.getRegisterUser().getId());
 
-        Call<AllResponse> call = apiService.get_vehicle_type(hm);
+
+        Call<AllResponse> call = apiService.get_vehicle_type();
         call.enqueue(new Callback<AllResponse>() {
             @Override
             public void onResponse(Call<AllResponse> call, Response<AllResponse> response) {

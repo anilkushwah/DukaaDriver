@@ -51,9 +51,9 @@
                     android:layout_toRightOf="@+id/parent_layout"
                     android:fontFamily="@font/nexa_bold"
                     android:text="Anil"
-                    android:textStyle="bold"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/_16sdp" />
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/driver_status_ll"

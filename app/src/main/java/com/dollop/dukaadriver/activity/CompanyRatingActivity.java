@@ -85,6 +85,7 @@ public class CompanyRatingActivity extends AppCompatActivity implements View.OnC
         HashMap<String, String> hm = new HashMap<>();
 
         hm.put("driver_id", sessionManager.getRegisterUser().getId());
+        Utils.E("hm::::::rating::"+hm);
 
         Call<RatingDTO> call = apiService.get_driver_rating(hm);
         call.enqueue(new Callback<RatingDTO>() {

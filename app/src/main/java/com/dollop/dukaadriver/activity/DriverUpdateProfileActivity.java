@@ -73,7 +73,7 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
     EditText edt_driver_name, edt_mobile_number, edt_national_Id, et_reg_modelName, et_reg_vehicle_regiter_num, et_reg_vehicle_number;
     EditText edt_email_id;
     String selete_type = "";
-
+    TextView tv_driver_name,tv_mobileNUmber,tv_national_Id;
     LinearLayout driver_licence_LL;
     SessionManager sessionManager;
     TextView title_TV;
@@ -104,6 +104,7 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
         Intent intent = getIntent();
         if (intent != null) {
             selete_type = intent.getStringExtra("type");
+            Utils.E("DriverUpdateProfile");
         }
 
         mVehicleTypeDTOS = new ArrayList<>();
@@ -121,9 +122,9 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
         if (selete_type.equals("edit")) {
             edt_driver_name.setEnabled(true);
             edt_national_Id.setEnabled(true);
-           // edt_Sacco_Name.setEnabled(true);
-            //edt_Sacco_number.setEnabled(true);
-          //  et_reg_other_services.setEnabled(true);
+               // edt_Sacco_Name.setEnabled(true);
+             //edt_Sacco_number.setEnabled(true);
+            //  et_reg_other_services.setEnabled(true);
             vehicle_type_spiner.setEnabled(true);
             et_reg_modelName.setEnabled(true);
             et_reg_vehicle_regiter_num.setEnabled(true);
@@ -335,22 +336,43 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
         email_error_tv = findViewById(R.id.email_error_tv);
         mobile_error_tv = findViewById(R.id.mobile_error_tv);
         nationID_error_tv = findViewById(R.id.nationID_error_tv);
-      //  sacco_name_error_tv = findViewById(R.id.sacco_name_error_tv);
-       // sacco_Membership_error_tv = findViewById(R.id.sacco_Membership_error_tv);
         vehicle_type_error_tv = findViewById(R.id.vehicle_type_error_tv);
         title_vehicle_type_tv = findViewById(R.id.title_vehicle_type_tv);
         vehicle_type_LL = findViewById(R.id.vehicle_type_LL);
 
+        /* Changes 9/24/2021   */
+        tv_driver_name = findViewById(R.id.tv_driver_name);
+        tv_mobileNUmber = findViewById(R.id.tv_mobileNUmber);
+        tv_national_Id = findViewById(R.id.tv_national_Id);
+        if (sessionManager.getRegisterUser() != null) {
+            Glide.with(getApplicationContext())
+                    .load(ApiClient.BASE_URL + sessionManager.getRegisterUser().getProfile_img())
+                    .into(user_profile);
+
+        }
+        if (sessionManager.getRegisterUser().getLicenseImg() != null) {
+
+            driver_licence_img.setVisibility(View.VISIBLE);
+            Glide.with(getApplicationContext())
+                    .load(ApiClient.BASE_URL + sessionManager.getRegisterUser().getLicenseImg())
+                    .into(driver_licence_img);
+
+        }
     }
 
     private void setData() {
-        edt_driver_name.setText(sessionManager.getRegisterUser().getFullName());
-        edt_mobile_number.setText(sessionManager.getRegisterUser().getMobile());
-        edt_national_Id.setText(sessionManager.getRegisterUser().getNationalId());
-       // edt_Sacco_Name.setText(sessionManager.getRegisterUser().getSaccoName());
-      //  edt_Sacco_number.setText(sessionManager.getRegisterUser().getSaccoMembershipNumber());
-      //  et_reg_other_services.setText(sessionManager.getRegisterUser().getOtherServices());
-        edt_email_id.setText(sessionManager.getRegisterUser().getEmail());
+       // edt_driver_name.setText(sessionManager.getRegisterUser().getFullName());
+        // edt_mobile_number.setText(sessionManager.getRegisterUser().getMobile());
+       // edt_national_Id.setText(sessionManager.getRegisterUser().getNationalId());
+        // edt_Sacco_Name.setText(sessionManager.getRegisterUser().getSaccoName());
+        //  edt_Sacco_number.setText(sessionManager.getRegisterUser().getSaccoMembershipNumber());
+        //  et_reg_other_services.setText(sessionManager.getRegisterUser().getOtherServices());
+
+        /* Changes 9/24/2021   */
+        tv_driver_name.setText(sessionManager.getRegisterUser().getFullName());
+        tv_mobileNUmber.setText(sessionManager.getRegisterUser().getMobile());
+        tv_national_Id.setText(sessionManager.getRegisterUser().getNationalId());
+       edt_email_id.setText(sessionManager.getRegisterUser().getEmail());
 
         if (sessionManager.getRegisterUser() != null) {
             Glide.with(getApplicationContext())
@@ -380,40 +402,51 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
     @Override
     public void onClick(View v) {
         if (v == btn_reg_submit) {
+            if (selete_type.equals("edit")) {
+                Utils.E("Edit:::::::::::::");
+                if (user_profile.getDrawable() == null) {
+                    // Toast.makeText(DriverUpdateProfileActivity.this, "Select Driver licence", Toast.LENGTH_LONG).show();
+                    ShowDialog("Select Profile Image");
+                }
+               /* else  if (!UserAccount.isEmpty(edt_driver_name)) {
 
-            if (!UserAccount.isEmpty(edt_driver_name)) {
+                    UserAccount.EditTextPointer.setFocusable(true);
+                    UserAccount.EditTextPointer.setSelection(0);
+                    name_error_tv.setText("Enter Full Name");
+                    name_error_tv.setVisibility(View.VISIBLE);
 
-                UserAccount.EditTextPointer.setFocusable(true);
-                UserAccount.EditTextPointer.setSelection(0);
+                }
+                else if (!UserAccount.isEmpty(edt_national_Id)) {
 
-                name_error_tv.setText("Enter Full Name");
-                name_error_tv.setVisibility(View.VISIBLE);
+                    UserAccount.EditTextPointer.setFocusable(true);
+                    UserAccount.EditTextPointer.setSelection(0);
+                    nationID_error_tv.setVisibility(View.VISIBLE);
+                    nationID_error_tv.setText("Enter National ID");
 
-            } else if (!UserAccount.isEmpty(edt_email_id)) {
+                }
+                else if (!UserAccount.isPhoneNumberLength(edt_mobile_number)) {
 
-                UserAccount.EditTextPointer.setFocusable(true);
-                UserAccount.EditTextPointer.setSelection(0);
-                email_error_tv.setVisibility(View.VISIBLE);
-                email_error_tv.setText("Enter Valid E-mail");
+                    UserAccount.EditTextPointer.setFocusable(true);
+                    UserAccount.EditTextPointer.setSelection(0);
+                    mobile_error_tv.setVisibility(View.VISIBLE);
+                    Utils.E("isPhoneNumberLength:::::::::::::");
+                    mobile_error_tv.setText("Enter 9 digits number");
 
-            } else if (!UserAccount.isPhoneNumberLength(edt_mobile_number)) {
+                }*/
+              /*  else if (!UserAccount.isEmpty(edt_email_id)) {
 
-                UserAccount.EditTextPointer.setFocusable(true);
-                UserAccount.EditTextPointer.setSelection(0);
-                mobile_error_tv.setVisibility(View.VISIBLE);
-                mobile_error_tv.setText("Enter 9 digits number");
+                    UserAccount.EditTextPointer.setFocusable(true);
+                    UserAccount.EditTextPointer.setSelection(0);
+                    email_error_tv.setVisibility(View.VISIBLE);
+                    email_error_tv.setText("Enter Valid E-mail");
 
-            } else if (!UserAccount.isEmpty(edt_national_Id)) {
+                }*/
+                else if (driver_licence_img.getDrawable() == null) {
+                    // Toast.makeText(DriverUpdateProfileActivity.this, "Select Driver licence", Toast.LENGTH_LONG).show();
+                    ShowDialog("Select Driver licence");
+                }
 
-                UserAccount.EditTextPointer.setFocusable(true);
-                UserAccount.EditTextPointer.setSelection(0);
-                nationID_error_tv.setVisibility(View.VISIBLE);
-                nationID_error_tv.setText("Enter National ID");
-
-            } else if (driver_licence_img.getDrawable() == null) {
-                // Toast.makeText(DriverUpdateProfileActivity.this, "Select Driver licence", Toast.LENGTH_LONG).show();
-                ShowDialog("Select Driver licence");
-            } /*else if (!UserAccount.isEmpty(edt_Sacco_Name)) {
+            /*else if (!UserAccount.isEmpty(edt_Sacco_Name)) {
 
                 UserAccount.EditTextPointer.setFocusable(true);
                 UserAccount.EditTextPointer.setSelection(0);
@@ -422,7 +455,8 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
                 sacco_name_error_tv.setVisibility(View.VISIBLE);
 
 
-            }*/ /*else if (!UserAccount.isEmpty(edt_Sacco_number)) {
+            }*/
+            /*else if (!UserAccount.isEmpty(edt_Sacco_number)) {
 
                 UserAccount.EditTextPointer.setFocusable(true);
                 UserAccount.EditTextPointer.setSelection(0);
@@ -431,18 +465,97 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
                 sacco_Membership_error_tv.setText("Enter Sacco Membership Number");
 
 
-            }*/ else {
+            }*/
+                else {
 
 
-                if (NetworkUtil.isNetworkAvailable(DriverUpdateProfileActivity.this)) {
-                    registrationMethod();
-                } else {
-                    Utility.netConnect(DriverUpdateProfileActivity.this);
+                    if (NetworkUtil.isNetworkAvailable(DriverUpdateProfileActivity.this)) {
+                        UpdateDriverProfileMethod();
+                    } else {
+                        Utility.netConnect(DriverUpdateProfileActivity.this);
+
+                    }
+
 
                 }
-
-
             }
+            else{
+                Utils.E("Register:::::::::::::");
+                if (user_profile.getDrawable() == null) {
+                    // Toast.makeText(DriverUpdateProfileActivity.this, "Select Driver licence", Toast.LENGTH_LONG).show();
+                    ShowDialog("Select Profile Image");
+                }
+                else  if (!UserAccount.isEmpty(edt_driver_name)) {
+
+                    UserAccount.EditTextPointer.setFocusable(true);
+                    UserAccount.EditTextPointer.setSelection(0);
+                    name_error_tv.setText("Enter Full Name");
+                    name_error_tv.setVisibility(View.VISIBLE);
+
+                }
+                else if (!UserAccount.isEmpty(edt_email_id)) {
+
+                    UserAccount.EditTextPointer.setFocusable(true);
+                    UserAccount.EditTextPointer.setSelection(0);
+                    email_error_tv.setVisibility(View.VISIBLE);
+                    email_error_tv.setText("Enter Valid E-mail");
+
+                }
+                else if (!UserAccount.isPhoneNumberLength(edt_mobile_number)) {
+
+                    UserAccount.EditTextPointer.setFocusable(true);
+                    UserAccount.EditTextPointer.setSelection(0);
+                    mobile_error_tv.setVisibility(View.VISIBLE);
+                    Utils.E("isPhoneNumberLength:::::::::::::");
+                    mobile_error_tv.setText("Enter 9 digits number");
+
+                }
+                else if (!UserAccount.isEmpty(edt_national_Id)) {
+
+                    UserAccount.EditTextPointer.setFocusable(true);
+                    UserAccount.EditTextPointer.setSelection(0);
+                    nationID_error_tv.setVisibility(View.VISIBLE);
+                    nationID_error_tv.setText("Enter National ID");
+
+                } else if (driver_licence_img.getDrawable() == null) {
+                    // Toast.makeText(DriverUpdateProfileActivity.this, "Select Driver licence", Toast.LENGTH_LONG).show();
+                    ShowDialog("Select Driver licence");
+                }
+
+            /*else if (!UserAccount.isEmpty(edt_Sacco_Name)) {
+
+                UserAccount.EditTextPointer.setFocusable(true);
+                UserAccount.EditTextPointer.setSelection(0);
+
+                sacco_name_error_tv.setText("Enter Sacco Name");
+                sacco_name_error_tv.setVisibility(View.VISIBLE);
+
+
+            }*/
+            /*else if (!UserAccount.isEmpty(edt_Sacco_number)) {
+
+                UserAccount.EditTextPointer.setFocusable(true);
+                UserAccount.EditTextPointer.setSelection(0);
+
+                sacco_Membership_error_tv.setVisibility(View.VISIBLE);
+                sacco_Membership_error_tv.setText("Enter Sacco Membership Number");
+
+
+            }*/
+                else {
+
+
+                    if (NetworkUtil.isNetworkAvailable(DriverUpdateProfileActivity.this)) {
+                        registrationMethod();
+                    } else {
+                        Utility.netConnect(DriverUpdateProfileActivity.this);
+
+                    }
+
+
+                }
+            }
+
 
 
         } else if (v == create_back) {
@@ -462,9 +575,9 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
 
         } else if (v == btn_edit_profile) {
 
-            edt_driver_name.setEnabled(true);
+          // edt_driver_name.setEnabled(true);
             //  edt_mobile_number.setEnabled(true);
-            edt_national_Id.setEnabled(true);
+          //  edt_national_Id.setEnabled(true);
            // edt_Sacco_Name.setEnabled(true);
           //  edt_Sacco_number.setEnabled(true);
           //  et_reg_other_services.setEnabled(true);
@@ -481,7 +594,8 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
             title_TV.setText("Update Profile");
             btn_reg_submit.setVisibility(View.VISIBLE);
             btn_edit_profile.setVisibility(View.INVISIBLE);
-        } else if (v == company_image_LL) {
+        }
+        else if (v == company_image_LL) {
 
 
             MarshMallowPermission marshMallowPermission = new MarshMallowPermission(DriverUpdateProfileActivity.this);
@@ -559,34 +673,12 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
                         mCourierDTO.setNationalId(data.getString("national_id"));
                         mCourierDTO.setNationalIdImg(data.getString("national_id_img"));
                         mCourierDTO.setLicenseImg(data.getString("license_img"));
-                        //   mCourierDTO.setVehicleInsuranceImg(data.getString("vehicle_insurance_img"));
-                        mCourierDTO.setSaccoName(data.getString("sacco_name"));
-                        mCourierDTO.setSaccoMembershipNumber(data.getString("sacco_membership_number"));
                         mCourierDTO.setOtherServices(data.getString("other_services"));
                         mCourierDTO.setProfile_img(data.getString("profile_img"));
                         mCourierDTO.setVehicle_type(data.getString("vehicle_type"));
 
                         sessionManager.setRegisterUser(mCourierDTO);
 
-                        //  edt_driver_name.setEnabled(false);
-                        //   edt_mobile_number.setEnabled(false);
-                        //  edt_national_Id.setEnabled(false);
-                        //    edt_Sacco_Name.setEnabled(false);
-                        //   edt_Sacco_number.setEnabled(false);
-                        //   et_reg_other_services.setEnabled(false);
-                        ////   vehicle_type_spiner.setEnabled(false);
-                        //   et_reg_modelName.setEnabled(false);
-                        //  et_reg_vehicle_regiter_num.setEnabled(false);
-                        //  et_reg_vehicle_number.setEnabled(false);
-                        //  driver_licence_LL.setEnabled(false);
-
-                        //   driver_licence_img.setEnabled(false);
-
-                        //   company_image_LL.setEnabled(false);
-                        //  edt_email_id.setEnabled(false);
-                        //   title_TV.setText("Personal Details");
-                        //   btn_reg_submit.setVisibility(View.GONE);
-                        //  btn_edit_profile.setVisibility(View.VISIBLE);
                         onBackPressed();
 
                     } else {
@@ -649,9 +741,6 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
                 hm.put("mobile", edt_mobile_number.getText().toString());
                 hm.put("national_id", edt_national_Id.getText().toString());
                 hm.put("password", sessionManager.getRegisterUser().getPassword());
-           //     hm.put("sacco_name", edt_Sacco_Name.getText().toString());
-              //  hm.put("sacco_membership_number", edt_Sacco_number.getText().toString());
-             //   hm.put("other_services", et_reg_other_services.getText().toString());
                 hm.put("id", sessionManager.getRegisterUser().getId());
                 hm.put("vehicle_type", vehicle_type_spiner.getSelectedItem().toString());
                 hm.put("type", vehicle_type_spiner.getSelectedItem().toString());
@@ -693,7 +782,151 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(multipartRequest);
     }
 
+    private void UpdateDriverProfileMethod() {
+        final Dialog dialog = Utils.initProgressDialog(this);
+        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, ApiClient.BASE_URL + "update_driver_profile", new com.android.volley.Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                dialog.dismiss();
+                String resultResponse = new String(response.data);
 
+                Utils.E("resultResponse::for:DriverUpdate:" + resultResponse);
+
+                try {
+                    JSONObject result = new JSONObject(resultResponse);
+                    Utils.E("DriverUpdate::" + result);
+                    int status = result.getInt("status");
+                    String msg = result.getString("message");
+
+                    if (status == 200) {
+
+                        JSONObject data = result.getJSONObject("data");
+                        dialog.dismiss();
+                        CourierDTO mCourierDTO = new CourierDTO();
+                        mCourierDTO.setId(data.getString("id"));
+                        mCourierDTO.setFullName(data.getString("full_name"));
+                        mCourierDTO.setCompanyName(data.getString("company_name"));
+                        mCourierDTO.setEmail(data.getString("email"));
+                        mCourierDTO.setMobile(data.getString("mobile"));
+                        mCourierDTO.setPassword(data.getString("password"));
+                        mCourierDTO.setOtp(data.getString("otp"));
+                        mCourierDTO.setIsActive(data.getString("is_active"));
+                        mCourierDTO.setIsDelete(data.getString("is_delete"));
+                        mCourierDTO.setCreateDate(data.getString("create_date"));
+                        mCourierDTO.setType(data.getString("type"));
+                        mCourierDTO.setDeliveryPartnerId(data.getString("delivery_partner_id"));
+                        mCourierDTO.setSelfService(data.getString("self_service"));
+                        mCourierDTO.setNationalId(data.getString("national_id"));
+                        mCourierDTO.setNationalIdImg(data.getString("national_id_img"));
+                        mCourierDTO.setLicenseImg(data.getString("license_img"));
+                        mCourierDTO.setOtherServices(data.getString("other_services"));
+                        mCourierDTO.setProfile_img(data.getString("profile_img"));
+                        mCourierDTO.setVehicle_type(data.getString("vehicle_type"));
+
+                        sessionManager.setRegisterUser(mCourierDTO);
+
+                        onBackPressed();
+
+                    } else {
+
+                        ShowDialog(msg);
+
+                    }
+                } catch (JSONException e) {
+                    Utils.E("UpdateUserProfileJSONException::" + e);
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+
+                String errorMessage = "Unknown error";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                        Utils.T(getApplicationContext(), "Request timeout please check Internet connection");
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                } else {
+                    String result = new String(networkResponse.data);
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        //   response.getJSONArray(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+
+                        Log.e("Error Status", status);
+                        Log.e("Error Message", message);
+
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message + " Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message + " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message + " Something is getting wrong";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.i("Error", errorMessage);
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                HashMap<String, String> hm = new HashMap<>();
+
+                hm.put("driver_name", edt_driver_name.getText().toString());
+                hm.put("email", edt_email_id.getText().toString());
+                hm.put("mobile", edt_mobile_number.getText().toString());
+                hm.put("national_id", edt_national_Id.getText().toString());
+                hm.put("password", sessionManager.getRegisterUser().getPassword());
+                hm.put("id", sessionManager.getRegisterUser().getId());
+                hm.put("vehicle_type", vehicle_type_spiner.getSelectedItem().toString());
+                hm.put("type", vehicle_type_spiner.getSelectedItem().toString());
+                Utils.E("for:DriverUpdate:::::" + hm);
+                return hm;
+
+            }
+
+            @Override
+            protected Map<String, DataPart> getByteData() throws IOException {
+                Map<String, DataPart> params = new HashMap<>();
+                if (driver_licence_img.getDrawable() != null) {
+                    params.put("license_img", new DataPart(System.currentTimeMillis() + ".png",
+                            getFileDataFromDrawable(getApplicationContext(),
+                                    driver_licence_img.getDrawable()), "image/png"));
+
+
+                }
+                if (user_profile.getDrawable() != null) {
+                    params.put("profile_img", new DataPart(System.currentTimeMillis() + ".png",
+                            getFileDataFromDrawable(getApplicationContext(),
+                                    user_profile.getDrawable()), "image/png"));
+
+
+                }
+
+                Utils.E("profile_img" + params);
+                return params;
+
+            }
+
+
+        };
+        multipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(multipartRequest);
+    }
     private void ShowDialog(String sms) {
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setMessage(sms)
@@ -828,10 +1061,9 @@ public class DriverUpdateProfileActivity extends AppCompatActivity implements Vi
     private void getVehicleType() {
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        HashMap<String, String> hm = new HashMap<>();
-        hm.put("driver_id", sessionManager.getRegisterUser().getId());
+ ;
 
-        Call<AllResponse> call = apiService.get_vehicle_type(hm);
+        Call<AllResponse> call = apiService.get_vehicle_type();
         call.enqueue(new Callback<AllResponse>() {
             @Override
             public void onResponse(Call<AllResponse> call, Response<AllResponse> response) {

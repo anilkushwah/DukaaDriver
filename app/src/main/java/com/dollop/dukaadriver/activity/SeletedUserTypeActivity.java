@@ -17,7 +17,7 @@ import com.dollop.dukaadriver.R;
 import com.dollop.dukaadriver.UtilityTools.SessionManager;
 
 public class SeletedUserTypeActivity extends AppCompatActivity implements View.OnClickListener {
-    LinearLayout card_driver, card_courier;
+    LinearLayout card_driver, card_courier,card_supplier;
     Button btn_selete_type;
     String selected_type = "";
     SessionManager sessionManager;
@@ -32,8 +32,10 @@ public class SeletedUserTypeActivity extends AppCompatActivity implements View.O
         card_driver = findViewById(R.id.card_driver);
         card_courier = findViewById(R.id.card_courier);
         btn_selete_type = findViewById(R.id.btn_selete_type);
+        card_supplier = findViewById(R.id.card_supplier);
 
         card_driver.setOnClickListener(this);
+        card_supplier.setOnClickListener(this);
         card_courier.setOnClickListener(this);
         btn_selete_type.setOnClickListener(this);
 
@@ -48,24 +50,36 @@ public class SeletedUserTypeActivity extends AppCompatActivity implements View.O
 
             card_driver.setBackground(getResources().getDrawable(R.drawable.seletec_user_type));
             card_courier.setBackground(getResources().getDrawable(R.drawable.seletec_user_type_gray));
+            card_supplier.setBackground(getResources().getDrawable(R.drawable.seletec_user_type_gray));
 
         } else if (v == card_courier) {
 
             sessionManager.set_DELIVERY_TYPE_DRIVER(false);
-            selected_type = "Courier Compnay";
+            selected_type = "Courier Company";
             card_courier.setBackground(getResources().getDrawable(R.drawable.seletec_user_type));
             card_driver.setBackground(getResources().getDrawable(R.drawable.seletec_user_type_gray));
+            card_supplier.setBackground(getResources().getDrawable(R.drawable.seletec_user_type_gray));
+
+
+        }  else if (v == card_supplier) {
+
+            sessionManager.set_DELIVERY_TYPE_DRIVER(false);
+            selected_type = "Courier Company";
+            card_supplier.setBackground(getResources().getDrawable(R.drawable.seletec_user_type));
+            card_driver.setBackground(getResources().getDrawable(R.drawable.seletec_user_type_gray));
+            card_courier.setBackground(getResources().getDrawable(R.drawable.seletec_user_type_gray));
 
 
         } else if (v == btn_selete_type) {
 
             if (selected_type.equals("")) {
                 ShowDialog("Select Delivery Type");
-                //  Toast.makeText(SeletedUserTypeActivity.this, "Select Delivery Type", Toast.LENGTH_LONG).show();
-            } else if (selected_type.equals("Courier Compnay")) {
-                startActivity(new Intent(SeletedUserTypeActivity.this, SignupCourierCompanyActivity.class).putExtra("type", selected_type));
+            } else if (selected_type.equals("Courier Company")) {
+                startActivity(new Intent(SeletedUserTypeActivity.this, SignupCourierCompanyActivity.class)
+                        .putExtra("type", selected_type));
             } else if (selected_type.equals("Individual Driver")) {
-                startActivity(new Intent(SeletedUserTypeActivity.this, RegistrationActivity.class).putExtra("type", selected_type));
+                startActivity(new Intent(SeletedUserTypeActivity.this, RegistrationActivity.class)
+                        .putExtra("type", selected_type));
             }
 
         }

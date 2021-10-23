@@ -156,7 +156,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginTop="@dimen/_2sdp"
                                 android:fontFamily="@font/nexa_light"
-                                android:text="+91 - 12345 67890"
+                                android:text="+254 - 12345 67890"
                                 android:textSize="@dimen/_10sdp" />
                         </LinearLayout>
 

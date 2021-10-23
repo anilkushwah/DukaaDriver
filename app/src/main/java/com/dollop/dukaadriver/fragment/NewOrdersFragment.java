@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dollop.dukaadriver.R;
+import com.dollop.dukaadriver.UtilityTools.SessionManager;
 import com.dollop.dukaadriver.UtilityTools.Utils;
 import com.dollop.dukaadriver.model.HomeDTO;
 import com.dollop.dukaadriver.activity.HomeActivity;
@@ -58,7 +59,7 @@ public class NewOrdersFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_orders, container, false);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         new_order_list = view.findViewById(R.id.new_order_list);
         new_order_rl = view.findViewById(R.id.new_order_btn);
@@ -84,8 +85,8 @@ public class NewOrdersFragment extends Fragment {
 
 
                 mOrderDTOArrayListPost.clear();
-                postOrderAdapter = new PostOrderAdapter(getActivity(), mOrderDTOArrayListPost);
-                new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+                postOrderAdapter = new PostOrderAdapter(requireActivity(), mOrderDTOArrayListPost);
+                new_order_list.setLayoutManager(new LinearLayoutManager(requireActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
                 new_order_list.setAdapter(postOrderAdapter);
                 postOrderAdapter.notifyDataSetChanged();
 
@@ -105,8 +106,8 @@ public class NewOrdersFragment extends Fragment {
 
 
                 mOrderDTOArrayList.clear();
-                mOnRoutAdapter = new OnRoutAdapter(getActivity(), mOrderDTOArrayList);
-                new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),
+                mOnRoutAdapter = new OnRoutAdapter(requireActivity(), mOrderDTOArrayList);
+                new_order_list.setLayoutManager(new LinearLayoutManager(requireActivity().getApplicationContext(),
                         RecyclerView.VERTICAL, false));
                 new_order_list.setAdapter(mOnRoutAdapter);
                 mOnRoutAdapter.notifyDataSetChanged();
@@ -120,7 +121,7 @@ public class NewOrdersFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-               getActivity().onBackPressed();
+               requireActivity().onBackPressed();
 
             }
         });
@@ -130,11 +131,11 @@ public class NewOrdersFragment extends Fragment {
 
     private void getVehicalMethod() {
 
-        final Dialog dialog = Utils.initProgressDialog(getActivity());
+        final Dialog dialog = Utils.initProgressDialog(requireActivity());
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         HashMap<String, String> hm = new HashMap<>();
-        hm.put("driver_id", ((HomeActivity) getActivity()).sessionManager.getRegisterUser().getId());
+        hm.put("driver_id", ((HomeActivity) requireActivity()).sessionManager.getRegisterUser().getId());
 
         Call<HomeDTO> call = apiService.route_jobs_order(hm);
         call.enqueue(new Callback<HomeDTO>() {
@@ -154,8 +155,8 @@ public class NewOrdersFragment extends Fragment {
                             no_data_image.setVisibility(View.VISIBLE);
                         }
 
-                        mOnRoutAdapter = new OnRoutAdapter(getActivity(), mOrderDTOArrayList);
-                        new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),
+                        mOnRoutAdapter = new OnRoutAdapter(requireActivity(), mOrderDTOArrayList);
+                        new_order_list.setLayoutManager(new LinearLayoutManager(requireActivity().getApplicationContext(),
                                 RecyclerView.VERTICAL, false));
                         new_order_list.setAdapter(mOnRoutAdapter);
                         mOnRoutAdapter.notifyDataSetChanged();
@@ -181,11 +182,11 @@ public class NewOrdersFragment extends Fragment {
 
     private void completeOrder() {
 
-        final Dialog dialog = Utils.initProgressDialog(getActivity());
+        final Dialog dialog = Utils.initProgressDialog(requireActivity());
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         HashMap<String, String> hm = new HashMap<>();
-        hm.put("driver_id", ((HomeActivity) getActivity()).sessionManager.getRegisterUser().getId());
+        hm.put("driver_id", ((HomeActivity) requireActivity()).sessionManager.getRegisterUser().getId());
         hm.put("type", "complete");
 
         Call<HomeDTO> call = apiService.route_jobs_order(hm);
@@ -205,7 +206,7 @@ public class NewOrdersFragment extends Fragment {
                         } else {
                             no_data_image.setVisibility(View.VISIBLE);
                         }
-                        postOrderAdapter = new PostOrderAdapter(getActivity(), mOrderDTOArrayListPost);
+                        postOrderAdapter = new PostOrderAdapter(requireActivity(), mOrderDTOArrayListPost);
                         new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
                         new_order_list.setAdapter(postOrderAdapter);
                         postOrderAdapter.notifyDataSetChanged();

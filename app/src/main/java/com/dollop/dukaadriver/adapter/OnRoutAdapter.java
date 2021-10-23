@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dollop.dukaadriver.R;
 import com.dollop.dukaadriver.UtilityTools.SessionManager;
 import com.dollop.dukaadriver.UtilityTools.Utils;
-import com.dollop.dukaadriver.activity.AcceptOrderActivity;
 import com.dollop.dukaadriver.activity.AcceptOrderDriverActivity;
+import com.dollop.dukaadriver.activity.DeliveryPrefrences;
 import com.dollop.dukaadriver.model.OrderDTO;
 import com.transferwise.sequencelayout.SequenceStep;
 
@@ -25,8 +25,9 @@ public class OnRoutAdapter extends RecyclerView.Adapter<OnRoutAdapter.MyViewHold
 
     Context context;
     ArrayList<OrderDTO> mOrderDTOArrayList;
-SessionManager sessionManager ;
-    public OnRoutAdapter(Context context, ArrayList<OrderDTO> mList) {
+    SessionManager sessionManager;
+
+    public  OnRoutAdapter(Context context, ArrayList<OrderDTO> mList) {
         this.context = context;
         this.mOrderDTOArrayList = mList;
     }
@@ -44,78 +45,83 @@ SessionManager sessionManager ;
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         holder.customer_name.setText(mOrderDTOArrayList.get(position).getRetailerName());
-        holder.customer_address.setText(mOrderDTOArrayList.get(position).getRetailerAddress());
+        holder.customer_address.setText(mOrderDTOArrayList.get(position).getRetailer_landmark() + "," + mOrderDTOArrayList.get(position).getRetailerAddress());
         holder.order_id.setText("#000" + mOrderDTOArrayList.get(position).getId());
 
         holder.accepet_order.setEnabled(false);
         holder.placed_complete.setEnabled(false);
         holder.delivered_complete.setEnabled(false);
         holder.arravi_stage.setEnabled(false);
+        if (sessionManager.is_DRIVER()) {
+            if (mOrderDTOArrayList.get(position).getDelivered().equals("0")) {
+                holder.accepet_order.setActive(true);
+                holder.accepet_order.setEnabled(true);
+            } else if (mOrderDTOArrayList.get(position).getDelivered().equals("Start_Job")) {
+                holder.placed_complete.setActive(true);
+                holder.placed_complete.setEnabled(true);
+            } else if (mOrderDTOArrayList.get(position).getDelivered().equals("Pickup")) {
+                holder.delivered_complete.setActive(true);
+                holder.delivered_complete.setEnabled(true);
+            } else if (mOrderDTOArrayList.get(position).getDelivered().equals("On_the_way")) {
+                holder.arravi_stage.setActive(true);
+                holder.arravi_stage.setEnabled(true);
+            }
 
-        if (mOrderDTOArrayList.get(position).getDelivered().equals("0")) {
-
-            holder.accepet_order.setActive(true);
-            holder.accepet_order.setEnabled(true);
-
-        } else if (mOrderDTOArrayList.get(position).getDelivered().equals("Start_Job")) {
-
-            holder.placed_complete.setActive(true);
-            holder.placed_complete.setEnabled(true);
-
-        } else if (mOrderDTOArrayList.get(position).getDelivered().equals("Pickup")) {
-            holder.delivered_complete.setActive(true);
-            holder.delivered_complete.setEnabled(true);
-        } else if (mOrderDTOArrayList.get(position).getDelivered().equals("On_the_way")) {
-            holder.arravi_stage.setActive(true);
-            holder.arravi_stage.setEnabled(true);
+        }else {
+            holder.accepet_order.setEnabled(false);
+            holder.placed_complete.setEnabled(false);
+            holder.delivered_complete.setEnabled(false);
+            holder.arravi_stage.setEnabled(false);
         }
-        Utils.E("RetilerLandmark::::::" + mOrderDTOArrayList.get(position).getRetailer_landmark());
-        if (sessionManager.is_DRIVER())
-        {
-            holder.accepet_order.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                    context.startActivity(new Intent(context, AcceptOrderDriverActivity.class)
-                            .putExtra("model", mOrderDTOArrayList.get(position)).putExtra("stage", "0"));
 
-                }
-            });
 
-            holder.placed_complete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                    context.startActivity(new Intent(context, AcceptOrderDriverActivity.class)
-                            .putExtra("model", mOrderDTOArrayList.get(position)).putExtra("stage", "Start_Job"));
 
-                }
-            });
+        holder.accepet_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            holder.arravi_stage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                context.startActivity(new Intent(context, AcceptOrderDriverActivity.class)
+                        .putExtra("model", mOrderDTOArrayList.get(position)).putExtra("stage", "0"));
 
+            }
+        });
+
+        holder.placed_complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                context.startActivity(new Intent(context, AcceptOrderDriverActivity.class)
+                        .putExtra("model", mOrderDTOArrayList.get(position)).putExtra("stage", "Start_Job"));
+
+            }
+        });
+
+        holder.arravi_stage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.E("driver_arrived:::"+mOrderDTOArrayList.get(position).getOrderStatus());
+                if (mOrderDTOArrayList.get(position).getOrderStatus().equals("8")) {
+                    context.startActivity(new Intent(context, DeliveryPrefrences.class)
+                            .putExtra("model", mOrderDTOArrayList.get(position)));
+                } else {
                     context.startActivity(new Intent(context, AcceptOrderDriverActivity.class)
                             .putExtra("model", mOrderDTOArrayList.get(position)).putExtra("stage", "On_the_way"));
-
                 }
-            });
 
-            holder.delivered_complete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            }
+        });
 
-                    context.startActivity(new Intent(context, AcceptOrderDriverActivity.class)
-                            .putExtra("model", mOrderDTOArrayList.get(position)).putExtra("stage", "Pickup"));
+        holder.delivered_complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                }
-            });
+                context.startActivity(new Intent(context, AcceptOrderDriverActivity.class)
+                        .putExtra("model", mOrderDTOArrayList.get(position)).putExtra("stage", "Pickup"));
 
-        }
-
-
-
+            }
+        });
 
     }
 

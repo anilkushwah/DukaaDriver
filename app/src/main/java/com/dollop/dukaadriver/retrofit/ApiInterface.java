@@ -147,9 +147,8 @@ public interface ApiInterface {
     @POST("statics_driver_earning")
     Call<StaticsDTO> statics_driver_earning(@FieldMap HashMap<String, String> hm);
 
-    @FormUrlEncoded
-    @POST("get_vehicle_type")
-    Call<AllResponse> get_vehicle_type(@FieldMap HashMap<String, String> hm);
+    @GET("get_vehicle_type")
+    Call<AllResponse> get_vehicle_type();
 
     @FormUrlEncoded
     @POST("courier_assign_vehicle")
@@ -168,4 +167,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("driver_update_token")
     Call<AllResponse> driver_update_token(@FieldMap HashMap<String, String> hm);
+
+
+    @FormUrlEncoded
+    @POST("order_history")
+    Call<AllResponse> order_history(@FieldMap HashMap<String, String> hm);
 }

@@ -437,60 +437,6 @@ public class SignupCourierCompanyActivity extends AppCompatActivity implements V
         }
     }
 
-    private void RegistrationMethod() {
-
-        final Dialog dialog = Utils.initProgressDialog(this);
-
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-
-        HashMap<String, String> hm = new HashMap<>();
-        hm.put("full_name", edt_full_name.getText().toString());
-        hm.put("company_name", edt_company_name.getText().toString());
-        hm.put("email", edt_email_id.getText().toString());
-        hm.put("mobile", edt_mobile_number.getText().toString());
-        hm.put("password", edt_password.getText().toString());
-
-
-        Call<SignupDTO> call = apiService.courier_register(hm);
-        call.enqueue(new Callback<SignupDTO>() {
-            @Override
-            public void onResponse(Call<SignupDTO> call, Response<SignupDTO> response) {
-                dialog.dismiss();
-                try {
-
-                    SignupDTO body = response.body();
-
-                    if (body.getStatus() == 200) {
-
-                        Integer otp = body.getData();
-                        Log.e("otp", "+" + otp);
-
-                        startActivity(new Intent(SignupCourierCompanyActivity.this, OTPActivity.class)
-                                .putExtra("otp", "" + otp)
-                                .putExtra("mobile", edt_mobile_number.getText().toString())
-                                .putExtra("DriverType", "courier"));
-                        finish();
-                        finishAffinity();
-                    } else {
-                        ShowDialog(body.getMessage());
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<SignupDTO> call, Throwable t) {
-                call.cancel();
-                t.printStackTrace();
-                dialog.dismiss();
-            }
-        });
-    }
-
-
     private void ShowDialog(String sms) {
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setMessage(sms)

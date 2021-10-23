@@ -2,23 +2,19 @@ package com.dollop.dukaadriver.ui.home;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -34,9 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -45,41 +39,34 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dollop.dukaadriver.R;
+import com.dollop.dukaadriver.UtilityTools.GoogleApisHandle;
+import com.dollop.dukaadriver.UtilityTools.SavedData;
 import com.dollop.dukaadriver.UtilityTools.SessionManager;
-import com.dollop.dukaadriver.UtilityTools.Utility;
 import com.dollop.dukaadriver.UtilityTools.Utils;
-
+import com.dollop.dukaadriver.activity.AddNewVehicleActivity;
+import com.dollop.dukaadriver.activity.RegistrationActivity;
 import com.dollop.dukaadriver.activity.VehicleDetailActivity;
 import com.dollop.dukaadriver.adapter.CompanyDriverHomeAdapter;
-import com.dollop.dukaadriver.firebase.Config;
-
-import com.dollop.dukaadriver.model.HomeDTO;
-import com.dollop.dukaadriver.UtilityTools.GoogleApisHandle;
-import com.dollop.dukaadriver.UtilityTools.IOnBackPressed;
-import com.dollop.dukaadriver.activity.AddNewVehicleActivity;
-import com.dollop.dukaadriver.activity.HomeActivity;
-import com.dollop.dukaadriver.activity.RegistrationActivity;
 import com.dollop.dukaadriver.adapter.HomeAdapter;
-import com.dollop.dukaadriver.adapter.SaveVehicalAdapter;
+import com.dollop.dukaadriver.firebase.Config;
 import com.dollop.dukaadriver.model.AllResponse;
+import com.dollop.dukaadriver.model.HomeDTO;
 import com.dollop.dukaadriver.model.OrderDTO;
 import com.dollop.dukaadriver.model.VehicalDTO;
 import com.dollop.dukaadriver.retrofit.ApiClient;
 import com.dollop.dukaadriver.retrofit.ApiInterface;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,45 +77,75 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, OnMapReadyCallback {
 
+    private static final long UPDATE_INTERVAL = 3000, FASTEST_INTERVAL = 3000; // = 5 seconds
+    static boolean active = false;
+    public GoogleApisHandle googleApisHandle;
     Button btnselect_vehicleId;
     ImageView iv_close_vehicle, image, no_data_image, wheeler_image;
     Dialog selectvehicle;
     Button lv_applyBtn, add_driver_btn, add_vehicle_btn;
     HomeAdapter mHomeAdapter;
     ArrayList<OrderDTO> mOrderDTOArrayList;
-
     RecyclerView rv_select_vehicle;
     ArrayList<VehicalDTO> mVehicalDTOS;
     RecyclerView new_order_list;
     SwitchMaterial switch_driver_online;
     TextView vehical_model_name_tv, vehical_number_tv, status_tv, user_name_tv;
-
     LinearLayout vehical_img_LL, driver_status_ll, vehical_LL, courier_LL;
-    private GoogleMap mMap;
-    public GoogleApisHandle googleApisHandle;
-    private Location location;
-
     double currentLatitude = 0.00;
     double currentLongitude = 0.00;
-
     int count = 0;
     LatLng currentLatLng;
     boolean doubleBackToExitPressedOnce = false;
     View root;
-    static boolean active = false;
-
     SessionManager sessionManager;
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            // Utils.E("broadcast:Home Fragment");
+            // if (active && ((HomeActivity) requireActivity()).isFinishing()) {
+            String message = intent.getStringExtra("Message");
+            initialization(root);
+
+            //Utils.E("message:Home Fragment" + message);
+
+        }
+    };
+    String m_deviceId;
+    Boolean aBoolean = true;
+    private GoogleMap mMap;
+    private Location location;
+    LocationCallback locationCallback =     new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            super.onLocationResult(locationResult);
+            if (mMap != null) {
+                location = locationResult.getLastLocation();
+                if (aBoolean) {
+                    aBoolean = false;
+                    setCurrentMarker(location.getLatitude(), location.getLongitude());
+                }
+               /* Utils.E("location:::" + location);
+                Utils.E("is_COMPANY_DRIVER:::" + sessionManager.is_COMPANY_DRIVER());
+                Utils.E("is_DRIVER:::" + sessionManager.is_DRIVER());*/
+                if (sessionManager.is_COMPANY_DRIVER() || sessionManager.is_DRIVER())
+                    updatelatLong(location);
+            }
+        }
+    };
     private Activity mActivity;
     private int exit = 0;
     private Handler handler;
-    String m_deviceId;
+    private LocationRequest locationRequest;
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mActivity = getActivity();
         root = inflater.inflate(R.layout.fragment_home, container, false);
-
+        SavedData.savePath(false);
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -170,6 +187,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
         return root;
     }
 
+    private void startLocationUpdates() {
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        locationRequest = new LocationRequest();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(FASTEST_INTERVAL);
+
+        if (ActivityCompat.checkSelfPermission(requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(requireActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(requireActivity(), "You need to enable permissions to display location !", Toast.LENGTH_SHORT).show();
+        }
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+
+
+        //  LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationCallback, AcceptOrderDriverActivity.this);
+    }
+
     public String getDeviceId(Context context) {
 
 
@@ -190,8 +227,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
         Log.e("m_deviceId>", m_deviceId);
         return m_deviceId;
     }
-
-
 
     private void initialization(View root) {
 
@@ -235,15 +270,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
                 });
 
 
-
-
         if (sessionManager.is_DRIVER()) {
-            if (sessionManager.is_COMPANY_DRIVER()) {
-            } else {
+            if (!sessionManager.is_COMPANY_DRIVER()) {
                 getVehicalMethod();
             }
         }
-
 
         if (sessionManager.is_DRIVER()) {
 
@@ -290,47 +321,59 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
 
     }
 
+    private void updatelatLong(Location location) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        HashMap<String, String> hm = new HashMap<>();
+        hm.put("driver_id", sessionManager.getRegisterUser().getId());
+        hm.put("driver_lat", "" + location.getLatitude());
+        hm.put("driver_long", "" + location.getLongitude());
+        Utils.E("ParamUpdate::" + hm);
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-           // Utils.E("broadcast:Home Fragment");
-            // if (active && ((HomeActivity) getActivity()).isFinishing()) {
-            String message = intent.getStringExtra("Message");
-            initialization(root);
+        Call<AllResponse> call = apiService.driver_update_lat_long(hm);
+        call.enqueue(new Callback<AllResponse>() {
+            @Override
+            public void onResponse(Call<AllResponse> call, Response<AllResponse> response) {
 
-            //Utils.E("message:Home Fragment" + message);
+                try {
 
-        }
-    };
+                    AllResponse body = response.body();
+
+                    if (body.getStatus() == 200) {
 
 
-    private void ShowForReviewsDialog(String msg) {
-        if (getContext() != null) {
-            AlertDialog dialog = new AlertDialog.Builder(getActivity())
-                    .setMessage(msg)
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //  startActivity(new Intent(PaymentProcessActivity.this,HomeActivity.class));
-                            Log.e("SUCCESS", "SUCCESS");
+                    }
 
-                            dialog.dismiss();
-                        }
-                    }).show();
+                } catch (
+                        Exception e) {
+                    e.printStackTrace();
+                }
 
-        }
+            }
 
+            @Override
+            public void onFailure(Call<AllResponse> call, Throwable t) {
+                call.cancel();
+                t.printStackTrace();
+
+            }
+        });
     }
 
     @Override
     public void onStop() {
         super.onStop();
         active = false;
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
 
     private void CompanyDriverView_Order() {
+        Utils.E("OnREsume Company Driver");
         mOrderDTOArrayList.clear();
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -346,7 +389,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
                 try {
 
                     HomeDTO body = response.body();
-
+                    CompanyDriverHomeAdapter mHomeAdapter = null;
                     if (body.getStatus() == 200) {
 
 
@@ -354,25 +397,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
 
                         mOrderDTOArrayList = body.getAllOrder();
                         mVehicalDTOS = mOrderDTOArrayList.get(0).getVehicle();
-                        CompanyDriverHomeAdapter mHomeAdapter = new CompanyDriverHomeAdapter(getActivity(), mOrderDTOArrayList);
-                        new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
-                        new_order_list.setAdapter(mHomeAdapter);
-                        mHomeAdapter.notifyDataSetChanged();
+
 
                         vehical_model_name_tv.setText(mVehicalDTOS.get(0).getVehicleName());
                         vehical_number_tv.setText(mVehicalDTOS.get(0).getVehicleRegistrionNumber());
-                        Utils.E("Number ::"+mVehicalDTOS.get(0).getVehicleRegistrionNumber());
+
                         String vehical_type = (mVehicalDTOS.get(0).getVehicleType());
 
                         if (vehical_type.equals("Van")) {
                             wheeler_image.setBackgroundResource(R.drawable.ic_van);
-                           // Log.e("4 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
+
                         } else if (vehical_type.equals("Bike")) {
                             wheeler_image.setBackgroundResource(R.drawable.ic_bike);
-                          //  Log.e("2 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
+
                         } else if (vehical_type.equals("Truck")) {
                             wheeler_image.setBackgroundResource(R.drawable.ic_truck);
-                           // Log.e("2 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
                         } else {
                             wheeler_image.setBackgroundResource(R.drawable.ic_bike);
                         }
@@ -381,7 +420,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
                     } else {
                         vehical_LL.setVisibility(View.GONE);
                     }
-
+                    mHomeAdapter = new CompanyDriverHomeAdapter(getActivity(), mOrderDTOArrayList);
+                    new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+                    new_order_list.setAdapter(mHomeAdapter);
+                    mHomeAdapter.notifyDataSetChanged();
                 } catch (
                         Exception e) {
                     e.printStackTrace();
@@ -398,6 +440,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
         });
 
 
+    }
+
+    @Override
+    public void onResume() {
+
+        Utils.E("OnREsume::::::::::::::::::::::::::::");
+        if (SavedData.getDriver()) {
+            getOrderMethod();
+        }
+
+        if (SavedData.getCourierDriver()) {
+            CompanyDriverView_Order();
+        }
+        if (SavedData.getCourier()) {
+            getCourire_ViewMethod();
+        }
+        super.onResume();
     }
 
     @Override
@@ -420,56 +479,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
         }
     }
 
-    public void selectVehicle() {
-        selectvehicle = new Dialog(getContext());
-        selectvehicle.setContentView(R.layout.dialog_select_vehcile);
-
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(selectvehicle.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        selectvehicle.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        selectvehicle.getWindow().setAttributes(lp);
-        selectvehicle.show();
-
-        rv_select_vehicle = selectvehicle.findViewById(R.id.rv_select_vehicle);
-        LinearLayout add_new_vehicle_ll = selectvehicle.findViewById(R.id.add_new_vehicle_ll);
-        no_data_image = selectvehicle.findViewById(R.id.no_data_image);
-
-        iv_close_vehicle = selectvehicle.findViewById(R.id.iv_close_vehicle);
-        lv_applyBtn = selectvehicle.findViewById(R.id.lv_applyBtn);
-
-
-        selectvehicle.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                //action when dialog is dismissed goes here
-                initialization(root);
-            }
-        });
-
-        iv_close_vehicle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectvehicle.dismiss();
-            }
-        });
-
-        add_new_vehicle_ll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddNewVehicleActivity.class));
-            }
-        });
-
-        lv_applyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectvehicle.dismiss();
-            }
-        });
-
-    }
 
     private void getVehicalMethod() {
 
@@ -491,32 +500,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
                     if (body.getStatus() == 200) {
 
                         mVehicalDTOS = body.getmVehicalDTOS();
-                        //  if (mVehicalDTOS == null) {
-                        //      no_data_image.setVisibility(View.VISIBLE);
-                        //  }
-
-                        //   rv_select_vehicle.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        //   SaveVehicalAdapter saveVehicalAdapter = new SaveVehicalAdapter(getActivity(), mVehicalDTOS, selectvehicle);
-                        //    rv_select_vehicle.setAdapter(saveVehicalAdapter);
-                        //   saveVehicalAdapter.notifyDataSetChanged();
-
-
                         vehical_model_name_tv.setText(mVehicalDTOS.get(0).getVehicleName());
                         vehical_number_tv.setText(mVehicalDTOS.get(0).getVehicleRegistrionNumber());
                         String vehical_type = (mVehicalDTOS.get(0).getVehicleType());
 
-                        if (vehical_type.equals("Van")) {
-                            wheeler_image.setBackgroundResource(R.drawable.ic_van);
-                           // Log.e("4 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
-                        } else if (vehical_type.equals("Bike")) {
-                            wheeler_image.setBackgroundResource(R.drawable.ic_bike);
-                          //  Log.e("2 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
-                        } else if (vehical_type.equals("Truck")) {
-                            wheeler_image.setBackgroundResource(R.drawable.ic_truck);
-                            //Log.e("2 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
-                        } else {
-                            wheeler_image.setBackgroundResource(R.drawable.ic_bike);
-                           // Log.e("2 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
+                        switch (vehical_type) {
+                            case "Van":
+                                wheeler_image.setBackgroundResource(R.drawable.ic_van);
+
+                                break;
+                            case "Bike":
+                                wheeler_image.setBackgroundResource(R.drawable.ic_bike);
+
+                                break;
+                            case "Truck":
+                                wheeler_image.setBackgroundResource(R.drawable.ic_truck);
+
+                                break;
+                            default:
+                                wheeler_image.setBackgroundResource(R.drawable.ic_bike);
+
+                                break;
                         }
 
 
@@ -540,10 +544,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
 
 
     private void getDriverStatus(String status) {
-
-
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-
         HashMap<String, String> hm = new HashMap<>();
         hm.put("driver_id", sessionManager.getRegisterUser().getId());
         hm.put("status", status);
@@ -600,13 +601,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
     }
 
     private void getOrderMethod() {
+        Utils.E("OnREsume driver indi");
         mOrderDTOArrayList.clear();
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         HashMap<String, String> hm = new HashMap<>();
         hm.put("driver_id", sessionManager.getRegisterUser().getId());
-
+        Utils.E("OnREsume driver indi"+hm);
         Call<HomeDTO> call = apiService.view_orders(hm);
         call.enqueue(new Callback<HomeDTO>() {
             @Override
@@ -619,14 +621,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
                     if (body.getStatus() == 200) {
 
                         mOrderDTOArrayList = body.getAllOrder();
-
-                        mHomeAdapter = new HomeAdapter(getActivity(), mOrderDTOArrayList);
-                        new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
-                        new_order_list.setAdapter(mHomeAdapter);
-                        mHomeAdapter.notifyDataSetChanged();
-
                     }
-
+                    mHomeAdapter = new HomeAdapter(getActivity(), mOrderDTOArrayList);
+                    new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+                    new_order_list.setAdapter(mHomeAdapter);
+                    mHomeAdapter.notifyDataSetChanged();
                 } catch (
                         Exception e) {
                     e.printStackTrace();
@@ -647,6 +646,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -659,79 +660,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+        startLocationUpdates();
         mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
 
-        getCurrentLocation();
+        // getCurrentLocation();
 
-    }
-
-
-    private void getCurrentLocation() {
-
-        location = googleApisHandle.getLastKnownLocation(getActivity());
-        if (location != null) {
-
-            setCurrentMarker(location.getLatitude(), location.getLongitude());
-
-            currentLatitude = location.getLatitude();
-            currentLongitude = location.getLongitude();
-
-            sessionManager.current_LAT("" + currentLatitude);
-            sessionManager.current_LONG("" + currentLongitude);
-
-
-        } else {
-            if (count < 5) {
-                count++;
-                getCurrentLocation();
-            } else {
-                ShowRefereshDialog();
-
-            }
-        }
-        updatelatLong();
-    }
-
-    private void updatelatLong() {
-
-
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-
-        HashMap<String, String> hm = new HashMap<>();
-        hm.put("driver_id", sessionManager.getRegisterUser().getId());
-        hm.put("driver_lat", "" + currentLatitude);
-        hm.put("driver_long", "" + currentLongitude);
-
-        Call<AllResponse> call = apiService.driver_update_lat_long(hm);
-        call.enqueue(new Callback<AllResponse>() {
-            @Override
-            public void onResponse(Call<AllResponse> call, Response<AllResponse> response) {
-
-                try {
-
-                    AllResponse body = response.body();
-
-                    if (body.getStatus() == 200) {
-
-
-                    }
-
-                } catch (
-                        Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<AllResponse> call, Throwable t) {
-                call.cancel();
-                t.printStackTrace();
-
-            }
-        });
     }
 
     private void updateMethod() {
@@ -779,13 +714,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
 
 
     private void getCourire_ViewMethod() {
+        Utils.E("OnREsume Company");
         mOrderDTOArrayList.clear();
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         HashMap<String, String> hm = new HashMap<>();
         hm.put("driver_id", sessionManager.getRegisterUser().getId());
-
+        Utils.E(" Company--->params"+hm);
         Call<HomeDTO> call = apiService.courier_view_order(hm);
         call.enqueue(new Callback<HomeDTO>() {
             @Override
@@ -796,16 +732,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
                     HomeDTO body = response.body();
 
                     if (body.getStatus() == 200) {
-
                         mOrderDTOArrayList = body.getAllOrder();
-
-                        mHomeAdapter = new HomeAdapter(getActivity(), mOrderDTOArrayList);
-                        new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
-                        new_order_list.setAdapter(mHomeAdapter);
-                        mHomeAdapter.notifyDataSetChanged();
-
                     }
-
+                    Utils.E("OrderItem----->"+body.getAllOrder().get(0).orderItem);
+                    mHomeAdapter = new HomeAdapter(getActivity(), mOrderDTOArrayList);
+                    new_order_list.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+                    new_order_list.setAdapter(mHomeAdapter);
+                    mHomeAdapter.notifyDataSetChanged();
                 } catch (
                         Exception e) {
                     e.printStackTrace();
@@ -831,18 +764,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
         getAddress(latitude, longitude);
     }
 
-    private void ShowRefereshDialog() {
-        androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(getActivity())
-                .setMessage("please_refresh_your_location")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Utils.I(this, AmountDoneNotificationActivity.class, null);
-                        dialog.dismiss();
-                    }
-                }).show();
-
-    }
 
     public String getAddress(double lat, double lang) {
         try {
@@ -868,35 +789,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, OnMa
             return null;
         }
     }
-
-
-/*
-    @Override
-    public boolean onBackPressed() {
-
-
-        if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getActivity().getSupportFragmentManager().popBackStack();
-
-        } else if (!doubleBackToExitPressedOnce) {
-            this.doubleBackToExitPressedOnce = true;
-            // drawer.close();
-            Toast.makeText(getActivity(), "Please click BACK again to exit.", Toast.LENGTH_SHORT).show();
-
-            new Handler().postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-                    doubleBackToExitPressedOnce = false;
-                }
-            }, 2000);
-        } else {
-            getActivity().finish();
-
-        }
-        return false;
-    }
-*/
 
 
 }

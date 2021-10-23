@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="0sp"
             android:scaleType="fitCenter"
-            android:src="@drawable/dukaa_partner_logo"
+            android:src="@drawable/dukka_delivery"
             app:layout_constraintBottom_toTopOf="@id/ll_input"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -176,6 +176,7 @@
                 android:visibility="gone" />
 
             <TextView
+                android:id="@+id/tv_forgot_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/toolbar_LL"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
+        android:layout_height="?attr/actionBarSize"
         android:background="@drawable/lv_home_bck"
         android:orientation="vertical">
 
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_LL"
-        android:layout_marginTop="@dimen/_10sdp"
+
         android:background="#ffffff"
         android:orientation="vertical">
 

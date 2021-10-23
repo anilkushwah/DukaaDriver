@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
+    android:background="@drawable/common_background"
     android:orientation="vertical">
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_8sdp"
+
         app:cardElevation="@dimen/_4sdp">
 
         <RelativeLayout
@@ -19,6 +19,7 @@
             android:layout_margin="@dimen/_8sdp">
 
             <TextView
+                android:padding="@dimen/_4sdp"
                 android:id="@+id/earnorderId_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -28,27 +29,16 @@
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/earnorderId_tv"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:drawableLeft="@drawable/payment_type"
-                android:drawablePadding="@dimen/_10sdp"
-                android:fontFamily="@font/nexa_regular"
-                android:text="Translation Type"
-                android:textSize="@dimen/_10sdp" />
+
 
 
             <TextView
                 android:id="@+id/earnpaymethod_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/earnorderId_tv"
+                android:padding="@dimen/_4sdp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="@dimen/_6sdp"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/nexa_bold"
                 android:text="Cash"
@@ -59,6 +49,8 @@
             <TextView
                 android:id="@+id/delivery_charge_tv"
                 android:layout_width="wrap_content"
+                android:paddingHorizontal="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/earnpaymethod_tv"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -66,38 +58,21 @@
                 android:text="Delivery Charge"
                 android:textSize="@dimen/_10sdp" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_below="@+id/delivery_charge_tv"
-                android:layout_marginTop="@dimen/_5sdp">
 
-                <TextView
-                    android:id="@+id/earnTime_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/ic_clock_blue"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:fontFamily="@font/nexa_regular"
-                    android:text="Today 10:20 AM"
-                    android:textColor="@color/grey_2"
-                    android:textSize="@dimen/_10sdp" />
-
-                <TextView
-                    android:id="@+id/earnViewdetails_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp"
-                    android:fontFamily="@font/nexa_regular"
-                    android:text="View Details"
-                    android:textColor="@color/colorPrimaryDark_old"
-                    android:textSize="@dimen/_12sdp"
-                    android:visibility="gone" />
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/earnTime_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingHorizontal="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:layout_below="@+id/earnpaymethod_tv"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/nexa_regular"
+                android:text="Today 10:20 AM"
+                android:textColor="@color/grey_2"
+                android:textSize="@dimen/_10sdp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

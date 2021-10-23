@@ -13,7 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dollop.dukaadriver.R;
 import com.dollop.dukaadriver.model.NotificationDTO;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.MyViewHolder> {
     Context context;
@@ -35,7 +40,23 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull NotificationAdapter.MyViewHolder holder, int position) {
         NotificationDTO homeViewModel = notificationModelList.get(position);
-        holder.tv_notificationTime.setText(homeViewModel.getCreatedDate());
+
+        DateFormat output = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                Locale.ENGLISH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM dd yyyy h:mm a");
+        // SimpleDateFormat format = new SimpleDateFormat("hh:mm aa");
+        Date dateasdf = null;
+        int hours = 0;
+        try {
+            dateasdf = output.parse(homeViewModel.getCreatedDate());
+            long mills = new Date().getTime() - dateasdf.getTime();
+            hours = (int) (mills / (1000 * 60 * 60));
+            int mins = (int) (mills % (1000 * 60 * 60));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        holder.tv_notificationTime.setText(dateFormat.format(dateasdf));
+
         holder.tv_notificaiton_Description.setText(homeViewModel.getMessage());
 
 

@@ -94,56 +94,6 @@ public class SessionManager {
         return pref.getBoolean(DRIVER_USER_TYPE, false);
     }
 
-/*
-    public void setRegisterUser(CourierDTO mUser) {
-
-        editor.putString(id, mUser.getId());
-        editor.putString(fullName, mUser.getFullName());
-        editor.putString(companyName, mUser.getCompanyName());
-        editor.putString(email, mUser.getEmail());
-        editor.putString(mobile, mUser.getMobile());
-        editor.putString(password, mUser.getPassword());
-        editor.putString(otp, mUser.getOtp());
-        editor.putString(type, mUser.getType());
-        editor.putString(isActive, mUser.getIsActive());
-        editor.putString(isDelete, mUser.getIsDelete());
-        editor.putString(createDate, mUser.getCreateDate());
-
-        editor.commit();
-
-    }
-
-    public CourierDTO getRegisterUser() {
-        if (pref.getString(id, null) != null) {
-
-            String str_id, str_fullName, str_companyName, str_email, str_mobile, str_password, str_otp,
-                    str_isActive, str_isDelete, str_createDate, str_type;
-
-
-            str_id = pref.getString(id, null);
-            str_fullName = pref.getString(fullName, null);
-            str_companyName = pref.getString(companyName, null);
-            str_email = pref.getString(email, null);
-            str_mobile = pref.getString(mobile, null);
-            str_password = pref.getString(password, null);
-            str_otp = pref.getString(otp, null);
-            str_type = pref.getString(type, null);
-            str_isActive = pref.getString(isActive, null);
-            str_isDelete = pref.getString(isDelete, null);
-            str_createDate = pref.getString(createDate, null);
-
-
-            CourierDTO user = new CourierDTO(str_id, str_fullName, str_companyName, str_email,
-                    str_mobile, str_password, str_otp, str_type,
-                    str_isActive, str_isDelete, str_createDate);
-
-            return user;
-        }
-        return null;
-    }
-*/
-
-
     public void setRegisterUser(CourierDTO mUser) {
 
         editor.putString(id, mUser.getId());
@@ -225,47 +175,7 @@ public class SessionManager {
     public boolean is_DRIVER_ONLINE_STATUS() {
         return pref.getBoolean(DRIVER_ONLINE_STATUS, false);
     }
-/*
 
-    public void setVehicalData(VehicalDTO mVehical) {
-        // Storing login value as TRUE
-        editor.putBoolean(vehical_id, true);
-        editor.putString(vehical_id, mVehical.getId());
-        editor.putString(vehicleName, mVehical.getVehicleName());
-        editor.putString(vehicleNum, mVehical.getVehicleNum());
-        editor.putString(driverId, mVehical.getDriverId());
-        editor.putString(vehicleType, mVehical.getVehicleType());
-        editor.putString(modelName, mVehical.getModelName());
-        editor.putString(vehicleRegistrionNumber, mVehical.getVehicleRegistrionNumber());
-        editor.putString(vehicleInsurance, mVehical.getVehicleInsurance());
-        // commit changes
-        editor.commit();
-    }
-
-
-    public VehicalDTO getVehicalData() {
-        if (pref.getString(vehical_id, null) != null) {
-
-            String str_id, str_driverId, str_vehicleName, str_vehicleNum, str_isActive, str_isDelete, str_createDate;
-            String str_vehicleType, str_modelName, str_vehicleRegistrionNumber, str_vehicleInsurance;
-
-            str_id = pref.getString(vehical_id, null);
-            str_driverId = pref.getString(driverId, null);
-            str_vehicleName = pref.getString(vehicleName, null);
-            str_vehicleNum = pref.getString(vehicleNum, null);
-            str_vehicleType = pref.getString(vehicleType, null);
-            str_modelName = pref.getString(modelName, null);
-            str_vehicleRegistrionNumber = pref.getString(vehicleRegistrionNumber, null);
-            str_vehicleInsurance = pref.getString(vehicleInsurance, null);
-
-            VehicalDTO user = new VehicalDTO(str_id, str_driverId, str_vehicleName, str_vehicleNum, str_vehicleType,
-                    str_modelName, str_vehicleRegistrionNumber, str_vehicleInsurance);
-
-            return user;
-        }
-        return null;
-    }
-*/
 
     public void setTokenFCM(String token) {
         editor.putString(tokenFcm, token);

@@ -9,6 +9,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.dollop.dukaadriver.activity.LoginActivity;
+
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
     Button btn_reg_submit;
     ImageView create_back;
@@ -30,7 +32,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         if (v == btn_reg_submit){
-            Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);
+            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         }

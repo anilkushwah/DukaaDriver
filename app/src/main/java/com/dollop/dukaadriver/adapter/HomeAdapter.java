@@ -1,19 +1,15 @@
 package com.dollop.dukaadriver.adapter;
 
-import android.app.Activity;
-import android.app.Notification;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -42,7 +38,6 @@ import com.dollop.dukaadriver.retrofit.ApiInterface;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,19 +63,20 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         show_distributor_distance(mOrderDTOArrayList.get(position), holder);
         show_retailer_distance(mOrderDTOArrayList.get(position), holder);
         holder.order_id_TV.setText("#000" + mOrderDTOArrayList.get(position).getId());
         holder.order_date_tv.setText(mOrderDTOArrayList.get(position).getCreateDate());
-        holder.pickup_address_Tv.setText(mOrderDTOArrayList.get(position).getDistributorAddress());
-        holder.drop_address.setText(mOrderDTOArrayList.get(position).getRetailer_landmark()+","+mOrderDTOArrayList.get(position).getRetailerAddress());
-        holder.tv_total_item_weight.setText(mOrderDTOArrayList.get(position).getTotal_weight()+" "+mOrderDTOArrayList.get(position).getWeight_unit());
-        holder.tv_total_item.setText(mOrderDTOArrayList.get(position).getItemCount()+" Item");
+        holder.pickup_address_Tv.setText(mOrderDTOArrayList.get(position).getDistributor_landmark() + "," + mOrderDTOArrayList.get(position).getDistributorAddress());
+        holder.drop_address.setText(mOrderDTOArrayList.get(position).getRetailer_landmark() + "," + mOrderDTOArrayList.get(position).getRetailerAddress());
+        holder.tv_total_item_weight.setText(mOrderDTOArrayList.get(position).getTotal_weight() + " " + mOrderDTOArrayList.get(position).getWeight_unit());
+        holder.tv_total_item.setText(mOrderDTOArrayList.get(position).getItemCount() + " Item");
 
         holder.total_amouny.setText("Delivery charges-" + mOrderDTOArrayList.get(position).getDeliveryCharge());
         holder.total_vat_TV.setText("Weight-");
+        holder.tv_recipientId.setText(mOrderDTOArrayList.get(position).getShopName());
 
         holder.accepte_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +85,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                 if (sessionManager.is_DRIVER()) {
 
                     if (NetworkUtil.isNetworkAvailable(context)) {
-                        acceptOrderMethod("Accept",mOrderDTOArrayList.get(position));
+                        acceptOrderMethod("Accept", mOrderDTOArrayList.get(position));
                     } else {
                         Utility.netConnect(context);
 
@@ -97,7 +93,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                 } else {
 
                     if (NetworkUtil.isNetworkAvailable(context)) {
-                        acceptOrderCourirMethod("Accept",mOrderDTOArrayList.get(position));
+                        acceptOrderCourirMethod("Accept", mOrderDTOArrayList.get(position));
                     } else {
                         Utility.netConnect(context);
 
@@ -113,7 +109,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                 if (sessionManager.is_DRIVER()) {
 
                     if (NetworkUtil.isNetworkAvailable(context)) {
-                        acceptOrderMethod("Reject",mOrderDTOArrayList.get(position));
+                        acceptOrderMethod("Reject", mOrderDTOArrayList.get(position));
                     } else {
                         Utility.netConnect(context);
 
@@ -121,7 +117,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                 } else {
 
                     if (NetworkUtil.isNetworkAvailable(context)) {
-                        acceptOrderCourirMethod("Reject",mOrderDTOArrayList.get(position));
+                        acceptOrderCourirMethod("Reject", mOrderDTOArrayList.get(position));
                     } else {
                         Utility.netConnect(context);
 
@@ -130,23 +126,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                 }
             }
         });
-        switch (mOrderDTOArrayList.get(position).getVehicle_type()) {
-            case "Van":
-                holder.wheeler_image.setBackgroundResource(R.drawable.ic_van);
-                // Log.e("4 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
-                break;
-            case "Bike":
-                holder.wheeler_image.setBackgroundResource(R.drawable.ic_bike);
-                // Log.e("2 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
-                break;
-            case "Truck":
-                holder.wheeler_image.setBackgroundResource(R.drawable.ic_truck);
-                // Log.e("2 Wheeler>>", (mVehicalDTOS.get(0).getVehicleType()));
-                break;
-            default:
-                holder.wheeler_image.setBackgroundResource(R.drawable.ic_bike);
-                break;
-        }
         if (mOrderDTOArrayList.get(position).getDistributorImage() != null) {
             Glide.with(context)
                     .load(ApiClient.BASE_URL + mOrderDTOArrayList.get(position).getDistributorImage())
@@ -161,41 +140,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
     public int getItemCount() {
         return mOrderDTOArrayList.size();
     }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-
-        TextView order_id_TV, order_date_tv, pickup_address_Tv, drop_address, total_amouny;
-        TextView total_vat_TV;
-        TextView distributor_distance_tv;
-        TextView retailer_distance_tv;
-        TextView tv_total_item_weight;
-        TextView tv_total_item;
-        Button accepte_btn;
-        Button Reject_btn;
-        CircleImageView driver_image, wheeler_image;
-
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            tv_total_item = itemView.findViewById(R.id.tv_total_item);
-            order_id_TV = itemView.findViewById(R.id.order_id_TV);
-            tv_total_item_weight = itemView.findViewById(R.id.tv_total_item_weight);
-            order_date_tv = itemView.findViewById(R.id.order_date_tv);
-            pickup_address_Tv = itemView.findViewById(R.id.pickup_address_Tv);
-            drop_address = itemView.findViewById(R.id.drop_address);
-            total_amouny = itemView.findViewById(R.id.total_amouny);
-            total_vat_TV = itemView.findViewById(R.id.total_vat_TV);
-            accepte_btn = itemView.findViewById(R.id.accepte_btn);
-            driver_image = itemView.findViewById(R.id.driver_image);
-            wheeler_image = itemView.findViewById(R.id.wheeler_image);
-            distributor_distance_tv = itemView.findViewById(R.id.distributor_distance_tv);
-            retailer_distance_tv = itemView.findViewById(R.id.retailer_distance_tv);
-            Reject_btn = itemView.findViewById(R.id.Reject_btn);
-
-
-        }
-    }
-
 
     private void show_distributor_distance(OrderDTO mOrderDTO, MyViewHolder holder) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -322,14 +266,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         });
     }
 
-    private void acceptOrderMethod(String status,OrderDTO mOrderDTO) {
+    private void acceptOrderMethod(String status, OrderDTO mOrderDTO) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         HashMap<String, String> hm = new HashMap<>();
         hm.put("driver_id", sessionManager.getRegisterUser().getId());
         hm.put("order_id", mOrderDTO.getId());
         hm.put("vehicle_id", mVehicalDTOS.get(0).getId());
         hm.put("order_status", status);
-
+    Utils.E("Accept::::"+hm);
 
         Call<AccpetOrderDTO> call = apiService.accept_order(hm);
         call.enqueue(new Callback<AccpetOrderDTO>() {
@@ -343,7 +287,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                     if (body.getStatus() == 200) {
                         if (status.equals("Reject")) {
 
-                            Utils.I_clear(context, HomeActivity.class,null);
+                            Utils.I_clear(context, HomeActivity.class, null);
 
                         } else {
 
@@ -372,8 +316,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         });
     }
 
-
-    private void acceptOrderCourirMethod(String status,OrderDTO mOrderDTO) {
+    private void acceptOrderCourirMethod(String status, OrderDTO mOrderDTO) {
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
@@ -395,12 +338,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
                         if (status.equals("Reject")) {
 
-                            Utils.I_clear(context, HomeActivity.class,null);
+                            Utils.I_clear(context, HomeActivity.class, null);
 
                         } else {
+                          /*  context.startActivity(new Intent(context, AssignOrderActivity.class)
+                                    .putExtra("object", mOrderDTO));*/
                             context.startActivity(new Intent(context, AssignOrderActivity.class)
-                                    .putExtra("object", mOrderDTO));
-
+                                    .putExtra("ID", mOrderDTO.getId())
+                                    .putExtra("VehicleType", mOrderDTO.getVehicle_type()));
                         }
 
 
@@ -423,6 +368,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
             }
         });
     }
+
     private void ShowDialog(String sms) {
         AlertDialog dialog = new AlertDialog.Builder(context)
                 .setMessage(sms)
@@ -430,11 +376,45 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Utils.I(this, AmountDoneNotificationActivity.class, null);
-                      Utils.I_clear(context, HomeActivity.class,null);
+                        Utils.I_clear(context, HomeActivity.class, null);
 
                         dialog.dismiss();
                     }
                 }).show();
 
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        TextView order_id_TV, order_date_tv, pickup_address_Tv, drop_address, total_amouny;
+        TextView total_vat_TV;
+        TextView distributor_distance_tv;
+        TextView retailer_distance_tv;
+        TextView tv_total_item_weight;
+        TextView tv_total_item;
+        Button accepte_btn;
+        TextView Reject_btn,tv_recipientId;
+        ImageView driver_image;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            tv_total_item = itemView.findViewById(R.id.tv_total_item);
+            order_id_TV = itemView.findViewById(R.id.order_id_TV);
+            tv_total_item_weight = itemView.findViewById(R.id.tv_total_item_weight);
+            order_date_tv = itemView.findViewById(R.id.order_date_tv);
+            pickup_address_Tv = itemView.findViewById(R.id.pickup_address_Tv);
+            drop_address = itemView.findViewById(R.id.drop_address);
+            total_amouny = itemView.findViewById(R.id.total_amouny);
+            total_vat_TV = itemView.findViewById(R.id.total_vat_TV);
+            accepte_btn = itemView.findViewById(R.id.accepte_btn);
+            driver_image = itemView.findViewById(R.id.driver_image);
+            distributor_distance_tv = itemView.findViewById(R.id.distributor_distance_tv);
+            retailer_distance_tv = itemView.findViewById(R.id.retailer_distance_tv);
+            Reject_btn = itemView.findViewById(R.id.Reject_btn);
+            tv_recipientId = itemView.findViewById(R.id.tv_recipientId);
+
+
+        }
     }
 }

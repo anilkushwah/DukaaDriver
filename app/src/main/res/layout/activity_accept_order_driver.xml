@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBody"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:weightSum="2"
-    tools:context=".ui.dashboard.DashboardFragment">
+    android:weightSum="2">
+
+    <fragment
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom"
+        android:layout_below="@id/top" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolvbaar_accpeted"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorBlue"
         android:orientation="vertical">
 
@@ -32,18 +38,18 @@
                     android:id="@+id/back_image"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
-                    android:src="@drawable/ic_white_backbtn" />
+                    android:src="@drawable/ic_back_left" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_weight="2"
-                    android:fontFamily="@font/nexa_light"
+                    android:fontFamily="@font/nexa_bold"
                     android:text="Accepted By Driver"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="@dimen/_22sdp"
@@ -56,120 +62,170 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolvbaar_accpeted"
-        android:orientation="vertical">
-
-
-        <fragment
-            android:id="@+id/map"
-            class="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolvbaar_accpeted"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/white_bottom_round"
             android:orientation="vertical"
-            android:weightSum="1">
-
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingRight="@dimen/_20sdp">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight=".5"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/_20sdp"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingRight="@dimen/_20sdp">
-
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
                 <TextView
-                    android:id="@+id/address_status_tv"
-                    android:layout_width="match_parent"
+                    android:id="@+id/order_id_tv"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nexa_light"
-                    android:text="Pickup Location"
-                    android:textSize="@dimen/_11sdp" />
-
-                <TextView
-                    android:id="@+id/address_one_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nexa_light"
-                    android:text="Vishnupuri"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/_11sdp" />
-
-                <TextView
-                    android:id="@+id/address_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nexa_light"
-                    android:text="121,Black-E,I-bus stop,Near Anand Super"
-                    android:textColor="#000000"
+                    android:fontFamily="@font/nexa_bold"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:text=""
                     android:textSize="@dimen/_11sdp"
-                    android:visibility="gone" />
+                    android:textStyle="bold" />
+                <LinearLayout
+                    android:id="@+id/ll_itemListId"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nexa_bold"
+                        android:textColor="@color/white"
+                        android:text="ITEMLIST"
+                        android:gravity="end"
+                        android:textSize="@dimen/_11sdp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="1dp"
+                        android:background="@color/white"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
+
+
+            <TextView
+                android:id="@+id/address_status_tv"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight=".5"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nexa_bold"
+                android:text="Pickup Location"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11sdp"
+                android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/call_to_distributore_btn"
-                    android:layout_width="@dimen/_120sdp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginVertical="@dimen/_10sdp"
-                    android:background="@drawable/round_btn2"
-                    android:drawableLeft="@drawable/call_ic"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:drawableTint="@color/white"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:singleLine="true"
-                    android:paddingRight="@dimen/_5sdp"
-                    android:text="Call To Distributor"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    android:textSize="@dimen/_9sdp" />
+            <TextView
+                android:id="@+id/address_one_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nexa_regular"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11sdp" />
 
-
-                <Button
-                    android:id="@+id/call_btn"
-                    android:layout_width="@dimen/_120sdp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginVertical="@dimen/_10sdp"
-                    android:background="@drawable/round_btn2"
-                    android:drawableLeft="@drawable/call_ic"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:drawableTint="@color/white"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_5sdp"
-                    android:singleLine="true"
-                    android:text="Call To Retailer"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    android:textSize="@dimen/_9sdp" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/address_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nexa_light"
+                android:text="121,Black-E,I-bus stop,Near Anand Super"
+                android:textColor="#000000"
+                android:textSize="@dimen/_11sdp"
+                android:visibility="gone" />
 
         </LinearLayout>
 
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:weightSum="2"
+            android:padding="@dimen/_5sdp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@drawable/round_btn2"
+                android:backgroundTint="@color/logo_color_code">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_phone_call"/>
+            <TextView
+                android:id="@+id/call_to_distributore_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/_10sdp"
+                android:fontFamily="@font/nexa_bold"
+                android:singleLine="true"
+                android:text="Distributor"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:background="@drawable/round_btn2"
+                android:backgroundTint="@color/logo_color_code">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_phone_call"/>
+                <TextView
+                    android:id="@+id/call_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/_20sdp"
+                    android:fontFamily="@font/nexa_bold"
+                    android:singleLine="true"
+                    android:text="Retailer"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <LinearLayout
+        android:id="@+id/bottom"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@android:color/transparent"
         android:orientation="vertical"
@@ -177,74 +233,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.6"
-            android:background="@drawable/curve_bg_white_login"
-            android:orientation="vertical">
-
-            <!--   <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:orientation="horizontal"
-                   android:layout_marginRight="@dimen/_10sdp"
-                   android:layout_marginLeft="@dimen/_10sdp"
-                   android:weightSum="2"
-                   android:gravity="center">
-
-                   <ImageView
-                       android:layout_gravity="center"
-                       android:layout_width="@dimen/_18sdp"
-                       android:layout_height="@dimen/_18sdp"
-                       android:layout_marginLeft="@dimen/_5sdp"
-                       android:src="@drawable/ic_location"/>
-
-                   <LinearLayout
-                       android:layout_width="0dp"
-                       android:layout_height="wrap_content"
-                       android:layout_weight="2"
-                       android:orientation="vertical">
-
-                       <TextView
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:text="VishnuPuri"
-                           android:fontFamily="@font/poppins"
-                           android:textStyle="bold"
-                           android:padding="@dimen/_3sdp"
-                           android:textSize="@dimen/_13sdp"
-                           android:layout_marginLeft="@dimen/_10sdp" />
-
-                       <TextView
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:text="121, Block-E, i-bus stop, Near Anand super"
-                           android:fontFamily="@font/poppins"
-                           android:textStyle="bold"
-                           android:textSize="@dimen/_11sdp"
-                           android:paddingLeft="@dimen/_4sdp"
-                           android:paddingRight="@dimen/_25sdp"
-                           android:layout_marginLeft="@dimen/_10sdp" />
-
-                   </LinearLayout>
-
-                   <ImageView
-                       android:layout_gravity="center"
-                       android:layout_width="@dimen/_25sdp"
-                       android:layout_height="@dimen/_25sdp"
-                       android:id="@+id/iv_more_menu"
-                       android:src="@drawable/ic_more_vert"/>
-
-
-               </LinearLayout>
-   -->
-            <!--<View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="#EEEEEE"/>-->
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/_5sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -252,7 +244,6 @@
                 android:layout_marginTop="@dimen/_3sdp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="@dimen/_3sdp"
                 android:weightSum="2">
 
                 <LinearLayout
@@ -267,10 +258,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_bold"
                         android:gravity="center"
                         android:text="Distributor Distance"
-                        android:textSize="@dimen/_9sdp" />
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/distance_tv"
@@ -287,7 +279,7 @@
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_height="@dimen/_30sdp"
                     android:layout_gravity="center"
                     android:background="#EEEEEE" />
 
@@ -302,10 +294,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/nexa_light"
+                        android:fontFamily="@font/nexa_bold"
                         android:gravity="center"
                         android:text="Time"
-                        android:textSize="@dimen/_9sdp" />
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/time_tv"
@@ -327,21 +320,24 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.4"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_5sdp">
 
             <Button
                 android:id="@+id/pickup_parcel_btn"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/curve_bg_login"
-                android:fontFamily="@font/nexa_light"
-                android:text="Start job"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:background="@drawable/the_button"
+                android:fontFamily="@font/nexa_bold"
+                android:text="START JOB"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/_12sdp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 

@@ -8,6 +8,7 @@
     android:padding="@dimen/_5sdp">
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/user_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -24,6 +25,7 @@
 
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
@@ -32,7 +34,7 @@
             android:paddingTop="@dimen/_5sdp">
 
             <TextView
-                android:visibility="gone"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Alex Carey"
@@ -56,14 +58,14 @@
 
 
     <RatingBar
-        android:layout_marginLeft="@dimen/_4sdp"
-        android:paddingTop="@dimen/_8sdp"
         android:id="@+id/my_rating_ratebar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_info"
+        android:layout_marginLeft="@dimen/_4sdp"
         android:max="5"
         android:numStars="5"
+        android:paddingTop="@dimen/_8sdp"
         android:rating="3"
         android:scaleX=".8"
         android:scaleY=".8"

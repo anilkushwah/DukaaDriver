@@ -1,8 +1,6 @@
 package com.dollop.dukaadriver.adapter;
 
 import android.content.Context;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,25 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dollop.dukaadriver.R;
+import com.dollop.dukaadriver.UtilityTools.SessionManager;
 import com.dollop.dukaadriver.model.OrderDTO;
-import com.dollop.dukaadriver.model.PostorderModel;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
-import static android.icu.lang.UProperty.INT_START;
 
 public class PostOrderAdapter extends RecyclerView.Adapter<PostOrderAdapter.MyViewHolder> {
 
+    public SessionManager sessionManager;
     ArrayList<OrderDTO> mOrderDTOArrayListPost;
     Context context;
-
 
     public PostOrderAdapter(Context context, ArrayList<OrderDTO> mList) {
         this.context = context;
         this.mOrderDTOArrayListPost = mList;
+        sessionManager = new SessionManager(context);
     }
 
 
@@ -47,9 +41,16 @@ public class PostOrderAdapter extends RecyclerView.Adapter<PostOrderAdapter.MyVi
 
         OrderDTO postorderModel = mOrderDTOArrayListPost.get(position);
 
-        holder.Pickuplocation.setText(postorderModel.getDistributorAddress());
-        holder.Droplocation.setText(postorderModel.getRetailerAddress());
+        holder.Pickuplocation.setText(postorderModel.getRetailer_landmark() + "," + postorderModel.getDistributorAddress());
+        holder.Droplocation.setText(postorderModel.getDistributor_landmark() + "," + postorderModel.getRetailerAddress());
 
+        if (sessionManager.is_COMPANY_DRIVER()) {
+            holder.PaymentMethod.setVisibility(View.GONE);
+            holder.Price.setVisibility(View.GONE);
+        } else {
+            holder.PaymentMethod.setVisibility(View.VISIBLE);
+            holder.Price.setVisibility(View.VISIBLE);
+        }
 
         holder.OrderId.setText("OrderId : #000" + postorderModel.getId());
         holder.theName.setText("Name: " + postorderModel.getRetailerName());
@@ -57,17 +58,7 @@ public class PostOrderAdapter extends RecyclerView.Adapter<PostOrderAdapter.MyVi
         holder.Price.setText(context.getString(R.string.currency_sign) + postorderModel.getDeliveryCharge());
 
         String date = postorderModel.getCreateDate();
-    /*    SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date newDate = null;
-        try {
-            newDate = spf.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        spf = new SimpleDateFormat("dd MMM yyyy");
-        String newDateString = spf.format(newDate);
-        System.out.println(newDateString);
-*/
+
         holder.Time.setText("Order Date : " + date);
 
     }

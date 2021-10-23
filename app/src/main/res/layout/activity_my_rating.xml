@@ -137,7 +137,6 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:visibility="gone"
                 android:id="@+id/my_rating_list_rec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dollop.dukaadriver.R;
+import com.dollop.dukaadriver.UtilityTools.SavedData;
 import com.dollop.dukaadriver.UtilityTools.SessionManager;
 import com.dollop.dukaadriver.UtilityTools.Utils;
 import com.dollop.dukaadriver.activity.AcceptOrderDriverActivity;
@@ -110,7 +111,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         manage_vehicle_RL = root.findViewById(R.id.manage_vehicle_RL);
 
 
-        if (((HomeActivity) getActivity()).sessionManager.is_DRIVER()) {
+        if (((HomeActivity) requireActivity()).sessionManager.is_DRIVER()) {
             manage_driver_LL.setVisibility(View.GONE);
             compnay_rating_RL.setVisibility(View.GONE);
             accepted_RL.setVisibility(View.GONE);
@@ -132,16 +133,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         accepted_RL.setOnClickListener(this);
         manage_vehicle_RL.setOnClickListener(this);
 
-        name_tv.setText(((HomeActivity) getActivity()).sessionManager.getRegisterUser().getFullName());
+        name_tv.setText(((HomeActivity) requireActivity()).sessionManager.getRegisterUser().getFullName());
 
-        if (((HomeActivity) getActivity()).sessionManager.getRegisterUser().getProfile_img() != null) {
-            Glide.with(getActivity())
-                    .load(ApiClient.BASE_URL + ((HomeActivity) getActivity()).sessionManager.getRegisterUser().getProfile_img())
+        if (((HomeActivity) requireActivity()).sessionManager.getRegisterUser().getProfile_img() != null) {
+            Glide.with(requireActivity())
+                    .load(ApiClient.BASE_URL + ((HomeActivity) requireActivity()).sessionManager.getRegisterUser().getProfile_img())
                     .error(R.drawable.individual_driver)
                     .into(image);
 
         }
-        getDeviceId(getActivity());
+        getDeviceId(requireActivity());
 
     }
 
@@ -170,54 +171,45 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == btn_edit_profile) {
-
-            if (((HomeActivity) getActivity()).sessionManager.is_DRIVER()) {
+            if (((HomeActivity) requireActivity()).sessionManager.is_DRIVER()) {
                 startActivity(new Intent(getContext(), DriverUpdateProfileActivity.class).putExtra("type", "edit"));
             } else {
                 startActivity(new Intent(getContext(), UpdateCourierActivity.class).putExtra("type", "edit"));
             }
-
         } else if (v == notification_RL) {
-            startActivity(new Intent(getActivity(), NotificationActivity.class));
+            startActivity(new Intent(requireActivity(), NotificationActivity.class));
         } else if (v == order_history_RL) {
-            ((HomeActivity) getActivity()).replaceFragmentWithoutBack(new NewOrdersFragment(), "");
+            ((HomeActivity) requireActivity()).replaceFragmentWithoutBack(new NewOrdersFragment(), "");
         } else if (v == personal_detail_RL) {
-
-            if (((HomeActivity) getActivity()).sessionManager.is_DRIVER()) {
+            if (((HomeActivity) requireActivity()).sessionManager.is_DRIVER()) {
                 startActivity(new Intent(getContext(), DriverUpdateProfileActivity.class).putExtra("type", "profile"));
             } else {
                 startActivity(new Intent(getContext(), UpdateCourierActivity.class).putExtra("type", "profile"));
             }
-
         } else if (v == manage_driver_RL) {
-
-            startActivity(new Intent(getActivity(), ManageDriverActivity.class));
-
+            startActivity(new Intent(requireActivity(), ManageDriverActivity.class));
         } else if (v == toolbar_logout) {
             logoutMethod();
         } else if (v == my_review_RL) {
-            startActivity(new Intent(getActivity(), MyRatingActivity.class)
-                    .putExtra("id", ((HomeActivity) getActivity()).sessionManager.getRegisterUser().getId()).putExtra("type", "Driver"));
+            startActivity(new Intent(requireActivity(), MyRatingActivity.class)
+                    .putExtra("id", ((HomeActivity) requireActivity()).sessionManager.getRegisterUser().getId()).putExtra("type", "Driver"));
         } else if (v == change_password_RL) {
-            startActivity(new Intent(getActivity(), ChangePasswordActivity.class));
+            startActivity(new Intent(requireActivity(), ChangePasswordActivity.class));
         } else if (v == compnay_rating_RL) {
-            startActivity(new Intent(getActivity(), MyRatingActivity.class)
-                    .putExtra("id", ((HomeActivity) getActivity()).sessionManager.getRegisterUser().getId()).putExtra("type", "Driver"));
+            startActivity(new Intent(requireActivity(), MyRatingActivity.class)
+                    .putExtra("id", ((HomeActivity) requireActivity()).sessionManager.getRegisterUser().getId()).putExtra("type", "Company"));
         } else if (v == Statistic_RL) {
-            // ShowDialog("Progress");
             startActivity(new Intent(getContext(), StaticsActivity.class));
         } else if (v == accepted_RL) {
-
-            startActivity(new Intent(getActivity(), AcceptedOrderListActivity.class));
-
+            startActivity(new Intent(requireActivity(), AcceptedOrderListActivity.class));
         } else if (v == manage_vehicle_RL) {
-            startActivity(new Intent(getActivity(), ManageVehicleActivity.class));
+            startActivity(new Intent(requireActivity(), ManageVehicleActivity.class));
         }
     }
 
     private void logoutMethod() {
 
-        AlertDialog.Builder alertdialog = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder alertdialog = new AlertDialog.Builder(requireActivity());
        // alertdialog.setTitle("Sure");
         alertdialog.setMessage("Are you sure you want to Logout ??");
         alertdialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
@@ -225,21 +217,24 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onClick(DialogInterface dialog, int which) {
 
 
-                if (((HomeActivity) getActivity()).sessionManager.is_DRIVER()) {
+                if (((HomeActivity) requireActivity()).sessionManager.is_DRIVER()) {
 
                     getDriverStatus();
 
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                    getActivity().finishAffinity();
-                    getActivity().finish();
+                    startActivity(new Intent(requireActivity(), LoginActivity.class));
+                    requireActivity().finishAffinity();
+                    requireActivity().finish();
                     CourierDTO user = new CourierDTO();
-                    ((HomeActivity) getActivity()).sessionManager.setLoginSession(false);
-                    ((HomeActivity) getActivity()).sessionManager.setRegisterUser(user);
-                    ((HomeActivity) getActivity()).sessionManager.DRIVER_ONLINE_STATUS(false);
-                    // ((HomeActivity) getActivity()).sessionManager.setVehicalData(mVehicalDTO);
-                    ((HomeActivity) getActivity()).sessionManager.set_DELIVERY_TYPE_DRIVER(false);
-                    ((HomeActivity) getActivity()).sessionManager.COMPANY_DRIVER(false);
-                    //((HomeActivity) getActivity()).sessionManager.setTokenFCM("");
+                    ((HomeActivity) requireActivity()).sessionManager.setLoginSession(false);
+                    ((HomeActivity) requireActivity()).sessionManager.setRegisterUser(user);
+                    ((HomeActivity) requireActivity()).sessionManager.DRIVER_ONLINE_STATUS(false);
+                    // ((HomeActivity) requireActivity()).sessionManager.setVehicalData(mVehicalDTO);
+                    ((HomeActivity) requireActivity()).sessionManager.set_DELIVERY_TYPE_DRIVER(false);
+                    ((HomeActivity) requireActivity()).sessionManager.COMPANY_DRIVER(false);
+                    //((HomeActivity) requireActivity()).sessionManager.setTokenFCM("");
+                    SavedData.saveCourierDriver(false);
+                    SavedData.saveDriver(false);
+                    SavedData.saveCourier(false);
 
 
                 } else {
@@ -264,12 +259,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void logout() {
 
-        final Dialog dialog = Utils.initProgressDialog(getActivity());
+        final Dialog dialog = Utils.initProgressDialog(requireActivity());
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         HashMap<String, String> hm = new HashMap<>();
         hm.put("device_id", m_deviceId);
-        hm.put("driver_id", ((HomeActivity) getActivity()).sessionManager.getRegisterUser().getId());
+        hm.put("driver_id", ((HomeActivity) requireActivity()).sessionManager.getRegisterUser().getId());
 
         Call<AllResponse> call = apiService.logout(hm);
         call.enqueue(new Callback<AllResponse>() {
@@ -282,15 +277,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                     if (body.getStatus() == 200) {
 
-                        startActivity(new Intent(getActivity(), LoginActivity.class));
-                        getActivity().finish();
+                        startActivity(new Intent(requireActivity(), LoginActivity.class));
+                        requireActivity().finish();
                         CourierDTO user = new CourierDTO();
-                        ((HomeActivity) getActivity()).sessionManager.setLoginSession(false);
-                        ((HomeActivity) getActivity()).sessionManager.setRegisterUser(user);
-                        ((HomeActivity) getActivity()).sessionManager.DRIVER_ONLINE_STATUS(false);
-                        //  ((HomeActivity) getActivity()).sessionManager.setVehicalData(mVehicalDTO);
-                        ((HomeActivity) getActivity()).sessionManager.set_DELIVERY_TYPE_DRIVER(false);
-                        ((HomeActivity) getActivity()).sessionManager.COMPANY_DRIVER(false);
+                        ((HomeActivity) requireActivity()).sessionManager.setLoginSession(false);
+                        ((HomeActivity) requireActivity()).sessionManager.setRegisterUser(user);
+                        ((HomeActivity) requireActivity()).sessionManager.DRIVER_ONLINE_STATUS(false);
+                        //  ((HomeActivity) requireActivity()).sessionManager.setVehicalData(mVehicalDTO);
+                        ((HomeActivity) requireActivity()).sessionManager.set_DELIVERY_TYPE_DRIVER(false);
+                        ((HomeActivity) requireActivity()).sessionManager.COMPANY_DRIVER(false);
 
 
 
@@ -316,7 +311,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void ShowDialog(String sms) {
-        androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(getActivity())
+        androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(requireActivity())
                 .setMessage(sms)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
@@ -335,7 +330,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         HashMap<String, String> hm = new HashMap<>();
-        hm.put("driver_id", ((HomeActivity) getActivity()).sessionManager.getRegisterUser().getId());
+        hm.put("driver_id", ((HomeActivity) requireActivity()).sessionManager.getRegisterUser().getId());
         hm.put("status", "Offline");
 
         Call<AllResponse> call = apiService.driver_status(hm);

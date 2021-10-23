@@ -44,7 +44,7 @@ public class AssignedJobsAdapter extends RecyclerView.Adapter<AssignedJobsAdapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.driver_name_tv.setText(mAssignOrdeList.get(position).getFullName());
         holder.driver_number_tv.setText(mAssignOrdeList.get(position).getMobile());
-        holder.order_id_TV.setText("Order ID- #000"+mAssignOrdeList.get(position).getId());
+        holder.order_id_TV.setText("Order ID- #000"+mAssignOrdeList.get(position).order_id);
 
         if (mAssignOrdeList.get(position).getProfileImg() != null) {
             Glide.with(context)

@@ -29,11 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_toRightOf="@+id/back_btn_total_earn"
-            android:text="Total Earing"
-            android:textColor="#FFFFFF"
             android:fontFamily="@font/nexa_bold"
-            android:textStyle="bold"
-            android:textSize="@dimen/_16sdp" />
+            android:text="Total Earning"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/total_errning_tv"
@@ -43,12 +43,12 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
+            android:fontFamily="@font/nexa_bold"
             android:paddingRight="@dimen/_10sdp"
             android:text="Ksh0"
-            android:fontFamily="@font/nexa_bold"
-            android:textStyle="bold"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/_16sdp" />
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

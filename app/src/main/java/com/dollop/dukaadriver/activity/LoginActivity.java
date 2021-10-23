@@ -1,11 +1,5 @@
 package com.dollop.dukaadriver.activity;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
@@ -27,16 +21,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.dollop.dukaadriver.R;
 import com.dollop.dukaadriver.UtilityTools.NetworkUtil;
+import com.dollop.dukaadriver.UtilityTools.SavedData;
 import com.dollop.dukaadriver.UtilityTools.SessionManager;
 import com.dollop.dukaadriver.UtilityTools.UserAccount;
 import com.dollop.dukaadriver.UtilityTools.Utility;
 import com.dollop.dukaadriver.UtilityTools.Utils;
 import com.dollop.dukaadriver.firebase.MyFirebaseMessagingService;
-import com.dollop.dukaadriver.model.AllResponse;
 import com.dollop.dukaadriver.model.CourierDTO;
 import com.dollop.dukaadriver.model.OTPResponse;
 import com.dollop.dukaadriver.retrofit.ApiClient;
@@ -52,19 +51,41 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 100;
+    private static final int REQUEST_READ_PHONE_STATE = 90;
+    static String m_deviceId = "";
     TextView tv_GoSignUp_Id, password_error_tv, email_error_tv;
     Button btn_login;
     EditText et_login_UserName, et_login_password;
     ImageView show_password_img;
+    TextView tv_forgot_password;
     SessionManager sessionManager;
-    private boolean permissionGranted;
-    private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 100;
-    private static final int REQUEST_READ_PHONE_STATE = 90;
-
     CourierDTO mCourierDTO;
-    static String m_deviceId = "";
     boolean isLogin = false;
     String passwordVisiblity = "hide";
+    private boolean permissionGranted;
+
+    public static String getDeviceId(Context context) {
+
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            m_deviceId = Settings.Secure.getString(
+                    context.getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
+        } else {
+            final TelephonyManager mTelephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (mTelephony.getDeviceId() != null) {
+                m_deviceId = mTelephony.getDeviceId();
+            } else {
+                m_deviceId = Settings.Secure.getString(
+                        context.getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
+            }
+        }
+        Log.e("m_deviceId>", m_deviceId);
+        return m_deviceId;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,27 +108,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         MyFirebaseMessagingService.GenerateToken(LoginActivity.this);
 
 
-    }
-
-    public static String getDeviceId(Context context) {
-
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            m_deviceId = Settings.Secure.getString(
-                    context.getContentResolver(),
-                    Settings.Secure.ANDROID_ID);
-        } else {
-            final TelephonyManager mTelephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if (mTelephony.getDeviceId() != null) {
-                m_deviceId = mTelephony.getDeviceId();
-            } else {
-                m_deviceId = Settings.Secure.getString(
-                        context.getContentResolver(),
-                        Settings.Secure.ANDROID_ID);
-            }
-        }
-        Log.e("m_deviceId>", m_deviceId);
-        return m_deviceId;
     }
 
     private void TextChangedListenerMethod() {
@@ -169,10 +169,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         email_error_tv = findViewById(R.id.email_error_tv);
         password_error_tv = findViewById(R.id.password_error_tv);
         show_password_img = findViewById(R.id.show_password_img);
+        tv_forgot_password = findViewById(R.id.tv_forgot_password);
 
         tv_GoSignUp_Id.setOnClickListener(this);
         btn_login.setOnClickListener(this);
         show_password_img.setOnClickListener(this);
+        tv_forgot_password.setOnClickListener(this);
 
     }
 
@@ -197,7 +199,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (v == tv_GoSignUp_Id) {
             Intent intent = new Intent(LoginActivity.this, SeletedUserTypeActivity.class);
             startActivity(intent);
-        } else if (v == btn_login) {
+        }
+        if (v == btn_login) {
 
             getDeviceId(LoginActivity.this);
 
@@ -236,7 +239,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
 
 
-        }else if (v==show_password_img){
+        }
+        if (v == show_password_img) {
             if (passwordVisiblity.equals("hide")) {
                 passwordVisiblity = "show";
                 show_password_img.setBackgroundResource(R.drawable.ic_baseline_visibility_off_24);
@@ -249,6 +253,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             }
         }
+        if (v == tv_forgot_password) {
+            Utils.I(LoginActivity.this, ForgotPasswordActivity.class, null);
+
+        }
+
     }
 
 
@@ -280,6 +289,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         sessionManager.setLoginSession(true);
                         sessionManager.setRegisterUser(mCourierDTO);
 
+                        if (mCourierDTO.getType().equals("Courier")) {
+                            SavedData.saveCourier(true);
+                            SavedData.saveCourierDriver(false);
+                            SavedData.saveDriver(false);
+                        } else if (mCourierDTO.getType().equals("Driver")) {
+                            SavedData.saveCourier(false);
+                            SavedData.saveCourierDriver(false);
+                            SavedData.saveDriver(true);
+
+                            if (!mCourierDTO.getDeliveryPartnerId().equals("0")) {
+                                SavedData.saveCourier(false);
+                                SavedData.saveCourierDriver(true);
+                                SavedData.saveDriver(false);
+                            }
+                        }
+
+
+
                         if (sessionManager.getRegisterUser().getType().equals("Driver")) {
                             sessionManager.set_DELIVERY_TYPE_DRIVER(true);
                         } else {
@@ -295,7 +322,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         finish();
 
                     } else {
-                        if (body.getMessage().equals("Your Account is Deactivated. Please Contact to Admin!")){
+                        if (body.getMessage().equals("Your Account is Deactivated. Please Contact to Admin!")) {
                             final Dialog dialog1 = new Dialog(LoginActivity.this, R.style.dialogstyle); // Context, this, etc.
                             dialog1.setContentView(R.layout.activity_successfull_registrion);
                             dialog1.setCanceledOnTouchOutside(true);
@@ -309,7 +336,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 }
                             });
                             dialog1.show();
-                        }else {
+                        } else {
                             ShowDialog(body.getMessage());
                         }
 
@@ -369,7 +396,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
                     REQUEST_ID_MULTIPLE_PERMISSIONS);
-           // Log.e("m_deviceId> 1", m_deviceId);
+            // Log.e("m_deviceId> 1", m_deviceId);
             return false;
         }
         return true;

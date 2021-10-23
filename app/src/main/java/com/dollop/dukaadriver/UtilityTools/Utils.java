@@ -19,6 +19,8 @@ import androidx.core.content.ContextCompat;
 import com.dollop.dukaadriver.R;
 
 import java.io.File;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class Utils {
     static Boolean condition = false;
@@ -162,4 +164,8 @@ public class Utils {
     public static void T_Long(Context c, String msg) {
         Toast.makeText(c, msg, Toast.LENGTH_LONG).show();
     }
+    public static String getFormatedAmount(int amount){
+        return NumberFormat.getNumberInstance(Locale.US).format(amount);
+    }
+
 }

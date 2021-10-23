@@ -1,20 +1,17 @@
 package com.dollop.dukaadriver.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +25,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -46,17 +52,14 @@ import com.dollop.dukaadriver.UtilityTools.NetworkUtil;
 import com.dollop.dukaadriver.UtilityTools.SessionManager;
 import com.dollop.dukaadriver.UtilityTools.Utility;
 import com.dollop.dukaadriver.UtilityTools.Utils;
-import com.dollop.dukaadriver.UtilityTools.multipart.AppHelper;
 import com.dollop.dukaadriver.UtilityTools.multipart.VolleyMultipartRequest;
 import com.dollop.dukaadriver.UtilityTools.multipart.VolleySingleton;
-import com.dollop.dukaadriver.model.AllResponse;
+import com.dollop.dukaadriver.firebase.Config;
 import com.dollop.dukaadriver.model.ItemModel;
 import com.dollop.dukaadriver.model.OrderDTO;
 import com.dollop.dukaadriver.model.VehicalDTO;
 import com.dollop.dukaadriver.retrofit.ApiClient;
-import com.dollop.dukaadriver.retrofit.ApiInterface;
 import com.simplify.ink.InkView;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,48 +70,236 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-
 import static com.dollop.dukaadriver.UtilityTools.multipart.AppHelper.getFileDataFromDrawable;
 
 
 public class DeliveryPrefrences extends AppCompatActivity implements View.OnClickListener {
+    public static final int GALLERY = 1;
+    protected static final int CAMERA_REQUEST = 2;
     RelativeLayout signature_view_RL;
-    ImageView final_image, delivery_image;
+    ImageView final_image, delivery_image, iv_back_arrow;
     Button upload_proof_and_order;
     //   private SignaturePad mSignaturePad;
     SessionManager sessionManager;
     LinearLayout image_LL;
-
-    public static final int GALLERY = 1;
-    protected static final int CAMERA_REQUEST = 2;
+    RelativeLayout ll_payOnDelivery;
     Uri insuranceUri;
     Bitmap insuranceBitmap;
     boolean insuranceCamera;
 
     InkView ink;
     Bitmap bitmap = null;
-    TextView item_tv, total_amount_tv, trash_sign, tv_distributor;
+    TextView item_tv, total_amount_tv, trash_sign, tv_distributor, tv_retailer_name, tv_requestPayment, tv_total_ProductPrice;
     OrderDTO mOrderDTO;
     ScrollView scrollViewId;
 
     ArrayList<VehicalDTO> mVehicalDTOS;
     RecyclerView rv_ItemList;
+    ImageView refresh_iv;
+    ArrayList<ItemModel> itemModels = new ArrayList<>();
+    String transactionId = "";
+    Activity activity = DeliveryPrefrences.this;
+    TextView tv_orderId;
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            if (!isFinishing()) {
+
+
+                if (intent.getStringExtra("action").equals("payment_success")) {
+                    tv_requestPayment.setEnabled(false);
+                    tv_requestPayment.setText("Paid");
+                    tv_requestPayment.setTextColor(Color.WHITE);
+                    tv_requestPayment.setBackgroundResource(R.drawable.the_green_btn);
+
+                }
+            }
+        }
+    };
+    private String callBack_url = ApiClient.BASE_URL + "callback_url?transaction_id=";
+
+
+    private void GetOrderStatus(final String order_id) {
+        final Dialog dialog = Utils.initProgressDialog(activity);
+        RequestQueue queue = Volley.newRequestQueue(activity);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ApiClient.BASE_URL + "order_history", new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                dialog.dismiss();
+                Utils.E("GetOrderStatus:response:" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getInt("status") == 200) {
+                        JSONArray data = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject object = data.getJSONObject(i);
+                            mOrderDTO.transactionId = object.getString("transaction_id");
+                            mOrderDTO.transactionMode = object.getString("transaction_mode");
+                            mOrderDTO.transaction_status = object.getString("transaction_status");
+                            /*if (object.getString("transaction_mode").equals("Pay On Delivery")) {
+                                ll_payOnDelivery.setVisibility(View.VISIBLE);
+                                tv_retailer_name.setText(mOrderDTO.getRetailerName());
+
+                            } else {
+                                ll_payOnDelivery.setVisibility(View.GONE);
+                            }*/
+                            if (object.getString("transaction_status").equals("Paid")) {
+                                tv_requestPayment.setEnabled(false);
+                                tv_requestPayment.setText("Paid");
+                                tv_requestPayment.setTextColor(Color.WHITE);
+                                tv_requestPayment.setBackgroundResource(R.drawable.the_green_btn);
+
+                            } else if (object.getString("transaction_status").equals("Failed")) {
+                                tv_requestPayment.setText("Not Paid");
+                                tv_requestPayment.setTextColor(Color.WHITE);
+                                tv_requestPayment.setBackgroundResource(R.drawable.red_btn);
+                                tv_requestPayment.setEnabled(true);
+
+                            } else {
+                                tv_requestPayment.setEnabled(true);
+                            }
+
+                        }
+
+                    }
+
+
+                } catch (JSONException e) {
+                    dialog.dismiss();
+
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Unknown error";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                    Utils.T(activity, errorMessage + "please check Internet connection");
+                } else {
+                    String result = new String(networkResponse.data);
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+                        Utils.E("Error Status" + status);
+                        Utils.E("Error Message" + message);
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message + " Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message + " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message + " Something is getting wrong";
+                        }
+                        Utils.T(activity, errorMessage + "please check Internet connection");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("order_id", order_id);
+                params.put("driver_id", sessionManager.getRegisterUser().getId());
+                Utils.E("GetOrderStatus:params:" + params);
+                return params;
+            }
+
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                25000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(stringRequest);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_delivery_prefrences);
-
+        ll_payOnDelivery = findViewById(R.id.ll_payOnDelivery);
+        tv_retailer_name = findViewById(R.id.tv_retailer_name);
+        tv_requestPayment = findViewById(R.id.tv_requestPayment);
+        tv_total_ProductPrice = findViewById(R.id.tv_total_ProductPrice);
+        iv_back_arrow = findViewById(R.id.iv_back_arrow);
+        refresh_iv = findViewById(R.id.refresh_iv);
+        tv_orderId = findViewById(R.id.tv_orderId);
 
         mOrderDTO = (OrderDTO) getIntent().getSerializableExtra("model");
+        if (!mOrderDTO.getTransactionId().equals("")) {
+            refresh_iv.setVisibility(View.VISIBLE);
+        } else {
+            refresh_iv.setVisibility(View.GONE);
+        }
+        refresh_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GetOrderStatus(mOrderDTO.getId());
+            }
+        });
+        if (mOrderDTO.getTransactionMode().equals("Pay On Delivery")) {
+            ll_payOnDelivery.setVisibility(View.VISIBLE);
+            tv_retailer_name.setText(mOrderDTO.getRetailerName());
+            if (mOrderDTO.transaction_status.equals("Paid")) {
+                tv_requestPayment.setEnabled(false);
+                tv_requestPayment.setText("Paid");
+                tv_requestPayment.setTextColor(Color.WHITE);
+                tv_requestPayment.setBackgroundResource(R.drawable.the_green_btn);
+
+            } else if (mOrderDTO.transaction_status.equals("Failed")) {
+                tv_requestPayment.setText("Not Paid");
+                tv_requestPayment.setTextColor(Color.WHITE);
+                tv_requestPayment.setBackgroundResource(R.drawable.red_btn);
+                tv_requestPayment.setEnabled(true);
+
+            } else {
+                tv_requestPayment.setEnabled(true);
+            }
+        } else {
+            ll_payOnDelivery.setVisibility(View.GONE);
+        }
+
+        tv_requestPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tv_requestPayment.getText().toString().equals("Request Payment")) {
+                    RequestPaymentTask();
+                }
+
+            }
+        });
+        iv_back_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+
+            }
+        });
 
         sessionManager = new SessionManager(this);
 
 
         signature_view_RL = findViewById(R.id.signature_view_RL);
+
         rv_ItemList = findViewById(R.id.rv_ItemList);
         tv_distributor = findViewById(R.id.tv_distributor);
 
@@ -158,9 +349,336 @@ public class DeliveryPrefrences extends AppCompatActivity implements View.OnClic
 
         GetItemListTask();
 
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(Config.PUSH_NOTIFICATION));
     }
 
+    private void RequestPaymentTask() {
+        final Dialog dialog = Utils.initProgressDialog(this);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ApiClient.payment_notification_for_retailer, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                dialog.dismiss();
+                Utils.E("RequestPaymentTask:--" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getInt("status") == 200) {
+                        refresh_iv.setVisibility(View.VISIBLE);
+                        transactionIdMethod();
+                    } else {
+                        Utils.T(DeliveryPrefrences.this, jsonObject.getString("message"));
+
+                    }
+
+                } catch (JSONException e) {
+                    dialog.dismiss();
+
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+
+                NetworkResponse networkResponse = error.networkResponse;
+
+                String errorMessage = "Unknown error";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                        Utils.T(DeliveryPrefrences.this, errorMessage + "please check Internet connection");
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                } else {
+                    String result = new String(networkResponse.data);
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+                        Utils.E("Error Status" + status);
+                        Utils.E("Error Message" + message);
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message + " Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message + " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message + " Something is getting wrong";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> stringStringHashMap = new HashMap<>();
+                stringStringHashMap.put("order_id", mOrderDTO.getId());
+                Utils.E("RequestPaymentTask:--" + stringStringHashMap);
+                return stringStringHashMap;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                25000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(stringRequest);
+    }
+
+    private void transactionIdMethod() {
+        final Dialog dialog = Utils.initProgressDialog(activity);
+        RequestQueue queue = Volley.newRequestQueue(activity);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ApiClient.generate_transaction_id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                dialog.dismiss();
+                Utils.E("transactionIdMethod:response:" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    transactionId = jsonObject.getString("transaction_id");
+                    callBack_url = callBack_url + jsonObject.getString("transaction_id");
+                    UpdateTransactionId(transactionId);
+
+                } catch (JSONException e) {
+                    dialog.dismiss();
+
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Unknown error";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                        Utils.T(activity, errorMessage + "please check Internet connection");
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                } else {
+                    String result = new String(networkResponse.data);
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+                        Utils.E("Error Status" + status);
+                        Utils.E("Error Message" + message);
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message + " Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message + " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message + " Something is getting wrong";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+
+                Utils.E("transactionIdMethod:params:" + params);
+                return params;
+
+            }
+
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                25000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(stringRequest);
+    }
+
+    private void UpdateTransactionId(final String transactionId) {
+        final Dialog dialog = Utils.initProgressDialog(activity);
+        RequestQueue queue = Volley.newRequestQueue(activity);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ApiClient.update_transaction_id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                dialog.dismiss();
+                Utils.E("UpdateTransactionId:response:" + response);
+                RequestPayment(mOrderDTO.getId());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Utils.E("UpdateTransactionId:response:" + error);
+                dialog.dismiss();
+
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Unknown error";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                        Utils.T(activity, errorMessage + "please check Internet connection");
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                } else {
+                    String result = new String(networkResponse.data);
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+                        Utils.E("Error Status" + status);
+                        Utils.E("Error Message" + message);
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message + " Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message + " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message + " Something is getting wrong";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("order_id", mOrderDTO.getId());
+                params.put("transaction_id", transactionId);
+
+                Utils.E("UpdateTransactionId:params:" + params);
+                return params;
+
+            }
+
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                25000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(stringRequest);
+    }
+
+    private void RequestPayment(final String order_id) {
+        final Dialog dialog = Utils.initProgressDialog(activity);
+        RequestQueue queue = Volley.newRequestQueue(activity);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ApiClient.requestPayment, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                dialog.dismiss();
+                Utils.E("RequestPayment:response:" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getInt("status") == 200) {
+
+                        //Utils.I(ConfirmOrderActivity.this, PaymentwaitingActivity.class, bundle);
+                        //  placeOrderMethod();
+                        //String gatewayResponse = jsonObject.getString("data");
+                        JSONObject gatewayResponseJsonObject = new JSONObject(jsonObject.getString("data"));
+                        if (gatewayResponseJsonObject.getBoolean("status")) {
+                            Utils.T(activity, gatewayResponseJsonObject.getString("message"));
+                        } else {
+                            Utils.T(activity, jsonObject.getString("message"));
+                        }
+                    } else {
+                        Utils.T(activity, jsonObject.getString("message"));
+                    }
+
+
+                } catch (JSONException e) {
+                    dialog.dismiss();
+
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Unknown error";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                        Utils.T(activity, errorMessage + "please check Internet connection");
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                } else {
+                    String result = new String(networkResponse.data);
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+                        Utils.E("Error Status" + status);
+                        Utils.E("Error Message" + message);
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message + " Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message + " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message + " Something is getting wrong";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> stringStringHashMap = new HashMap<>();
+                stringStringHashMap.put("json_str", getJsonParam(order_id).toString());
+
+                return stringStringHashMap;
+
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                25000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(stringRequest);
+    }
+
+    private JSONObject getJsonParam(String order_id) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put("amount", mOrderDTO.getPaidAmount());
+            jsonObject.put("tel", "254" + mOrderDTO.getRetailerMobile());
+            jsonObject.put("reference", "Retailer");
+            jsonObject.put("vendor", mOrderDTO.getDistributorId());
+            jsonObject.put("callback_url", callBack_url);
+            jsonObject.put("order_id", "#000" + order_id);
+            Utils.E("checkJsonObjectPut::" + jsonObject);
+
+        } catch (Exception e) {
+        }
+
+        return jsonObject;
+    }
 
     @Override
     public void onClick(View v) {
@@ -194,7 +712,6 @@ public class DeliveryPrefrences extends AppCompatActivity implements View.OnClic
 
         }
     }
-
 
     public void deliverOrder() {
         final Dialog dialog = Utils.initProgressDialog(DeliveryPrefrences.this);
@@ -313,7 +830,6 @@ public class DeliveryPrefrences extends AppCompatActivity implements View.OnClic
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(multipartRequest);
     }
 
-
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -380,7 +896,6 @@ public class DeliveryPrefrences extends AppCompatActivity implements View.OnClic
         Utils.I_clear(DeliveryPrefrences.this, HomeActivity.class, null);
     }
 
-
     private void GetItemListTask() {
 
         StringRequest stringRequest = new StringRequest(1, ApiClient.order_history, new Response.Listener<String>() {
@@ -394,9 +909,10 @@ public class DeliveryPrefrences extends AppCompatActivity implements View.OnClic
                         for (int a = 0; a < data.length(); a++) {
                             JSONObject jsonObject = data.getJSONObject(a);
                             tv_distributor.setText(jsonObject.getString("shop_name"));
+                            tv_total_ProductPrice.setText(getString(R.string.currency_sign) + jsonObject.getString("paid_amount"));
+
                             for (int i = 0; i < jsonObject.getJSONArray("products").length(); i++) {
                                 JSONObject Item = jsonObject.getJSONArray("products").getJSONObject(i);
-
                                 ItemModel itemModel = new ItemModel();
                                 itemModel.id = Item.getString("id");
                                 itemModel.retailer_id = Item.getString("retailer_id");
@@ -434,6 +950,7 @@ public class DeliveryPrefrences extends AppCompatActivity implements View.OnClic
                                 itemModel.packing = Item.getString("packing");
                                 itemModel.tax_name = Item.getString("tax_name");
                                 itemModels.add(itemModel);
+                                tv_orderId.setText("Order ID-: #000"+itemModel.order_id);
 
                             }
 
@@ -465,8 +982,6 @@ public class DeliveryPrefrences extends AppCompatActivity implements View.OnClic
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
-
-    ArrayList<ItemModel> itemModels = new ArrayList<>();
 
     public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 

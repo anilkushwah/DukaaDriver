@@ -94,7 +94,6 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     public void getTimer() {
-        Log.e("cgecch", "::");
         countDownTimer = new CountDownTimer(30000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -152,7 +151,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
 
         HashMap<String, String> hm = new HashMap<>();
         hm.put("mobile", mobile_number);
-        hm.put("otp", otp_number);
+        hm.put("otp", firstPinView.getText().toString());
         hm.put("type", "driver");
 
         Call<OTPResponse> call = apiService.match_otp(hm);

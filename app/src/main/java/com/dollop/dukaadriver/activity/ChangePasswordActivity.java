@@ -1,8 +1,5 @@
 package com.dollop.dukaadriver.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +10,8 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.dollop.dukaadriver.R;
 import com.dollop.dukaadriver.UtilityTools.NetworkUtil;
@@ -39,13 +40,36 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ChangePasswordActivity extends AppCompatActivity {
+    static String m_deviceId;
     EditText current_password_edt, new_password_edt, confirm_password_edt;
     TextView confirm_password_error_, new_password_error_, Current_password_error_;
     Button changePassword_btn;
     SessionManager sessionManager;
-
+    ImageView old_password_img;
+    ImageView new_pass_img;
+    ImageView confirm_pass_img;
     ImageView back_home_img;
-    static String m_deviceId;
+
+    public static String getDeviceId(Context context) {
+
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            m_deviceId = Settings.Secure.getString(
+                    context.getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
+        } else {
+            final TelephonyManager mTelephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (mTelephony.getDeviceId() != null) {
+                m_deviceId = mTelephony.getDeviceId();
+            } else {
+                m_deviceId = Settings.Secure.getString(
+                        context.getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
+            }
+        }
+        Log.e("..", m_deviceId);
+        return m_deviceId;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,10 +202,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         });
     }
-
+String oldpasswordVisiblity="hide";
+String newpasswordVisiblity="hide";
+String confirmpasswordVisiblity="hide";
     private void initialization() {
 
         current_password_edt = findViewById(R.id.current_password_edt);
+        old_password_img = findViewById(R.id.old_password_img);
+        confirm_pass_img = findViewById(R.id.confirm_pass_img);
+        new_pass_img = findViewById(R.id.new_pass_img);
         new_password_edt = findViewById(R.id.new_password_edt);
         confirm_password_edt = findViewById(R.id.confirm_password_edt);
 
@@ -197,29 +226,55 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-    }
+        old_password_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (oldpasswordVisiblity.equals("hide")) {
+                    oldpasswordVisiblity = "show";
+                    old_password_img.setBackgroundResource(R.drawable.ic_baseline_visibility_off_24);
+                    current_password_edt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
-    public static String getDeviceId(Context context) {
+                } else if (oldpasswordVisiblity.equals("show")) {
+                    oldpasswordVisiblity = "hide";
+                    old_password_img.setBackgroundResource(R.drawable.ic_baseline_visibility_24);
+                    current_password_edt.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            m_deviceId = Settings.Secure.getString(
-                    context.getContentResolver(),
-                    Settings.Secure.ANDROID_ID);
-        } else {
-            final TelephonyManager mTelephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if (mTelephony.getDeviceId() != null) {
-                m_deviceId = mTelephony.getDeviceId();
-            } else {
-                m_deviceId = Settings.Secure.getString(
-                        context.getContentResolver(),
-                        Settings.Secure.ANDROID_ID);
+                }
             }
-        }
-        Log.e("..", m_deviceId);
-        return m_deviceId;
-    }
+        });
+        new_pass_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (newpasswordVisiblity.equals("hide")) {
+                    newpasswordVisiblity = "show";
+                    new_pass_img.setBackgroundResource(R.drawable.ic_baseline_visibility_off_24);
+                    new_password_edt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
+                } else if (newpasswordVisiblity.equals("show")) {
+                    newpasswordVisiblity = "hide";
+                    new_pass_img.setBackgroundResource(R.drawable.ic_baseline_visibility_24);
+                    new_password_edt.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                }
+            }
+        });
+        confirm_pass_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (confirmpasswordVisiblity.equals("hide")) {
+                    confirmpasswordVisiblity = "show";
+                    confirm_pass_img.setBackgroundResource(R.drawable.ic_baseline_visibility_off_24);
+                    confirm_password_edt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+
+                } else if (confirmpasswordVisiblity.equals("show")) {
+                    confirmpasswordVisiblity = "hide";
+                    confirm_pass_img.setBackgroundResource(R.drawable.ic_baseline_visibility_24);
+                    confirm_password_edt.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                }
+            }
+        });
+    }
 
     private void updatePasswordMethod(String oldPassword, String newPassword) {
         final Dialog dialog1 = Utils.initProgressDialog(this);
@@ -371,7 +426,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         HashMap<String, String> hm = new HashMap<>();
-        hm.put("driver_id",sessionManager.getRegisterUser().getId());
+        hm.put("driver_id", sessionManager.getRegisterUser().getId());
         hm.put("status", "Offline");
 
         Call<AllResponse> call = apiService.driver_status(hm);

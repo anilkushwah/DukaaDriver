@@ -86,6 +86,9 @@ public class TotalEarnModel {
     @SerializedName("isRegisteredSuccessfully")
     @Expose
     private String isRegisteredSuccessfully;
+    @SerializedName("order_id")
+    @Expose
+    private String order_id;
 
     public String getGenOrderId() {
         return genOrderId;
@@ -93,6 +96,13 @@ public class TotalEarnModel {
 
     public void setGenOrderId(String genOrderId) {
         this.genOrderId = genOrderId;
+    }
+    public String getOrderId() {
+        return order_id;
+    }
+
+    public void setOrderId(String order_id) {
+        this.order_id = order_id;
     }
 
     public String getCreateDate() {
